@@ -5,7 +5,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>6. 動作確認 &mdash; awsiot-handson-dojo-greengrass v0.0 documentation</title>
+    <title>6. Greengrassコアへのデプロイと動作確認 &mdash; awsiot-handson-dojo-greengrass v0.0 documentation</title>
     <link rel="stylesheet" href="_static/default.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <script type="text/javascript">
@@ -46,8 +46,8 @@
         <div class="bodywrapper">
           <div class="body">
             
-  <div class="section" id="id1">
-<h1>6. 動作確認<a class="headerlink" href="#id1" title="このヘッドラインへのパーマリンク">¶</a></h1>
+  <div class="section" id="greengrass">
+<h1>6. Greengrassコアへのデプロイと動作確認<a class="headerlink" href="#greengrass" title="このヘッドラインへのパーマリンク">¶</a></h1>
 <p>ゲートウェイは、温湿度センサーが送信するBeaconを受信し、定期的にAWS IoTに送信します。AWS IoTではルールに基づきKinesis Firehoseにデータを送り、Kinesis Firehoseは、受け取ったデータをLambda関数で加工し、S3に保存します。</p>
 <img alt="_images/overview1.png" src="_images/overview1.png" />
 <div class="line-block">
