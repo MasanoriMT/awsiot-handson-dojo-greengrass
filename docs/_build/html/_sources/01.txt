@@ -6,7 +6,7 @@ AWS IoT ハンズオン Dojo コース
 ============================================
 
 今回のAWS IoT ハンズオン Dojo コースは、AWS Greengrassに的を絞ったものになります。
-Greengrassを使った **エッジコンピューティング** を学ぶことが出来るコースです。
+Greengrassを使った _エッジコンピューティング_ を学ぶことが出来るコースです。
 
 .. image:: images/01/dojo_course.png
 
@@ -16,7 +16,7 @@ Greengrassを使った **エッジコンピューティング** を学ぶこと�
 ハンズオンシナリオ
 ====================
 
-Greengrass coreをRaspberry Piに導入し、センサーデバイス、アラーとデバイスと連携させます。クラウドからGreengrass coreにLambda関数をデプロイし、センサーデバイスからの計測データをエッジ内で処理させます。デバイスがオフライン状態であっても、エッジでの処理(ローカル Lambda)が停止することなく処理が行われることを確認します。
+Greengrass coreをRaspberry Piに導入し、センサーデバイス、アラートデバイスと連携させます。クラウドからGreengrass coreにLambda関数をデプロイし、センサーデバイスからの計測データをエッジ内で処理させます。デバイスがオフライン状態であっても、エッジでの処理(ローカル Lambda)が停止することなく処理が行われることを確認します。
 
 .. image:: images/01/overview.png
 
@@ -26,21 +26,25 @@ Greengrass coreをRaspberry Piに導入し、センサーデバイス、アラ�
 利用するデバイス、アプリケーション、サービス
 ========================================================
 
-**Raspberry Pi 3**
+Raspberry Pi
+--------------------
 
-レンジャーシステムズ社が提供するBLE/WiFiゲートウェイです。本ハンズオンでは、センサーからBLE経由で温度/湿度データ取得し、AWS IoTへのデータ送信に利用します。レンジャーシステムズ社のゲートウェイは、AWS IoTに直接接続可能で、AWSとの親和性が非常に高い製品です。他にLTE版のゲートウエイもあります。
-    http://www.ranger-systems.co.jp/iot/
+ARMプロセッサーを搭載したシングルボードコンピュータ。
+Linuxで動作し、microSDメモリーカード (microSD) を起動および長期保存用のストレージに利用する。
+    https://ja.wikipedia.org/wiki/Raspberry_Pi
 
 |
 
-**AWSアカウント**
+AWSアカウント
+--------------------
 
-センサーデータの保存先として使用するAWSを利用・管理するためのアカウント。アカウント作成の手順はこちらの通りです。
+AWSを利用・管理するためのアカウント。アカウント作成の手順はこちらの通りです。
     https://aws.amazon.com/jp/register-flow/
 
 |
 
-**AWS IoT**
+AWS IoT
+--------------------
 
 接続されたデバイスが安全かつ簡単にクラウドアプリケーションやその他のデバイスとやりとりするためのマネージド型プラットフォームです。本ハンズオンでは、デバイスからのセンサーデータの受信で利用します。
     https://aws.amazon.com/jp/iot/
@@ -49,7 +53,8 @@ Greengrass coreをRaspberry Piに導入し、センサーデバイス、アラ�
 
 |
 
-**AWS Greengrass**
+AWS Greengrass
+--------------------
 
 接続されたデバイスでローカルのコンピューティング、メッセージング、データキャッシュ、および同期。
 AWS Lambda と AWS IoT を使用して AWS クラウドとローカルデバイス全体で IoT アプリケーションをシームレスに実行する。
@@ -57,20 +62,29 @@ AWS Lambda と AWS IoT を使用して AWS クラウドとローカルデバイ�
 
 .. image:: images/01/AWS_Greengrass.png
 
-  :scale: 50
+  :scale: 20
   :align: right
 
 |
 
+**AWS IoT Device SDK**
 
-**AWS Lambda**
+AWS IoT デバイス SDK を使用すれば、ハードウェアデバイスを簡単かつすばやく AWS IoT に接続できます。この SDK では、AWS IoT によって準備されているデバイスゲートウェイおよびデバイスのシャドウとハードウェアデバイスとをシームレスかつセキュアに連携させられるよう、機能が強化されています。
+今回のGreengrassハンズオンでは、C++言語版のDevice SDKを使用します。
+    https://aws.amazon.com/jp/iot/sdk/
+
+|
+
+AWS Lambda
+--------------------
 
 お客様のコードをイベント発生時やリクエストごとに実行できる管理不要なコンピューティングプラットフォームです。本ハンズオンでは、AWS Greengrassで使用します。
     https://aws.amazon.com/jp/lambda/
 
 |
 
-**Amazon CloudWatch**
+Amazon CloudWatch
+--------------------
 
 AWSクラウドリソースとAWSで実行するアプリケーションのモニタリングサービスです。メトリクスの収集、ログファイルの収集が可能です。本ハンズオンではCloudWatch Logsを利用してAWS IoTのログを収集、閲覧します。
     https://aws.amazon.com/jp/cloudwatch/
@@ -82,7 +96,8 @@ AWSクラウドリソースとAWSで実行するアプリケーションのモ�
 事前準備
 ==============
 
-* VNCクライアント
+VNCクライアント
+-----------------------------
 
 Raspberry Piの操作は、VNCを使用してリモートで行います。VNC接続に必要なソフトウェアをURLからダウンロードし、インストールしておいて下さい。
 
@@ -93,6 +108,7 @@ https://www.realvnc.com/download/viewer/
 設定によっては、インストール出来ない場合があります。
 その場合、インストーラーを"管理者として実行"してみて下さい。
 
+|
 
 
 サンプルプログラム
@@ -101,13 +117,14 @@ https://www.realvnc.com/download/viewer/
 本ハンズオンで利用するサンプルプログラムです。
 
 * `Raspberry Pi 用 SDカードイメージ
- <https://s3-.....zip>_`
+ <hhttps://s3-us-west-2.amazonaws.com/greengrass-trial/GG_Handson.img.zip>`_
 
 * `Lambda関数パッケージ
- <https://s3-.....zip>_`
+ <https://s3-us-west-2.amazonaws.com/greengrass-trial/GGhandsonLambda.zip>`_
+
 
 参考情報
-=======
+======================
 
 * `AWS IoT Device SDK C++
  <https://github.com/aws/aws-iot-device-sdk-cpp>`_

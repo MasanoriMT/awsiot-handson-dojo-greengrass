@@ -5,7 +5,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>5. 動作確認 &mdash; awsiot-handson-dojo-greengrass v0.0 documentation</title>
+    <title>5. Raspberry Piの設定 &mdash; awsiot-handson-dojo-greengrass v0.0 documentation</title>
     <link rel="stylesheet" href="_static/default.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <script type="text/javascript">
@@ -21,8 +21,8 @@
     <script type="text/javascript" src="_static/doctools.js"></script>
     <script type="text/javascript" src="_static/translations.js"></script>
     <link rel="top" title="awsiot-handson-dojo-greengrass v0.0 documentation" href="index.html" />
-    <link rel="next" title="6. シナリオ2: センサーデータを可視化する-1" href="06.html" />
-    <link rel="prev" title="4. 04 Raspberry Piの設定" href="04.html" /> 
+    <link rel="next" title="6. 動作確認" href="06.html" />
+    <link rel="prev" title="4. Greengrass向けLambda関数の登録とサブスクリプションの設定" href="04.html" /> 
   </head>
   <body>
     <div class="related">
@@ -32,10 +32,10 @@
           <a href="genindex.html" title="総合索引"
              accesskey="I">索引</a></li>
         <li class="right" >
-          <a href="06.html" title="6. シナリオ2: センサーデータを可視化する-1"
+          <a href="06.html" title="6. 動作確認"
              accesskey="N">次へ</a> |</li>
         <li class="right" >
-          <a href="04.html" title="4. 04 Raspberry Piの設定"
+          <a href="04.html" title="4. Greengrass向けLambda関数の登録とサブスクリプションの設定"
              accesskey="P">前へ</a> |</li>
         <li><a href="index.html">awsiot-handson-dojo-greengrass v0.0 documentation</a> &raquo;</li> 
       </ul>
@@ -46,27 +46,10 @@
         <div class="bodywrapper">
           <div class="body">
             
-  <div class="section" id="id1">
-<h1>5. 動作確認<a class="headerlink" href="#id1" title="このヘッドラインへのパーマリンク">¶</a></h1>
-<p>ゲートウェイは、温湿度センサーが送信するBeaconを受信し、定期的にAWS IoTに送信します。AWS IoTではルールに基づきKinesis Firehoseにデータを送り、Kinesis Firehoseは、受け取ったデータをLambda関数で加工し、S3に保存します。</p>
-<img alt="_images/overview1.png" src="_images/overview1.png" />
-<div class="line-block">
-<div class="line"><br /></div>
-</div>
-<p>S3に保存されるデータは、下記のJSON形式になります。</p>
-<div class="highlight-python"><pre>{
-  "model": "590080BC",       ← センサーのモデル番号
-  "src_mac": "FFEAD7E638B8", ← センサーのMACアドレス
-  "dst_mac": "AC83F3A041D2", ← ゲートウェイのMACアドレス
-  "rssi": -47,               ← Beaconの電波強度
-  "vbat": 3.34,              ← 電池電圧
-  "tempreature": 26.97,      ← 温度
-  "humidity": 42,            ← 湿度
-  "@timestamp": "2017-05-11T08:34:43" ← タイムスタンプ
-}</pre>
-</div>
-<div class="line-block">
-<div class="line"><br /></div>
+  <div class="section" id="raspberry-pi">
+<h1>5. Raspberry Piの設定<a class="headerlink" href="#raspberry-pi" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<div class="section" id="wifi">
+<h2>5.1. WiFi接続<a class="headerlink" href="#wifi" title="このヘッドラインへのパーマリンク">¶</a></h2>
 </div>
 </div>
 
@@ -76,12 +59,20 @@
       </div>
       <div class="sphinxsidebar">
         <div class="sphinxsidebarwrapper">
+            <h3><a href="index.html">目次</a></h3>
+            <ul>
+<li><a class="reference external" href="#">5. Raspberry Piの設定</a><ul>
+<li><a class="reference external" href="#wifi">5.1. WiFi接続</a></li>
+</ul>
+</li>
+</ul>
+
             <h4>前のトピックへ</h4>
             <p class="topless"><a href="04.html"
-                                  title="前の章へ">4. 04 Raspberry Piの設定</a></p>
+                                  title="前の章へ">4. Greengrass向けLambda関数の登録とサブスクリプションの設定</a></p>
             <h4>次のトピックへ</h4>
             <p class="topless"><a href="06.html"
-                                  title="次の章へ">6. シナリオ2: センサーデータを可視化する-1</a></p>
+                                  title="次の章へ">6. 動作確認</a></p>
             <h3>このページ</h3>
             <ul class="this-page-menu">
               <li><a href="_sources/05.txt"
@@ -111,10 +102,10 @@
           <a href="genindex.html" title="総合索引"
              >索引</a></li>
         <li class="right" >
-          <a href="06.html" title="6. シナリオ2: センサーデータを可視化する-1"
+          <a href="06.html" title="6. 動作確認"
              >次へ</a> |</li>
         <li class="right" >
-          <a href="04.html" title="4. 04 Raspberry Piの設定"
+          <a href="04.html" title="4. Greengrass向けLambda関数の登録とサブスクリプションの設定"
              >前へ</a> |</li>
         <li><a href="index.html">awsiot-handson-dojo-greengrass v0.0 documentation</a> &raquo;</li> 
       </ul>

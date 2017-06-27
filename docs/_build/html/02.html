@@ -21,7 +21,7 @@
     <script type="text/javascript" src="_static/doctools.js"></script>
     <script type="text/javascript" src="_static/translations.js"></script>
     <link rel="top" title="awsiot-handson-dojo-greengrass v0.0 documentation" href="index.html" />
-    <link rel="next" title="3. BLEゲートウェイの設定" href="03.html" />
+    <link rel="next" title="3. AWS IoTの設定" href="03.html" />
     <link rel="prev" title="1. イントロダクション" href="01.html" /> 
   </head>
   <body>
@@ -32,7 +32,7 @@
           <a href="genindex.html" title="総合索引"
              accesskey="I">索引</a></li>
         <li class="right" >
-          <a href="03.html" title="3. BLEゲートウェイの設定"
+          <a href="03.html" title="3. AWS IoTの設定"
              accesskey="N">次へ</a> |</li>
         <li class="right" >
           <a href="01.html" title="1. イントロダクション"
@@ -87,32 +87,43 @@
 <div class="line-block">
 <div class="line"><br /></div>
 </div>
-<p>サービス一覧から[AWS IoT]をクリックして開きます。</p>
-<img alt="_images/iot-servicemenu&#64;2x.png" src="_images/iot-servicemenu&#64;2x.png" />
+<p>サービス一覧から [AWS Greengrass] をクリックして開きます。</p>
+<img alt="_images/greengrass-servicemenu.png" src="_images/greengrass-servicemenu.png" />
 <div class="line-block">
 <div class="line"><br /></div>
 </div>
-<p>AWS IoTのダッシュボードが表示されます。</p>
-<img alt="_images/iot-dashboard&#64;2x.png" src="_images/iot-dashboard&#64;2x.png" />
+<p>AWS Greengrass の開始画面が表示されます。[今すぐ始める]をクリックします。</p>
+<img alt="_images/greengrass-welcome.png" src="_images/greengrass-welcome.png" />
 <div class="line-block">
 <div class="line"><br /></div>
 </div>
-<p>下記の画面が表示された場合は、[Get started]をクリックします。</p>
-<img alt="_images/iot-get-started.png" src="_images/iot-get-started.png" />
-<div class="line-block">
-<div class="line"><br /></div>
-</div>
-<p>デバイス(Thing)を作成します。メニューから[Registry]-[Things]をクリックします。以下の様な画面が表示された場合は、[Registry a thing]をクリックします。</p>
+<p>Greengrasクループ を作成します。[簡単な作成の使用] をクリックします。</p>
 <img alt="_images/create-thing.png" src="_images/create-thing.png" />
 <div class="line-block">
 <div class="line"><br /></div>
 </div>
-<p>あるいは、デバイス(Thing)一覧が表示された場合は、[Create]をクリックします。</p>
-<img alt="_images/create-thing-2.png" src="_images/create-thing-2.png" />
+<p>[グループ名] に”GGHandsonGroup-&lt;参加者番号&gt;” と入力し、[次へ] をクリックします。</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="30%" />
+<col width="70%" />
+</colgroup>
+<thead valign="bottom">
+<tr><th class="head">項目</th>
+<th class="head">値</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr><td>グループ名</td>
+<td>GGHandsonGroup-&lt;参加者番号&gt;</td>
+</tr>
+</tbody>
+</table>
+<img alt="_images/greengrass-group-name.png" src="_images/greengrass-group-name.png" />
 <div class="line-block">
 <div class="line"><br /></div>
 </div>
-<p>[Name]に”ranger-gw-&lt;参加者番号&gt;”と入力し、[Create thing]をクリックします。</p>
+<p>[名前] に”GGC_Thing-&lt;参加者番号&gt;” と入力し、[次へ] をクリックします。</p>
 <table border="1" class="docutils">
 <colgroup>
 <col width="32%" />
@@ -124,24 +135,55 @@
 </tr>
 </thead>
 <tbody valign="top">
-<tr><td>Name</td>
-<td>ranger-gw-&lt;参加者番号&gt;</td>
+<tr><td>名前</td>
+<td>GGC_Thing-&lt;参加者番号&gt;</td>
 </tr>
 </tbody>
 </table>
-<img alt="_images/create-thing-3.png" src="_images/create-thing-3.png" />
+<img alt="_images/greengrass-core-name.png" src="_images/greengrass-core-name.png" />
 <div class="line-block">
 <div class="line"><br /></div>
 </div>
-<p>[←]をクリックして下さい。</p>
-<p>デバイス(Thing)一覧が表示され、作成したデバイスが表示されている事を確認します。</p>
-<img alt="_images/create-thing-4.png" src="_images/create-thing-4.png" />
+<p>[グループとコアの作成] をクリックすると、GreengrassグループとGreengrassコアが作成されます。</p>
+<img alt="_images/geengrass-create-group.png" src="_images/geengrass-create-group.png" />
 <div class="line-block">
 <div class="line"><br /></div>
 </div>
-<p>メニューから[Settings]をクリックします。以下の様な画面が表示されます。
-EndpointのURLが表示されます。このEndpointは、ゲートウェイがデータを送信する宛先になります。後ほどゲートウェイの設定のところで参照しますので、ノートパッドなどに記録しておいて下さい。</p>
-<img alt="_images/endpoint.png" src="_images/endpoint.png" />
+<p>自動的に、新しいGreengrassグループが作成され、Greengrassコアデバイス用の証明書とセキュリティーポリーシーが作成されGreengrassコアにアタッチされます。</p>
+<p>次の [コアデバイスへの接続] 画面で、Greengrassコアデバイス用の証明書とプライベートキーをPCにダウンロードして下さい。ダウンロードした証明書とプライベートキーは、後にRaspberry Piにコピーし、Greengrassコアデバイスで使用します。また、証明書の番号は、Greengrassコアデバイス用と分かる様に記録しておいて下さい。</p>
+<p>Greengrass自身のダウンロードもこの画面で可能ですが、このハンズオンでは、導入済みのRaspberry PiのSDカードを使用しますので、ダウンロードは不要です。[完了] をクリックして、Greengrassグループの作成を終了します。</p>
+<img alt="_images/geengrass-create-group-complete.png" src="_images/geengrass-create-group-complete.png" />
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<p>Greengrassグループが作成されました。</p>
+<img alt="_images/geengrass-group-status.png" src="_images/geengrass-group-status.png" />
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<p>メニューから[コア]をクリックします。以下の様な画面が表示されますので、作成したGreengrassコアが表示されている事を確認します。</p>
+<img alt="_images/greengrass-core-verify.png" src="_images/greengrass-core-verify.png" />
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<p>Greengrassコア [GGC_Thing-&lt;参加者番号&gt;] をクリックして下さい。Greengrassコアの詳細が表示されます。
+モノのARNは、後にRaspberry Pi上のGreengrassコアの設定で必要になりますので、記録しておいて下さい。</p>
+<img alt="_images/geengrass-core-ARN.png" src="_images/geengrass-core-ARN.png" />
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<p>[←]をクリックして下さい。メニューから [セキュリティー] をクリックして、自動的に生成された証明書を確認します。</p>
+<img alt="_images/geengrass-security-check.png" src="_images/geengrass-security-check.png" />
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<p>作成された証明書が表示されます。先ほど記録しておいたGreengrassコアデバイス用の証明書の番号があるか確認して下さい。また、証明書が アクティブ になっているかも確認して下さい。Greengrassコアデバイス用の証明書をクリックして下さい。</p>
+<img alt="_images/geengrass-security-check-2.png" src="_images/geengrass-security-check-2.png" />
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<p>発行者、発行日、有効期限などの証明書の詳細情報が表示されます。メニューから [ポリシー] をクリックして下さい。</p>
+<img alt="_images/geengrass-security-check-3.png" src="_images/geengrass-security-check-3.png" />
 <div class="line-block">
 <div class="line"><br /></div>
 </div>
@@ -149,12 +191,12 @@ EndpointのURLが表示されます。このEndpointは、ゲートウェイが�
 <div class="section" id="id1">
 <h2>2.3. ポリシーの作成<a class="headerlink" href="#id1" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>デバイスに対して、AWS IoTの各種操作を許可するためのポリシーを作成します。メニューから[Security]-[Policies]をクリックします。以下の様な画面が表示された場合は、[Create a policy] をクリックします。</p>
-<img alt="_images/create-policy.png" src="_images/create-policy.png" />
+<img alt="_images/02" src="_images/02" />
 <div class="line-block">
 <div class="line"><br /></div>
 </div>
 <p>あるいは、ポリシー一覧が表示された場合は、[Create]をクリックします。</p>
-<img alt="_images/create-policy-2.png" src="_images/create-policy-2.png" />
+<img alt="_images/02" src="_images/02" />
 <div class="line-block">
 <div class="line"><br /></div>
 </div>
@@ -188,13 +230,13 @@ EndpointのURLが表示されます。このEndpointは、ゲートウェイが�
 </tbody>
 </table>
 <p>&#8220;*&#8221;は、半角の＊(アスタリスク)です。</p>
-<img alt="_images/create-policy-3.png" src="_images/create-policy-3.png" />
+<img alt="_images/02" src="_images/02" />
 <div class="line-block">
 <div class="line"><br /></div>
 </div>
 <p>[←]をクリックして下さい。</p>
 <p>ポリシーの一覧が表示され、作成したポリシーが表示されている事を確認します。</p>
-<img alt="_images/create-policy-4.png" src="_images/create-policy-4.png" />
+<img alt="_images/02" src="_images/02" />
 <div class="line-block">
 <div class="line"><br /></div>
 </div>
@@ -202,12 +244,12 @@ EndpointのURLが表示されます。このEndpointは、ゲートウェイが�
 <div class="section" id="id2">
 <h2>2.4. 証明書の作成<a class="headerlink" href="#id2" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>証明書を作成します。メニューから[Security]-[Cetificate]をクリックします。以下の様な画面が表示された場合は、[Create a crtificate]をクリックします。</p>
-<img alt="_images/crreate-certificate.png" src="_images/crreate-certificate.png" />
+<img alt="_images/02" src="_images/02" />
 <div class="line-block">
 <div class="line"><br /></div>
 </div>
 <p>以下の様な画面が表示された場合は、[One-click certificate creation]右の[Create certificate]をクリックします。</p>
-<img alt="_images/crreate-certificate-2.png" src="_images/crreate-certificate-2.png" />
+<img alt="_images/02" src="_images/02" />
 <div class="line-block">
 <div class="line"><br /></div>
 </div>
@@ -215,12 +257,12 @@ EndpointのURLが表示されます。このEndpointは、ゲートウェイが�
 <p>これらは、後ほど、BLEゲートウェイにアップロードします。証明書の番号は、後ほど証明書の割当てのところで参照しますので、ノートパッドなどに記録しておいて下さい。
 証明書の番号とは、ファイル名が &#8220;xxxxxxxxxx-certificate.pem.crt&#8221; の場合、冒頭の &#8220;xxxxxxxxxx&#8221; になります。</p>
 <p>証明書とプライベートキーのダウンロードが終わったら、[Activate] をクリックして証明書を有効にして下さい。</p>
-<img alt="_images/certificate-created.png" src="_images/certificate-created.png" />
+<img alt="_images/02" src="_images/02" />
 <div class="line-block">
 <div class="line"><br /></div>
 </div>
 <p>最後に、左上の[←]を２回押して、戻って下さい。先ほど作成した証明書が表示され、&#8221;<strong>ACTIVATE</strong>&#8221; 状態になっている確認して下さい。</p>
-<img alt="_images/confirm-certificate.png" src="_images/confirm-certificate.png" />
+<img alt="_images/02" src="_images/02" />
 <div class="line-block">
 <div class="line"><br /></div>
 </div>
@@ -279,7 +321,7 @@ EndpointのURLが表示されます。このEndpointは、ゲートウェイが�
                                   title="前の章へ">1. イントロダクション</a></p>
             <h4>次のトピックへ</h4>
             <p class="topless"><a href="03.html"
-                                  title="次の章へ">3. BLEゲートウェイの設定</a></p>
+                                  title="次の章へ">3. AWS IoTの設定</a></p>
             <h3>このページ</h3>
             <ul class="this-page-menu">
               <li><a href="_sources/02.txt"
@@ -309,7 +351,7 @@ EndpointのURLが表示されます。このEndpointは、ゲートウェイが�
           <a href="genindex.html" title="総合索引"
              >索引</a></li>
         <li class="right" >
-          <a href="03.html" title="3. BLEゲートウェイの設定"
+          <a href="03.html" title="3. AWS IoTの設定"
              >次へ</a> |</li>
         <li class="right" >
           <a href="01.html" title="1. イントロダクション"

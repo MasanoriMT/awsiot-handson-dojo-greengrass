@@ -51,7 +51,7 @@
 <div class="section" id="aws-iot-dojo">
 <h2>1.1. AWS IoT ハンズオン Dojo コース<a class="headerlink" href="#aws-iot-dojo" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>今回のAWS IoT ハンズオン Dojo コースは、AWS Greengrassに的を絞ったものになります。
-Greengrassを使った <strong>エッジコンピューティング</strong> を学ぶことが出来るコースです。</p>
+Greengrassを使った _エッジコンピューティング_ を学ぶことが出来るコースです。</p>
 <img alt="_images/dojo_course.png" src="_images/dojo_course.png" />
 <div class="line-block">
 <div class="line"><br /></div>
@@ -59,7 +59,7 @@ Greengrassを使った <strong>エッジコンピューティング</strong> を
 </div>
 <div class="section" id="id2">
 <h2>1.2. ハンズオンシナリオ<a class="headerlink" href="#id2" title="このヘッドラインへのパーマリンク">¶</a></h2>
-<p>Greengrass coreをRaspberry Piに導入し、センサーデバイス、アラーとデバイスと連携させます。クラウドからGreengrass coreにLambda関数をデプロイし、センサーデバイスからの計測データをエッジ内で処理させます。デバイスがオフライン状態であっても、エッジでの処理(ローカル Lambda)が停止することなく処理が行われることを確認します。</p>
+<p>Greengrass coreをRaspberry Piに導入し、センサーデバイス、アラートデバイスと連携させます。クラウドからGreengrass coreにLambda関数をデプロイし、センサーデバイスからの計測データをエッジ内で処理させます。デバイスがオフライン状態であっても、エッジでの処理(ローカル Lambda)が停止することなく処理が行われることを確認します。</p>
 <img alt="_images/overview.png" src="_images/overview.png" />
 <div class="line-block">
 <div class="line"><br /></div>
@@ -67,23 +67,28 @@ Greengrassを使った <strong>エッジコンピューティング</strong> を
 </div>
 <div class="section" id="id3">
 <h2>1.3. 利用するデバイス、アプリケーション、サービス<a class="headerlink" href="#id3" title="このヘッドラインへのパーマリンク">¶</a></h2>
-<p><strong>Raspberry Pi 3</strong></p>
-<dl class="docutils">
-<dt>レンジャーシステムズ社が提供するBLE/WiFiゲートウェイです。本ハンズオンでは、センサーからBLE経由で温度/湿度データ取得し、AWS IoTへのデータ送信に利用します。レンジャーシステムズ社のゲートウェイは、AWS IoTに直接接続可能で、AWSとの親和性が非常に高い製品です。他にLTE版のゲートウエイもあります。</dt>
-<dd><a class="reference external" href="http://www.ranger-systems.co.jp/iot/">http://www.ranger-systems.co.jp/iot/</a></dd>
-</dl>
+<div class="section" id="raspberry-pi">
+<h3>1.3.1. Raspberry Pi<a class="headerlink" href="#raspberry-pi" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p>ARMプロセッサーを搭載したシングルボードコンピュータ。
+Linuxで動作し、microSDメモリーカード (microSD) を起動および長期保存用のストレージに利用する。</p>
+<blockquote>
+<a class="reference external" href="https://ja.wikipedia.org/wiki/Raspberry_Pi">https://ja.wikipedia.org/wiki/Raspberry_Pi</a></blockquote>
 <div class="line-block">
 <div class="line"><br /></div>
 </div>
-<p><strong>AWSアカウント</strong></p>
+</div>
+<div class="section" id="aws">
+<h3>1.3.2. AWSアカウント<a class="headerlink" href="#aws" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <dl class="docutils">
-<dt>センサーデータの保存先として使用するAWSを利用・管理するためのアカウント。アカウント作成の手順はこちらの通りです。</dt>
+<dt>AWSを利用・管理するためのアカウント。アカウント作成の手順はこちらの通りです。</dt>
 <dd><a class="reference external" href="https://aws.amazon.com/jp/register-flow/">https://aws.amazon.com/jp/register-flow/</a></dd>
 </dl>
 <div class="line-block">
 <div class="line"><br /></div>
 </div>
-<p><strong>AWS IoT</strong></p>
+</div>
+<div class="section" id="aws-iot">
+<h3>1.3.3. AWS IoT<a class="headerlink" href="#aws-iot" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <dl class="docutils">
 <dt>接続されたデバイスが安全かつ簡単にクラウドアプリケーションやその他のデバイスとやりとりするためのマネージド型プラットフォームです。本ハンズオンでは、デバイスからのセンサーデータの受信で利用します。</dt>
 <dd><a class="reference external" href="https://aws.amazon.com/jp/iot/">https://aws.amazon.com/jp/iot/</a></dd>
@@ -92,7 +97,9 @@ Greengrassを使った <strong>エッジコンピューティング</strong> を
 <div class="line-block">
 <div class="line"><br /></div>
 </div>
-<p><strong>AWS Greengrass</strong></p>
+</div>
+<div class="section" id="aws-greengrass">
+<h3>1.3.4. AWS Greengrass<a class="headerlink" href="#aws-greengrass" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <p>接続されたデバイスでローカルのコンピューティング、メッセージング、データキャッシュ、および同期。
 AWS Lambda と AWS IoT を使用して AWS クラウドとローカルデバイス全体で IoT アプリケーションをシームレスに実行する。</p>
 <blockquote>
@@ -100,7 +107,17 @@ AWS Lambda と AWS IoT を使用して AWS クラウドとローカルデバイ�
 <div class="line-block">
 <div class="line"><br /></div>
 </div>
-<p><strong>AWS Lambda</strong></p>
+<p><strong>AWS IoT Device SDK</strong></p>
+<p>AWS IoT デバイス SDK を使用すれば、ハードウェアデバイスを簡単かつすばやく AWS IoT に接続できます。この SDK では、AWS IoT によって準備されているデバイスゲートウェイおよびデバイスのシャドウとハードウェアデバイスとをシームレスかつセキュアに連携させられるよう、機能が強化されています。
+今回のGreengrassハンズオンでは、C++言語版のDevice SDKを使用します。</p>
+<blockquote>
+<a class="reference external" href="https://aws.amazon.com/jp/iot/sdk/">https://aws.amazon.com/jp/iot/sdk/</a></blockquote>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+</div>
+<div class="section" id="aws-lambda">
+<h3>1.3.5. AWS Lambda<a class="headerlink" href="#aws-lambda" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <dl class="docutils">
 <dt>お客様のコードをイベント発生時やリクエストごとに実行できる管理不要なコンピューティングプラットフォームです。本ハンズオンでは、AWS Greengrassで使用します。</dt>
 <dd><a class="reference external" href="https://aws.amazon.com/jp/lambda/">https://aws.amazon.com/jp/lambda/</a></dd>
@@ -108,7 +125,9 @@ AWS Lambda と AWS IoT を使用して AWS クラウドとローカルデバイ�
 <div class="line-block">
 <div class="line"><br /></div>
 </div>
-<p><strong>Amazon CloudWatch</strong></p>
+</div>
+<div class="section" id="amazon-cloudwatch">
+<h3>1.3.6. Amazon CloudWatch<a class="headerlink" href="#amazon-cloudwatch" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <dl class="docutils">
 <dt>AWSクラウドリソースとAWSで実行するアプリケーションのモニタリングサービスです。メトリクスの収集、ログファイルの収集が可能です。本ハンズオンではCloudWatch Logsを利用してAWS IoTのログを収集、閲覧します。</dt>
 <dd><a class="reference external" href="https://aws.amazon.com/jp/cloudwatch/">https://aws.amazon.com/jp/cloudwatch/</a></dd>
@@ -117,16 +136,20 @@ AWS Lambda と AWS IoT を使用して AWS クラウドとローカルデバイ�
 <div class="line"><br /></div>
 </div>
 </div>
+</div>
 <div class="section" id="id4">
 <h2>1.4. 事前準備<a class="headerlink" href="#id4" title="このヘッドラインへのパーマリンク">¶</a></h2>
-<ul class="simple">
-<li>VNCクライアント</li>
-</ul>
+<div class="section" id="vnc">
+<h3>1.4.1. VNCクライアント<a class="headerlink" href="#vnc" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <p>Raspberry Piの操作は、VNCを使用してリモートで行います。VNC接続に必要なソフトウェアをURLからダウンロードし、インストールしておいて下さい。</p>
 <p><a class="reference external" href="https://www.realvnc.com/download/viewer/">https://www.realvnc.com/download/viewer/</a></p>
 <p>(Mac/Windows共通)</p>
 <p>設定によっては、インストール出来ない場合があります。
 その場合、インストーラーを&#8221;管理者として実行&#8221;してみて下さい。</p>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+</div>
 </div>
 <div class="section" id="id5">
 <h2>1.5. サンプルプログラム<a class="headerlink" href="#id5" title="このヘッドラインへのパーマリンク">¶</a></h2>
@@ -135,12 +158,12 @@ AWS Lambda と AWS IoT を使用して AWS クラウドとローカルデバイ�
 <li><a href="#id6"><span class="problematic" id="id7">`</span></a>Raspberry Pi 用 SDカードイメージ</li>
 </ul>
 <blockquote>
-&lt;<a class="reference external" href="https://s3-.....zip">https://s3-.....zip</a>&gt;_`</blockquote>
+&lt;hhttps://s3-us-west-2.amazonaws.com/greengrass-trial/GG_Handson.img.zip&gt;`_</blockquote>
 <ul class="simple">
 <li><a href="#id8"><span class="problematic" id="id9">`</span></a>Lambda関数パッケージ</li>
 </ul>
 <blockquote>
-&lt;<a class="reference external" href="https://s3-.....zip">https://s3-.....zip</a>&gt;_`</blockquote>
+&lt;<a class="reference external" href="https://s3-us-west-2.amazonaws.com/greengrass-trial/GGhandsonLambda.zip">https://s3-us-west-2.amazonaws.com/greengrass-trial/GGhandsonLambda.zip</a>&gt;`_</blockquote>
 </div>
 <div class="section" id="id10">
 <h2>1.6. 参考情報<a class="headerlink" href="#id10" title="このヘッドラインへのパーマリンク">¶</a></h2>
@@ -163,8 +186,19 @@ AWS Lambda と AWS IoT を使用して AWS クラウドとローカルデバイ�
 <li><a class="reference external" href="#">1. イントロダクション</a><ul>
 <li><a class="reference external" href="#aws-iot-dojo">1.1. AWS IoT ハンズオン Dojo コース</a></li>
 <li><a class="reference external" href="#id2">1.2. ハンズオンシナリオ</a></li>
-<li><a class="reference external" href="#id3">1.3. 利用するデバイス、アプリケーション、サービス</a></li>
-<li><a class="reference external" href="#id4">1.4. 事前準備</a></li>
+<li><a class="reference external" href="#id3">1.3. 利用するデバイス、アプリケーション、サービス</a><ul>
+<li><a class="reference external" href="#raspberry-pi">1.3.1. Raspberry Pi</a></li>
+<li><a class="reference external" href="#aws">1.3.2. AWSアカウント</a></li>
+<li><a class="reference external" href="#aws-iot">1.3.3. AWS IoT</a></li>
+<li><a class="reference external" href="#aws-greengrass">1.3.4. AWS Greengrass</a></li>
+<li><a class="reference external" href="#aws-lambda">1.3.5. AWS Lambda</a></li>
+<li><a class="reference external" href="#amazon-cloudwatch">1.3.6. Amazon CloudWatch</a></li>
+</ul>
+</li>
+<li><a class="reference external" href="#id4">1.4. 事前準備</a><ul>
+<li><a class="reference external" href="#vnc">1.4.1. VNCクライアント</a></li>
+</ul>
+</li>
 <li><a class="reference external" href="#id5">1.5. サンプルプログラム</a></li>
 <li><a class="reference external" href="#id10">1.6. 参考情報</a></li>
 </ul>

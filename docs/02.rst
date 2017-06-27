@@ -31,62 +31,103 @@ AWSマネージメントコンソールを開き、右上のリージョン一�
 
 |
 
-サービス一覧から[AWS IoT]をクリックして開きます。
+サービス一覧から [AWS Greengrass] をクリックして開きます。
 
-.. image:: images/02/iot-servicemenu@2x.png
-
-|
-
-AWS IoTのダッシュボードが表示されます。
-
-.. image:: images/02/iot-dashboard@2x.png
+.. image:: images/02/greengrass-servicemenu.png
 
 |
 
-下記の画面が表示された場合は、[Get started]をクリックします。
+AWS Greengrass の開始画面が表示されます。[今すぐ始める]をクリックします。
 
-.. image:: images/02/iot-get-started.png
+.. image:: images/02/greengrass-welcome.png
 
 |
 
-デバイス(Thing)を作成します。メニューから[Registry]-[Things]をクリックします。以下の様な画面が表示された場合は、[Registry a thing]をクリックします。
+Greengrasクループ を作成します。[簡単な作成の使用] をクリックします。
 
 .. image:: images/02/create-thing.png
 
 |
 
-あるいは、デバイス(Thing)一覧が表示された場合は、[Create]をクリックします。
-
-.. image:: images/02/create-thing-2.png
-
-|
-
-[Name]に”ranger-gw-<参加者番号>”と入力し、[Create thing]をクリックします。
+[グループ名] に”GGHandsonGroup-<参加者番号>” と入力し、[次へ] をクリックします。
 
 ============= ============================
 項目            値
 ============= ============================
-Name	          ranger-gw-<参加者番号>
+グループ名       GGHandsonGroup-<参加者番号>
 ============= ============================
 
-.. image:: images/02/create-thing-3.png
+.. image:: images/02/greengrass-group-name.png
 
 |
 
-[←]をクリックして下さい。
+[名前] に”GGC_Thing-<参加者番号>” と入力し、[次へ] をクリックします。
 
-デバイス(Thing)一覧が表示され、作成したデバイスが表示されている事を確認します。
+============= ============================
+項目            値
+============= ============================
+名前             GGC_Thing-<参加者番号>
+============= ============================
 
-.. image:: images/02/create-thing-4.png
+.. image:: images/02/greengrass-core-name.png
+
+|
+
+[グループとコアの作成] をクリックすると、GreengrassグループとGreengrassコアが作成されます。
+
+.. image:: images/02/geengrass-create-group.png
 
 |
 
-メニューから[Settings]をクリックします。以下の様な画面が表示されます。
-EndpointのURLが表示されます。このEndpointは、ゲートウェイがデータを送信する宛先になります。後ほどゲートウェイの設定のところで参照しますので、ノートパッドなどに記録しておいて下さい。
+自動的に、新しいGreengrassグループが作成され、Greengrassコアデバイス用の証明書とセキュリティーポリーシーが作成されGreengrassコアにアタッチされます。
 
-.. image:: images/02/endpoint.png
+次の [コアデバイスへの接続] 画面で、Greengrassコアデバイス用の証明書とプライベートキーをPCにダウンロードして下さい。ダウンロードした証明書とプライベートキーは、後にRaspberry Piにコピーし、Greengrassコアデバイスで使用します。また、証明書の番号は、Greengrassコアデバイス用と分かる様に記録しておいて下さい。
+
+Greengrass自身のダウンロードもこの画面で可能ですが、このハンズオンでは、導入済みのRaspberry PiのSDカードを使用しますので、ダウンロードは不要です。[完了] をクリックして、Greengrassグループの作成を終了します。
+
+.. image:: images/02/geengrass-create-group-complete.png
 
 |
+
+Greengrassグループが作成されました。
+
+.. image:: images/02/geengrass-group-status.png
+
+|
+
+メニューから[コア]をクリックします。以下の様な画面が表示されますので、作成したGreengrassコアが表示されている事を確認します。
+
+.. image:: images/02/greengrass-core-verify.png
+
+|
+
+Greengrassコア [GGC_Thing-<参加者番号>] をクリックして下さい。Greengrassコアの詳細が表示されます。
+モノのARNは、後にRaspberry Pi上のGreengrassコアの設定で必要になりますので、記録しておいて下さい。
+
+.. image:: images/02/geengrass-core-ARN.png
+
+|
+
+[←]をクリックして下さい。メニューから [セキュリティー] をクリックして、自動的に生成された証明書を確認します。
+
+.. image:: images/02/geengrass-security-check.png
+
+|
+
+作成された証明書が表示されます。先ほど記録しておいたGreengrassコアデバイス用の証明書の番号があるか確認して下さい。また、証明書が アクティブ になっているかも確認して下さい。Greengrassコアデバイス用の証明書をクリックして下さい。
+
+.. image:: images/02/geengrass-security-check-2.png
+
+|
+
+発行者、発行日、有効期限などの証明書の詳細情報が表示されます。メニューから [ポリシー] をクリックして下さい。
+自動的に生成されたポリシー [GGC_Thing-<参加者番号>-policy] が、証明書と関連付けれていることが分かります。
+
+.. image:: images/02/geengrass-security-check-3.png
+
+|
+
+
 
 
 ポリシーの作成
@@ -94,13 +135,13 @@ EndpointのURLが表示されます。このEndpointは、ゲートウェイが�
 
 デバイスに対して、AWS IoTの各種操作を許可するためのポリシーを作成します。メニューから[Security]-[Policies]をクリックします。以下の様な画面が表示された場合は、[Create a policy] をクリックします。
 
-.. image:: images/02/create-policy.png
+.. image:: images/02/
 
 |
 
 あるいは、ポリシー一覧が表示された場合は、[Create]をクリックします。
 
-.. image:: images/02/create-policy-2.png
+.. image:: images/02/
 
 |
 
@@ -117,7 +158,7 @@ Effect	        Allow (チェックを入れて下さい)
 
 "*"は、半角の＊(アスタリスク)です。
 
-.. image:: images/02/create-policy-3.png
+.. image:: images/02/
 
 |
 
@@ -125,7 +166,7 @@ Effect	        Allow (チェックを入れて下さい)
 
 ポリシーの一覧が表示され、作成したポリシーが表示されている事を確認します。
 
-.. image:: images/02/create-policy-4.png
+.. image:: images/02/
 
 |
 
@@ -134,13 +175,13 @@ Effect	        Allow (チェックを入れて下さい)
 
 証明書を作成します。メニューから[Security]-[Cetificate]をクリックします。以下の様な画面が表示された場合は、[Create a crtificate]をクリックします。
 
-.. image:: images/02/crreate-certificate.png
+.. image:: images/02/
 
 |
 
 以下の様な画面が表示された場合は、[One-click certificate creation]右の[Create certificate]をクリックします。
 
-.. image:: images/02/crreate-certificate-2.png
+.. image:: images/02/
 
 |
 
@@ -153,13 +194,13 @@ Effect	        Allow (チェックを入れて下さい)
 
 証明書とプライベートキーのダウンロードが終わったら、[Activate] をクリックして証明書を有効にして下さい。
 
-.. image:: images/02/certificate-created.png
+.. image:: images/02/
 
 |
 
 最後に、左上の[←]を２回押して、戻って下さい。先ほど作成した証明書が表示され、"**ACTIVATE**" 状態になっている確認して下さい。
 
-.. image:: images/02/confirm-certificate.png
+.. image:: images/02/
 
 |
 
