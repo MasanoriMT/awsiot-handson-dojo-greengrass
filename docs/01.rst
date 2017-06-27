@@ -16,7 +16,7 @@ Greengrassを使った **エッジコンピューティング** を学ぶこと�
 ハンズオンシナリオ
 ====================
 
-Greengrass coreをRaspberry Piに導入し、センサーデバイス、アラームデバイスと連携させます。クラウドからGreengrass coreにLambda関数をデプロイし、センサーデバイスからの計測データをエッジ内で処理させ、デバイスがオフラインになってもエッジでの処理が停止することなく動作することを確認します。
+Greengrass coreをRaspberry Piに導入し、センサーデバイス、アラーとデバイスと連携させます。クラウドからGreengrass coreにLambda関数をデプロイし、センサーデバイスからの計測データをエッジ内で処理させます。デバイスがオフライン状態であっても、エッジでの処理(ローカル Lambda)が停止することなく処理が行われることを確認します。
 
 .. image:: images/01/overview.png
 
@@ -57,7 +57,8 @@ AWS Lambda と AWS IoT を使用して AWS クラウドとローカルデバイ�
 
 .. image:: images/01/AWS_Greengrass.png
 
-  :scale: 25
+  :scale: 50
+  :align: right
 
 |
 

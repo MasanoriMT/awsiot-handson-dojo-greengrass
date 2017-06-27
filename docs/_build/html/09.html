@@ -48,20 +48,20 @@
             
   <div class="section" id="id1">
 <h1>9. ハンズオン終了後<a class="headerlink" href="#id1" title="このヘッドラインへのパーマリンク">¶</a></h1>
-<div class="section" id="id2">
-<h2>9.1. ゲートウェイを初期化する<a class="headerlink" href="#id2" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<div class="section" id="raspberry-pi">
+<h2>9.1. Raspberry Piを初期化する<a class="headerlink" href="#raspberry-pi" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>ゲートウェイの電源が入った状態で、本体裏面にあるリセット用ボタンを5秒以上長押しして、工場出荷状態に戻して下さい。</p>
 <img alt="_images/reset.png" src="_images/reset.png" />
 <div class="line-block">
 <div class="line"><br /></div>
 </div>
 </div>
-<div class="section" id="id3">
-<h2>9.2. ゲートウェイの電源を切る<a class="headerlink" href="#id3" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<div class="section" id="id2">
+<h2>9.2. ゲートウェイの電源を切る<a class="headerlink" href="#id2" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>ゲートウェイからUSBケーブルを抜いて電源を切って下さい。</p>
 </div>
-<div class="section" id="id4">
-<h2>9.3. センサーの電源を切る<a class="headerlink" href="#id4" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<div class="section" id="id3">
+<h2>9.3. センサーの電源を切る<a class="headerlink" href="#id3" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>センサーのスライドスイッチをスライドさせて電源を切って下さい。</p>
 <img alt="_images/sensor-power-on-off.png" src="_images/sensor-power-on-off.png" />
 <div class="line-block">
@@ -74,10 +74,10 @@
 <p>AWS IoTの証明書、ポリシー、デバイスを削除するためには、削除前にアタッチされているリソースをデタッチする必要があります。（ルールは他のリソースとの関連性はありません）</p>
 <ul class="simple">
 <li>マネージメントコンソールのサービスから[AWS IoT]を選択します。</li>
-<li>メニューから、[Security]-[Certificate]をクリックします。</li>
+<li>メニューから、[セキュリティー]-[証明書]をクリックします。</li>
 <li>削除したい証明書を選択します。</li>
-<li>メニューから、[Things]を選び、[Detach] して下さい。</li>
-<li>Policyも同様に[Detach] して下さい。</li>
+<li>メニューから、[モノ]を選び、アクションメニューから[取り消し] して下さい。</li>
+<li>[ポリシー] も同様に[取り消し] して下さい。</li>
 </ul>
 <img alt="_images/detach.png" src="_images/detach.png" />
 <div class="line-block">
@@ -199,9 +199,9 @@ Domain”firehose-to-es-domain-&lt;参加者番号&gt;”をクリックしま�
             <h3><a href="index.html">目次</a></h3>
             <ul>
 <li><a class="reference external" href="#">9. ハンズオン終了後</a><ul>
-<li><a class="reference external" href="#id2">9.1. ゲートウェイを初期化する</a></li>
-<li><a class="reference external" href="#id3">9.2. ゲートウェイの電源を切る</a></li>
-<li><a class="reference external" href="#id4">9.3. センサーの電源を切る</a></li>
+<li><a class="reference external" href="#raspberry-pi">9.1. Raspberry Piを初期化する</a></li>
+<li><a class="reference external" href="#id2">9.2. ゲートウェイの電源を切る</a></li>
+<li><a class="reference external" href="#id3">9.3. センサーの電源を切る</a></li>
 <li><a class="reference external" href="#aws-iot">9.4. AWS IoTのリソースを削除</a></li>
 <li><a class="reference external" href="#s3">9.5. S3バケットを削除</a></li>
 <li><a class="reference external" href="#elsticsearch-service">9.6. ElsticSearch Serviceの設定を削除</a></li>

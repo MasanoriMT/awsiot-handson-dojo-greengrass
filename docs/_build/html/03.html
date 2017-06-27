@@ -5,7 +5,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>3. BLEゲートウェイの設定 &mdash; awsiot-handson-dojo-greengrass v0.0 documentation</title>
+    <title>3. Lambda関数の登録 &mdash; awsiot-handson-dojo-greengrass v0.0 documentation</title>
     <link rel="stylesheet" href="_static/default.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <script type="text/javascript">
@@ -21,7 +21,7 @@
     <script type="text/javascript" src="_static/doctools.js"></script>
     <script type="text/javascript" src="_static/translations.js"></script>
     <link rel="top" title="awsiot-handson-dojo-greengrass v0.0 documentation" href="index.html" />
-    <link rel="next" title="4. センサーデータの確認" href="04.html" />
+    <link rel="next" title="4. 04 Raspberry Piの設定" href="04.html" />
     <link rel="prev" title="2. AWS Greengrass基本設定" href="02.html" /> 
   </head>
   <body>
@@ -32,7 +32,7 @@
           <a href="genindex.html" title="総合索引"
              accesskey="I">索引</a></li>
         <li class="right" >
-          <a href="04.html" title="4. センサーデータの確認"
+          <a href="04.html" title="4. 04 Raspberry Piの設定"
              accesskey="N">次へ</a> |</li>
         <li class="right" >
           <a href="02.html" title="2. AWS Greengrass基本設定"
@@ -46,8 +46,8 @@
         <div class="bodywrapper">
           <div class="body">
             
-  <div class="section" id="ble">
-<h1>3. BLEゲートウェイの設定<a class="headerlink" href="#ble" title="このヘッドラインへのパーマリンク">¶</a></h1>
+  <div class="section" id="lambda">
+<h1>3. Lambda関数の登録<a class="headerlink" href="#lambda" title="このヘッドラインへのパーマリンク">¶</a></h1>
 <p>レンジャーシステムズ製のBLEゲートウェイの設定を行います。</p>
 <div class="section" id="id1">
 <h2>3.1. 電源投入<a class="headerlink" href="#id1" title="このヘッドラインへのパーマリンク">¶</a></h2>
@@ -178,8 +178,8 @@
 <div class="line"><br /></div>
 </div>
 </div>
-<div class="section" id="id5">
-<h2>3.6. BLEフィルター設定<a class="headerlink" href="#id5" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<div class="section" id="ble">
+<h2>3.6. BLEフィルター設定<a class="headerlink" href="#ble" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>レンジャーシステムズのBLEゲートウェイは、周囲の受信可能なBeaconを全て受信する仕様です。目的のセンサーのBeaconだけを受信するには、BLEフィルター設定を行います。今回のハンズオンでは、温湿度センサー(iBS01T)を使用しますので、BLE Beaconのパターン設定を行います。最後に、[Save] ボタンを押して設定を保存します。</p>
 <p>この設定により、周囲のBeaconの中から、温湿度センサー(iBS01T)のBeaconだけを取得できるようになります。設定画面上部のRSSIは、取得するBeaconの電波強度です。近くのBeaconだけを受信したい場合に使用します。今回は設定しません。</p>
 <p>まだ、Rebootしないで下さい。</p>
@@ -207,8 +207,8 @@
 <div class="line"><br /></div>
 </div>
 </div>
-<div class="section" id="id6">
-<h2>3.7. タイムサーバーの設定<a class="headerlink" href="#id6" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<div class="section" id="id5">
+<h2>3.7. タイムサーバーの設定<a class="headerlink" href="#id5" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>AWS IoTにデータを送信する際、ゲートウェイは、時刻情報を付加します。
 「System」タブをクリックし、タイムサーバーの設定を行います。
 この設定を行わないと、センサーデータの取得日時が1970年になってしまいますので、必ず設定して下さい。&#8221;NTP Setting&#8221; に下記を設定してください。</p>
@@ -244,8 +244,8 @@
 <div class="line"><br /></div>
 </div>
 </div>
-<div class="section" id="id7">
-<h2>3.8. WiFi設定<a class="headerlink" href="#id7" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<div class="section" id="id6">
+<h2>3.8. WiFi設定<a class="headerlink" href="#id6" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>WiFi設定を変更し、インターネットに接続出来るWiFiアクセスポイントに接続します。
 [Wi-Fi] タブをクリックし、Wi-Fi設定画面に移動します。</p>
 <img alt="_images/wifi.png" src="_images/wifi.png" />
@@ -264,13 +264,13 @@
 <div class="line"><br /></div>
 </div>
 </div>
-<div class="section" id="id8">
-<h2>3.9. 最終確認<a class="headerlink" href="#id8" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<div class="section" id="id7">
+<h2>3.9. 最終確認<a class="headerlink" href="#id7" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>ゲートウェイの設定を再度確認して下さい。
 ゲストWiFiを使用している場合、Reboot後にゲートウェイのIPアドレスを知る事が難しいため、ゲートウェイの再設の変更が出来なくなる場合があります。その場合、ゲートウェイを初期化して、最初から設定をやり直す必要があります。ご注意下さい。</p>
 </div>
-<div class="section" id="id9">
-<h2>3.10. 再起動<a class="headerlink" href="#id9" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<div class="section" id="id8">
+<h2>3.10. 再起動<a class="headerlink" href="#id8" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>「Reboot」タブをクリックし、ゲートウェイを再起動して下さい。</p>
 <img alt="_images/reboot.png" src="_images/reboot.png" />
 <div class="line-block">
@@ -278,8 +278,8 @@
 </div>
 <p>念のため、一度、USBケーブルを抜いて再起動して下さい。</p>
 </div>
-<div class="section" id="id10">
-<h2>3.11. センサーの電源を入れる<a class="headerlink" href="#id10" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<div class="section" id="id9">
+<h2>3.11. センサーの電源を入れる<a class="headerlink" href="#id9" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>センサーのスライドスイッチをスライドさせて、電源を入れて下さい。</p>
 <p>Beaconの送信が始まります。</p>
 <img alt="_images/sensor-power-on-off.png" src="_images/sensor-power-on-off.png" />
@@ -297,18 +297,18 @@
         <div class="sphinxsidebarwrapper">
             <h3><a href="index.html">目次</a></h3>
             <ul>
-<li><a class="reference external" href="#">3. BLEゲートウェイの設定</a><ul>
+<li><a class="reference external" href="#">3. Lambda関数の登録</a><ul>
 <li><a class="reference external" href="#id1">3.1. 電源投入</a></li>
 <li><a class="reference external" href="#id2">3.2. ゲートウェイを初期化する</a></li>
 <li><a class="reference external" href="#wifi">3.3. ゲートウェイにWiFiで接続する</a></li>
 <li><a class="reference external" href="#id3">3.4. クラウド接続の設定</a></li>
 <li><a class="reference external" href="#id4">3.5. 証明書の登録</a></li>
-<li><a class="reference external" href="#id5">3.6. BLEフィルター設定</a></li>
-<li><a class="reference external" href="#id6">3.7. タイムサーバーの設定</a></li>
-<li><a class="reference external" href="#id7">3.8. WiFi設定</a></li>
-<li><a class="reference external" href="#id8">3.9. 最終確認</a></li>
-<li><a class="reference external" href="#id9">3.10. 再起動</a></li>
-<li><a class="reference external" href="#id10">3.11. センサーの電源を入れる</a></li>
+<li><a class="reference external" href="#ble">3.6. BLEフィルター設定</a></li>
+<li><a class="reference external" href="#id5">3.7. タイムサーバーの設定</a></li>
+<li><a class="reference external" href="#id6">3.8. WiFi設定</a></li>
+<li><a class="reference external" href="#id7">3.9. 最終確認</a></li>
+<li><a class="reference external" href="#id8">3.10. 再起動</a></li>
+<li><a class="reference external" href="#id9">3.11. センサーの電源を入れる</a></li>
 </ul>
 </li>
 </ul>
@@ -318,7 +318,7 @@
                                   title="前の章へ">2. AWS Greengrass基本設定</a></p>
             <h4>次のトピックへ</h4>
             <p class="topless"><a href="04.html"
-                                  title="次の章へ">4. センサーデータの確認</a></p>
+                                  title="次の章へ">4. 04 Raspberry Piの設定</a></p>
             <h3>このページ</h3>
             <ul class="this-page-menu">
               <li><a href="_sources/03.txt"
@@ -348,7 +348,7 @@
           <a href="genindex.html" title="総合索引"
              >索引</a></li>
         <li class="right" >
-          <a href="04.html" title="4. センサーデータの確認"
+          <a href="04.html" title="4. 04 Raspberry Piの設定"
              >次へ</a> |</li>
         <li class="right" >
           <a href="02.html" title="2. AWS Greengrass基本設定"
