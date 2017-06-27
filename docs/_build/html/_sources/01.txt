@@ -5,6 +5,8 @@
 ハンズオンシナリオ
 ====================
 
+Raspberry Pi上にGreengrass core、センサーデバイス、アラームデバイスを導入し、クラウドからGreengrass coreにデプロイした、Lambda関数によってエッジネットワーク内での
+
 BLEゲートウェイに接続された温度／湿度センサーの情報をAWS IoTに送り、S3に保存し、Kibanaでセンサーの情報をグラフ化します。
 
 .. image:: images/01/overview.png
@@ -15,17 +17,12 @@ BLEゲートウェイに接続された温度／湿度センサーの情報をAW
 利用するデバイス、アプリケーション、サービス
 ========================================================
 
-**レンジャーシステムズ BLE Gateway (iBS01W)**
+**Raspberry Pi 3**
 
 レンジャーシステムズ社が提供するBLE/WiFiゲートウェイです。本ハンズオンでは、センサーからBLE経由で温度/湿度データ取得し、AWS IoTへのデータ送信に利用します。レンジャーシステムズ社のゲートウェイは、AWS IoTに直接接続可能で、AWSとの親和性が非常に高い製品です。他にLTE版のゲートウエイもあります。
     http://www.ranger-systems.co.jp/iot/
 
 |
-
-**レンジャーシステムズ 温湿度センサー (iBS01T)**
-
-レンジャーシステムズ社が提供するBLE Beacon温湿度センサーです。ボタン電池で動作し、電池寿命は1.4年で、長時間使用できます。
-
 
 **AWSアカウント**
 
@@ -43,6 +40,15 @@ BLEゲートウェイに接続された温度／湿度センサーの情報をAW
 
 |
 
+**AWS Greengrass**
+
+接続されたデバイスでローカルのコンピューティング、メッセージング、データキャッシュ、および同期。
+AWS Lambda と AWS IoT を使用して AWS クラウドとローカルデバイス全体で IoT アプリケーションをシームレスに実行する。
+    https://aws.amazon.com/jp/greengrass/
+
+.. image:: images/01/AWS_Greengrass.png
+   :scale: 50
+|
 
 **Amazon Kinesis Firehose**
 
@@ -78,3 +84,39 @@ AWSクラウドリソースとAWSで実行するアプリケーションのモ�
     https://aws.amazon.com/jp/cloudwatch/
 
 |
+
+事前準備
+==============
+
+* VNCクライアント
+
+Raspberry Piの操作は、VNCを使用してリモートで行います。VNC接続に必要なソフトウェアをURLからダウンロードし、インストールしておいて下さい。
+<https://www.realvnc.com/download/viewer/> (Mac/Windows共通)`_`
+
+* `Intel Edisonドライバのインストール <https://s3-ap-northeast-1.amazonaws.com/toshiake-iot-handson/classmethod-devday/tools/win/IntelEdisonDriverSetup1.2.1.exe>`_
+
+* `Windows FTDI ドライバのインストール <http://www.ftdichip.com/Drivers/CDM/CDM%20v2.10.00%20WHQL%20Certified.exe>`_
+
+Windowsの設定によっては、インストール出来ない場合があります。
+その場合、インストーラーを"管理者として実行"してみて下さい。
+
+**MacOSの場合**
+
+* `MacOS FTDI ドライバのインストール <https://s3-ap-northeast-1.amazonaws.com/toshiake-iot-handson/classmethod-devday/tools/mac/FTDIUSBSerialDriver_v2_2_18.dmg>`_
+
+
+サンプルプログラム
+==================
+
+本ハンズオンで利用するサンプルプログラムです。Edison上で利用します。
+
+https://s3-ap-northeast-1.amazonaws.com/awsiot-handson-dojo-jp/aws-iot-handson-dojo-basic.zip
+
+参考情報
+=======
+
+* `Intel Edison Board Software Downloads <https://software.intel.com/en-us/iot/hardware/edison/downloads>`_
+* `Intel libmraa (Low Level Skeleton Library for Communication on GNU/Linux platforms) <https://github.com/intel-iot-devkit/mraa>`_
+* `Intel UPM (Useful Packages & Modules) Sensor/Actuator repository for MRAA <https://github.com/intel-iot-devkit/upm>`_
+* `AWS IoT SDK for JavaScript <https://github.com/aws/aws-iot-device-sdk-js>`_
+* `AWS IoT Embedded-C SDK <https://github.com/aws/aws-iot-device-sdk-embedded-C>`_
