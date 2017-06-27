@@ -45,7 +45,7 @@ AWS Greengrass の開始画面が表示されます。[今すぐ始める]をク
 
 Greengrasクループ を作成します。[簡単な作成の使用] をクリックします。
 
-.. image:: images/02/create-thing.png
+.. image:: images/02/geengrass-easy-creation.png
 
 |
 
@@ -54,7 +54,7 @@ Greengrasクループ を作成します。[簡単な作成の使用] をクリ�
 ============= ============================
 項目            値
 ============= ============================
-グループ名       GGHandsonGroup-<参加者番号>
+グループ名           GGHandsonGroup-<参加者番号>
 ============= ============================
 
 .. image:: images/02/greengrass-group-name.png
@@ -127,114 +127,6 @@ Greengrassコア [GGC_Thing-<参加者番号>] をクリックして下さい。
 
 |
 
+..... 未完了
 
-
-
-ポリシーの作成
-===========================
-
-デバイスに対して、AWS IoTの各種操作を許可するためのポリシーを作成します。メニューから[Security]-[Policies]をクリックします。以下の様な画面が表示された場合は、[Create a policy] をクリックします。
-
-.. image:: images/02/
-
-|
-
-あるいは、ポリシー一覧が表示された場合は、[Create]をクリックします。
-
-.. image:: images/02/
-
-|
-
-フォームにそれぞれ以下のパラメータを入力し、[Create] をクリックします。
-
-============= ============================
-項目            値
-============= ============================
-Name	          awsiot-handson-policy-<参加者番号>
-Action	        iot:*
-Resource ARN	  *
-Effect	        Allow (チェックを入れて下さい)
-============= ============================
-
-"*"は、半角の＊(アスタリスク)です。
-
-.. image:: images/02/
-
-|
-
-[←]をクリックして下さい。
-
-ポリシーの一覧が表示され、作成したポリシーが表示されている事を確認します。
-
-.. image:: images/02/
-
-|
-
-証明書の作成
-=======================
-
-証明書を作成します。メニューから[Security]-[Cetificate]をクリックします。以下の様な画面が表示された場合は、[Create a crtificate]をクリックします。
-
-.. image:: images/02/
-
-|
-
-以下の様な画面が表示された場合は、[One-click certificate creation]右の[Create certificate]をクリックします。
-
-.. image:: images/02/
-
-|
-
-下記の様に、"Certificate created!"と表示されたら、証明書(Certificate)とプライベートキー(Private key)をPCにダウンロードして下さい。各ファイルのサイズは、証明書が1,220バイト程度、プライベートキーが1,670バイト程度になります。
-
-
-
-これらは、後ほど、BLEゲートウェイにアップロードします。証明書の番号は、後ほど証明書の割当てのところで参照しますので、ノートパッドなどに記録しておいて下さい。
-証明書の番号とは、ファイル名が "xxxxxxxxxx-certificate.pem.crt" の場合、冒頭の "xxxxxxxxxx" になります。
-
-証明書とプライベートキーのダウンロードが終わったら、[Activate] をクリックして証明書を有効にして下さい。
-
-.. image:: images/02/
-
-|
-
-最後に、左上の[←]を２回押して、戻って下さい。先ほど作成した証明書が表示され、"**ACTIVATE**" 状態になっている確認して下さい。
-
-.. image:: images/02/
-
-|
-
-デバイス、ポリシーを証明書に割当てる
-===========================================
-
-作成したデバイス、ポリシーを証明書に割当てます。メニューから[Security]-[Certificates]をクリックします。証明書一覧から「証明書の作成」のセクションで保存した証明書のIDに一致する証明書をクリックして開きます。
-
-.. image:: images/02/attach-policy-thing.png
-
-|
-
-証明書の詳細が表示されます。[Actions] - [Attach policy]を選択します。
-
-.. image:: images/02/attach-policy.png
-
-|
-
-”awsiot-handson-policy-<参加者番号>”を選択し、[Attach] をクリックします。
-
-.. image:: images/02/attach-policy-2.png
-
-|
-
-[Actions] - [Attach thing]を選択します。
-
-.. image:: images/02/attach-thing.png
-
-|
-
-“ranger-gw-<参加者番号>”を入力し、[Attach] をクリックします。
-
-.. image:: images/02/attach-thing-2.png
-
-|
-
-これで、AWS IoTの基本設定は、終わりです。
+これで、AWS Greengrass の基本設定は、終わりです。

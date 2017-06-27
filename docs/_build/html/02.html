@@ -98,15 +98,15 @@
 <div class="line"><br /></div>
 </div>
 <p>Greengrasクループ を作成します。[簡単な作成の使用] をクリックします。</p>
-<img alt="_images/create-thing.png" src="_images/create-thing.png" />
+<img alt="_images/geengrass-easy-creation.png" src="_images/geengrass-easy-creation.png" />
 <div class="line-block">
 <div class="line"><br /></div>
 </div>
 <p>[グループ名] に”GGHandsonGroup-&lt;参加者番号&gt;” と入力し、[次へ] をクリックします。</p>
 <table border="1" class="docutils">
 <colgroup>
-<col width="30%" />
-<col width="70%" />
+<col width="28%" />
+<col width="72%" />
 </colgroup>
 <thead valign="bottom">
 <tr><th class="head">項目</th>
@@ -182,119 +182,14 @@
 <div class="line-block">
 <div class="line"><br /></div>
 </div>
-<p>発行者、発行日、有効期限などの証明書の詳細情報が表示されます。メニューから [ポリシー] をクリックして下さい。</p>
+<p>発行者、発行日、有効期限などの証明書の詳細情報が表示されます。メニューから [ポリシー] をクリックして下さい。
+自動的に生成されたポリシー [GGC_Thing-&lt;参加者番号&gt;-policy] が、証明書と関連付けれていることが分かります。</p>
 <img alt="_images/geengrass-security-check-3.png" src="_images/geengrass-security-check-3.png" />
 <div class="line-block">
 <div class="line"><br /></div>
 </div>
-</div>
-<div class="section" id="id1">
-<h2>2.3. ポリシーの作成<a class="headerlink" href="#id1" title="このヘッドラインへのパーマリンク">¶</a></h2>
-<p>デバイスに対して、AWS IoTの各種操作を許可するためのポリシーを作成します。メニューから[Security]-[Policies]をクリックします。以下の様な画面が表示された場合は、[Create a policy] をクリックします。</p>
-<img alt="_images/02" src="_images/02" />
-<div class="line-block">
-<div class="line"><br /></div>
-</div>
-<p>あるいは、ポリシー一覧が表示された場合は、[Create]をクリックします。</p>
-<img alt="_images/02" src="_images/02" />
-<div class="line-block">
-<div class="line"><br /></div>
-</div>
-<p>フォームにそれぞれ以下のパラメータを入力し、[Create] をクリックします。</p>
-<table border="1" class="docutils">
-<colgroup>
-<col width="25%" />
-<col width="75%" />
-</colgroup>
-<thead valign="bottom">
-<tr><th class="head">項目</th>
-<th class="head">値</th>
-</tr>
-</thead>
-<tbody valign="top">
-<tr><td>Name</td>
-<td>awsiot-handson-policy-&lt;参加者番号&gt;</td>
-</tr>
-<tr><td>Action</td>
-<td>iot:*</td>
-</tr>
-<tr><td>Resource ARN</td>
-<td><ul class="first last simple">
-<li></li>
-</ul>
-</td>
-</tr>
-<tr><td>Effect</td>
-<td>Allow (チェックを入れて下さい)</td>
-</tr>
-</tbody>
-</table>
-<p>&#8220;*&#8221;は、半角の＊(アスタリスク)です。</p>
-<img alt="_images/02" src="_images/02" />
-<div class="line-block">
-<div class="line"><br /></div>
-</div>
-<p>[←]をクリックして下さい。</p>
-<p>ポリシーの一覧が表示され、作成したポリシーが表示されている事を確認します。</p>
-<img alt="_images/02" src="_images/02" />
-<div class="line-block">
-<div class="line"><br /></div>
-</div>
-</div>
-<div class="section" id="id2">
-<h2>2.4. 証明書の作成<a class="headerlink" href="#id2" title="このヘッドラインへのパーマリンク">¶</a></h2>
-<p>証明書を作成します。メニューから[Security]-[Cetificate]をクリックします。以下の様な画面が表示された場合は、[Create a crtificate]をクリックします。</p>
-<img alt="_images/02" src="_images/02" />
-<div class="line-block">
-<div class="line"><br /></div>
-</div>
-<p>以下の様な画面が表示された場合は、[One-click certificate creation]右の[Create certificate]をクリックします。</p>
-<img alt="_images/02" src="_images/02" />
-<div class="line-block">
-<div class="line"><br /></div>
-</div>
-<p>下記の様に、&#8221;Certificate created!&#8221;と表示されたら、証明書(Certificate)とプライベートキー(Private key)をPCにダウンロードして下さい。各ファイルのサイズは、証明書が1,220バイト程度、プライベートキーが1,670バイト程度になります。</p>
-<p>これらは、後ほど、BLEゲートウェイにアップロードします。証明書の番号は、後ほど証明書の割当てのところで参照しますので、ノートパッドなどに記録しておいて下さい。
-証明書の番号とは、ファイル名が &#8220;xxxxxxxxxx-certificate.pem.crt&#8221; の場合、冒頭の &#8220;xxxxxxxxxx&#8221; になります。</p>
-<p>証明書とプライベートキーのダウンロードが終わったら、[Activate] をクリックして証明書を有効にして下さい。</p>
-<img alt="_images/02" src="_images/02" />
-<div class="line-block">
-<div class="line"><br /></div>
-</div>
-<p>最後に、左上の[←]を２回押して、戻って下さい。先ほど作成した証明書が表示され、&#8221;<strong>ACTIVATE</strong>&#8221; 状態になっている確認して下さい。</p>
-<img alt="_images/02" src="_images/02" />
-<div class="line-block">
-<div class="line"><br /></div>
-</div>
-</div>
-<div class="section" id="id3">
-<h2>2.5. デバイス、ポリシーを証明書に割当てる<a class="headerlink" href="#id3" title="このヘッドラインへのパーマリンク">¶</a></h2>
-<p>作成したデバイス、ポリシーを証明書に割当てます。メニューから[Security]-[Certificates]をクリックします。証明書一覧から「証明書の作成」のセクションで保存した証明書のIDに一致する証明書をクリックして開きます。</p>
-<img alt="_images/attach-policy-thing.png" src="_images/attach-policy-thing.png" />
-<div class="line-block">
-<div class="line"><br /></div>
-</div>
-<p>証明書の詳細が表示されます。[Actions] - [Attach policy]を選択します。</p>
-<img alt="_images/attach-policy.png" src="_images/attach-policy.png" />
-<div class="line-block">
-<div class="line"><br /></div>
-</div>
-<p>”awsiot-handson-policy-&lt;参加者番号&gt;”を選択し、[Attach] をクリックします。</p>
-<img alt="_images/attach-policy-2.png" src="_images/attach-policy-2.png" />
-<div class="line-block">
-<div class="line"><br /></div>
-</div>
-<p>[Actions] - [Attach thing]を選択します。</p>
-<img alt="_images/attach-thing.png" src="_images/attach-thing.png" />
-<div class="line-block">
-<div class="line"><br /></div>
-</div>
-<p>“ranger-gw-&lt;参加者番号&gt;”を入力し、[Attach] をクリックします。</p>
-<img alt="_images/attach-thing-2.png" src="_images/attach-thing-2.png" />
-<div class="line-block">
-<div class="line"><br /></div>
-</div>
-<p>これで、AWS IoTの基本設定は、終わりです。</p>
+<p>..... 未完了</p>
+<p>これで、AWS Greengrass の基本設定は、終わりです。</p>
 </div>
 </div>
 
@@ -309,9 +204,6 @@
 <li><a class="reference external" href="#">2. AWS Greengrass基本設定</a><ul>
 <li><a class="reference external" href="#aws">2.1. AWS マネジメントコンソールにログイン</a></li>
 <li><a class="reference external" href="#greengrass">2.2. Greengrassグループの作成</a></li>
-<li><a class="reference external" href="#id1">2.3. ポリシーの作成</a></li>
-<li><a class="reference external" href="#id2">2.4. 証明書の作成</a></li>
-<li><a class="reference external" href="#id3">2.5. デバイス、ポリシーを証明書に割当てる</a></li>
 </ul>
 </li>
 </ul>
