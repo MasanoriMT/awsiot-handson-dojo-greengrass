@@ -2,12 +2,21 @@
 イントロダクション
 =======================
 
+AWS IoT ハンズオン Dojo コース
+============================================
+
+今回のAWS IoT ハンズオン Dojo コースは、AWS Greengrassに的を絞ったものになります。
+Greengrassを使った **エッジコンピューティング** を学ぶことが出来るコースです。
+
+.. image:: images/01/dojo_ course.png
+
+|
+
+
 ハンズオンシナリオ
 ====================
 
-Raspberry Pi上にGreengrass core、センサーデバイス、アラームデバイスを導入し、クラウドからGreengrass coreにデプロイした、Lambda関数によってエッジネットワーク内での
-
-BLEゲートウェイに接続された温度／湿度センサーの情報をAWS IoTに送り、S3に保存し、Kibanaでセンサーの情報をグラフ化します。
+Greengrass coreをRaspberry Piに導入し、センサーデバイス、アラームデバイスと連携させます。クラウドからGreengrass coreにLambda関数をデプロイし、センサーデバイスからの計測データをエッジ内で処理させ、デバイスがオフラインになってもエッジでの処理が停止することなく動作することを確認します。
 
 .. image:: images/01/overview.png
 
@@ -47,33 +56,15 @@ AWS Lambda と AWS IoT を使用して AWS クラウドとローカルデバイ�
     https://aws.amazon.com/jp/greengrass/
 
 .. image:: images/01/AWS_Greengrass.png
-   :scale: 50
-|
 
-**Amazon Kinesis Firehose**
-
-Amazon Kinesis Firehose は、ストリーミングデータを AWS にロードする最も簡単な方法です。本ハンズオンでは、AWS IoTで取得したBLE Beaconデータを加工すし、S3に保存したり、ElasticSearch Serviceに保存し可視化するために使用します。
-    https://aws.amazon.com/jp/kinesis/firehose/
+  :scale: 25
 
 |
 
-**Amazon Elasticsearch Service**
-
-オープンソースのElasticsearchを利用できるマネージド型のサービスです。本ハンズオンでは、データのストアとElasticsearchで利用できるKibanaを利用してデータの可視化に利用します。
-    https://aws.amazon.com/jp/elasticsearch-service/
-
-|
-
-**Amazon S3 (Simple Storage Service)**
-
-スケーラブルなクラウドストレージです。Webのコンテンツを配置してWebサーバとしても利用できます。本ハンズオンでは、センサーから取得したデータの保存先として使用します。
-    https://aws.amazon.com/jp/sns/
-
-|
 
 **AWS Lambda**
 
-お客様のコードをイベント発生時やリクエストごとに実行できる管理不要なコンピューティングプラットフォームです。本ハンズオンでは、Kinesis Firehose内でセンサーデータの加工に使用します。
+お客様のコードをイベント発生時やリクエストごとに実行できる管理不要なコンピューティングプラットフォームです。本ハンズオンでは、AWS Greengrassで使用します。
     https://aws.amazon.com/jp/lambda/
 
 |
@@ -85,38 +76,37 @@ AWSクラウドリソースとAWSで実行するアプリケーションのモ�
 
 |
 
+
+
 事前準備
 ==============
 
 * VNCクライアント
 
 Raspberry Piの操作は、VNCを使用してリモートで行います。VNC接続に必要なソフトウェアをURLからダウンロードし、インストールしておいて下さい。
-<https://www.realvnc.com/download/viewer/> (Mac/Windows共通)`_`
 
-* `Intel Edisonドライバのインストール <https://s3-ap-northeast-1.amazonaws.com/toshiake-iot-handson/classmethod-devday/tools/win/IntelEdisonDriverSetup1.2.1.exe>`_
+https://www.realvnc.com/download/viewer/
 
-* `Windows FTDI ドライバのインストール <http://www.ftdichip.com/Drivers/CDM/CDM%20v2.10.00%20WHQL%20Certified.exe>`_
+(Mac/Windows共通)
 
-Windowsの設定によっては、インストール出来ない場合があります。
+設定によっては、インストール出来ない場合があります。
 その場合、インストーラーを"管理者として実行"してみて下さい。
 
-**MacOSの場合**
-
-* `MacOS FTDI ドライバのインストール <https://s3-ap-northeast-1.amazonaws.com/toshiake-iot-handson/classmethod-devday/tools/mac/FTDIUSBSerialDriver_v2_2_18.dmg>`_
 
 
 サンプルプログラム
-==================
+======================
 
-本ハンズオンで利用するサンプルプログラムです。Edison上で利用します。
+本ハンズオンで利用するサンプルプログラムです。
 
-https://s3-ap-northeast-1.amazonaws.com/awsiot-handson-dojo-jp/aws-iot-handson-dojo-basic.zip
+* `Raspberry Pi 用 SDカードイメージ
+ <https://s3-.....zip>_`
+
+* `Lambda関数パッケージ
+ <https://s3-.....zip>_`
 
 参考情報
 =======
 
-* `Intel Edison Board Software Downloads <https://software.intel.com/en-us/iot/hardware/edison/downloads>`_
-* `Intel libmraa (Low Level Skeleton Library for Communication on GNU/Linux platforms) <https://github.com/intel-iot-devkit/mraa>`_
-* `Intel UPM (Useful Packages & Modules) Sensor/Actuator repository for MRAA <https://github.com/intel-iot-devkit/upm>`_
-* `AWS IoT SDK for JavaScript <https://github.com/aws/aws-iot-device-sdk-js>`_
-* `AWS IoT Embedded-C SDK <https://github.com/aws/aws-iot-device-sdk-embedded-C>`_
+* `AWS IoT Device SDK C++
+ <https://github.com/aws/aws-iot-device-sdk-cpp>`_
