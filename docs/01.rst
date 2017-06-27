@@ -8,7 +8,7 @@ AWS IoT ハンズオン Dojo コース
 今回のAWS IoT ハンズオン Dojo コースは、AWS Greengrassに的を絞ったものになります。
 Greengrassを使った **エッジコンピューティング** を学ぶことが出来るコースです。
 
-.. image:: images/01/dojo_ course.png
+.. image:: images/01/dojo_course.png
 
 |
 
