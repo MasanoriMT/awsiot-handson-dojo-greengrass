@@ -81,7 +81,8 @@ Greengrasクループ を作成します。[簡単な作成の使用] をクリ�
 
 自動的に、新しいGreengrassグループが作成され、Greengrassコアデバイス用の証明書とセキュリティーポリーシーが作成されGreengrassコアにアタッチされます。
 
-次の [コアデバイスへの接続] 画面で、Greengrassコアデバイス用の証明書とプライベートキーをPCにダウンロードして下さい。ダウンロードした証明書とプライベートキーは、後にRaspberry Piにコピーし、Greengrassコアデバイスで使用します。また、証明書の番号は、Greengrassコアデバイス用と分かる様に記録しておいて下さい。
+次の [コアデバイスへの接続] 画面で、Greengrassコアデバイス用の証明書とプライベートキーをPCにダウンロードして下さい。ダウンロードした証明書とプライベートキーは、後にRaspberry Piにコピーし、Greengrassコアデバイスで使用します。(/greengrass/configuration/certs/ 下にコピーします。)
+また、証明書の番号は、Greengrassコアデバイス用と分かる様に記録しておいて下さい。
 
 Greengrass自身のダウンロードもこの画面で可能ですが、このハンズオンでは、導入済みのRaspberry PiのSDカードを使用しますので、ダウンロードは不要です。[完了] をクリックして、Greengrassグループの作成を終了します。
 
@@ -95,6 +96,9 @@ Greengrassグループが作成されました。
 
 |
 
+確認
+=============
+
 メニューから[コア]をクリックします。以下の様な画面が表示されますので、作成したGreengrassコアが表示されている事を確認します。
 
 .. image:: images/02/greengrass-core-verify.png
@@ -107,6 +111,41 @@ Greengrassコア [GGC_Thing-<参加者番号>] をクリックして下さい。
 .. image:: images/02/geengrass-core-ARN.png
 
 |
+
+ARNは、Raspberry Pi上の Greengrassの設定ファイル
+::
+
+  /greengrass/configuration/config.json
+
+|
+
+に記載します。config.json は、下記の様な内容になっています。
+記録した ARNは、"thingArn" となります。
+
+::
+
+  {
+      "coreThing": {
+          "caPath": "root-ca.pem",
+          "certPath": "cloud.pem.crt",
+          "keyPath": "cloud.pem.key",
+          "thingArn": "arn:aws:iot:us-east-1:292337560880:thing/GGC_Thing",
+          "iotHost": "axxzd0p5x0eif.iot.us-east-1.amazonaws.com",
+          "ggHost": "greengrass.iot.us-east-1.amazonaws.com"
+      },
+      "runtime": {
+          "cgroup": {
+              "useSystemd": "yes"
+          }
+      }
+  }
+
+|
+
+
+
+
+
 
 [←]をクリックして下さい。メニューから [セキュリティー] をクリックして、自動的に生成された証明書を確認します。
 

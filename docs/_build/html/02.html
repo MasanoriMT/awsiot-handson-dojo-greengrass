@@ -150,7 +150,8 @@
 <div class="line"><br /></div>
 </div>
 <p>自動的に、新しいGreengrassグループが作成され、Greengrassコアデバイス用の証明書とセキュリティーポリーシーが作成されGreengrassコアにアタッチされます。</p>
-<p>次の [コアデバイスへの接続] 画面で、Greengrassコアデバイス用の証明書とプライベートキーをPCにダウンロードして下さい。ダウンロードした証明書とプライベートキーは、後にRaspberry Piにコピーし、Greengrassコアデバイスで使用します。また、証明書の番号は、Greengrassコアデバイス用と分かる様に記録しておいて下さい。</p>
+<p>次の [コアデバイスへの接続] 画面で、Greengrassコアデバイス用の証明書とプライベートキーをPCにダウンロードして下さい。ダウンロードした証明書とプライベートキーは、後にRaspberry Piにコピーし、Greengrassコアデバイスで使用します。(/greengrass/configuration/certs/ 下にコピーします。)
+また、証明書の番号は、Greengrassコアデバイス用と分かる様に記録しておいて下さい。</p>
 <p>Greengrass自身のダウンロードもこの画面で可能ですが、このハンズオンでは、導入済みのRaspberry PiのSDカードを使用しますので、ダウンロードは不要です。[完了] をクリックして、Greengrassグループの作成を終了します。</p>
 <img alt="_images/geengrass-create-group-complete.png" src="_images/geengrass-create-group-complete.png" />
 <div class="line-block">
@@ -161,6 +162,9 @@
 <div class="line-block">
 <div class="line"><br /></div>
 </div>
+</div>
+<div class="section" id="id1">
+<h2>2.3. 確認<a class="headerlink" href="#id1" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>メニューから[コア]をクリックします。以下の様な画面が表示されますので、作成したGreengrassコアが表示されている事を確認します。</p>
 <img alt="_images/greengrass-core-verify.png" src="_images/greengrass-core-verify.png" />
 <div class="line-block">
@@ -169,6 +173,34 @@
 <p>Greengrassコア [GGC_Thing-&lt;参加者番号&gt;] をクリックして下さい。Greengrassコアの詳細が表示されます。
 モノのARNは、後にRaspberry Pi上のGreengrassコアの設定で必要になりますので、記録しておいて下さい。</p>
 <img alt="_images/geengrass-core-ARN.png" src="_images/geengrass-core-ARN.png" />
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<p>ARNは、Raspberry Pi上の Greengrassの設定ファイル</p>
+<div class="highlight-python"><pre>/greengrass/configuration/config.json</pre>
+</div>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<p>に記載します。config.json は、下記の様な内容になっています。
+記録した ARNは、&#8221;thingArn&#8221; となります。</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="s2">&quot;coreThing&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s2">&quot;caPath&quot;</span><span class="p">:</span> <span class="s2">&quot;root-ca.pem&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;certPath&quot;</span><span class="p">:</span> <span class="s2">&quot;cloud.pem.crt&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;keyPath&quot;</span><span class="p">:</span> <span class="s2">&quot;cloud.pem.key&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;thingArn&quot;</span><span class="p">:</span> <span class="s2">&quot;arn:aws:iot:us-east-1:292337560880:thing/GGC_Thing&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;iotHost&quot;</span><span class="p">:</span> <span class="s2">&quot;axxzd0p5x0eif.iot.us-east-1.amazonaws.com&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;ggHost&quot;</span><span class="p">:</span> <span class="s2">&quot;greengrass.iot.us-east-1.amazonaws.com&quot;</span>
+    <span class="p">},</span>
+    <span class="s2">&quot;runtime&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s2">&quot;cgroup&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s2">&quot;useSystemd&quot;</span><span class="p">:</span> <span class="s2">&quot;yes&quot;</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
 <div class="line-block">
 <div class="line"><br /></div>
 </div>
@@ -204,6 +236,7 @@
 <li><a class="reference external" href="#">2. AWS Greengrass基本設定</a><ul>
 <li><a class="reference external" href="#aws">2.1. AWS マネジメントコンソールにログイン</a></li>
 <li><a class="reference external" href="#greengrass">2.2. Greengrassグループの作成</a></li>
+<li><a class="reference external" href="#id1">2.3. 確認</a></li>
 </ul>
 </li>
 </ul>
