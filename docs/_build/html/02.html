@@ -123,7 +123,7 @@
 <div class="line-block">
 <div class="line"><br /></div>
 </div>
-<p>[名前] に”GGC_Thing-&lt;参加者番号&gt;” と入力し、[次へ] をクリックします。</p>
+<p>[名前] に &#8220;GGHandsonGroup-&lt;参加者番号&gt;_Core&#8221; と出ますが、”GGC_Thing-&lt;参加者番号&gt;” に変更して、[次へ] をクリックします。</p>
 <table border="1" class="docutils">
 <colgroup>
 <col width="32%" />
@@ -150,9 +150,20 @@
 <div class="line"><br /></div>
 </div>
 <p>自動的に、新しいGreengrassグループが作成され、Greengrassコアデバイス用の証明書とセキュリティーポリーシーが作成されGreengrassコアにアタッチされます。</p>
-<p>次の [コアデバイスへの接続] 画面で、Greengrassコアデバイス用の証明書とプライベートキーをPCにダウンロードして下さい。ダウンロードした証明書とプライベートキーは、後にRaspberry Piにコピーし、Greengrassコアデバイスで使用します。(/greengrass/configuration/certs/ 下にコピーします。)
-また、証明書の番号は、Greengrassコアデバイス用と分かる様に記録しておいて下さい。</p>
-<p>Greengrass自身のダウンロードもこの画面で可能ですが、このハンズオンでは、導入済みのRaspberry PiのSDカードを使用しますので、ダウンロードは不要です。[完了] をクリックして、Greengrassグループの作成を終了します。</p>
+<p>次の [コアデバイスへの接続] 画面で、Greengrassコアデバイス用の証明書とプライベートキーをPCにダウンロードして下さい。</p>
+<p>各ファイルのサイズは、証明書が1,220バイト程度、プライベートキーが1,670バイト程度になります。</p>
+<p>ダウンロードした証明書とプライベートキーは、後にRaspberry Piにコピーし、Greengrassコアデバイスで使用します。(/greengrass/configuration/certs/ 下にコピーします。)
+また、証明書の番号は、Greengrassコアデバイス用と分かる様にノートパッドなどに記録しておいて下さい。</p>
+<p>証明書の番号とは、ファイル名が &#8220;xxxxxxxxxx-certificate.pem.crt&#8221; の場合、冒頭の &#8220;xxxxxxxxxx&#8221; になります。</p>
+<p><strong>記録</strong></p>
+<div class="highlight-python"><pre>Greengrass core device: GGC_Thing-00
+"certPath": "xxxxxxxxxx-certificate.pem.crt",
+"keyPath": "xxxxxxxxxx-private.pem.key",</pre>
+</div>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<p>Greengrass自身のダウンロードもこの画面で可能ですが、このハンズオンでは、Greengrass導入済みのRaspberry PiのSDカードを使用しますので、ダウンロードは不要です。[完了] をクリックして、Greengrassグループの作成を終了します。</p>
 <img alt="_images/geengrass-create-group-complete.png" src="_images/geengrass-create-group-complete.png" />
 <div class="line-block">
 <div class="line"><br /></div>
@@ -162,9 +173,8 @@
 <div class="line-block">
 <div class="line"><br /></div>
 </div>
-</div>
-<div class="section" id="id1">
-<h2>2.3. 確認<a class="headerlink" href="#id1" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<div class="section" id="thing">
+<h3>2.2.1. モノ(Thing)を確認する<a class="headerlink" href="#thing" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <p>メニューから[コア]をクリックします。以下の様な画面が表示されますので、作成したGreengrassコアが表示されている事を確認します。</p>
 <img alt="_images/greengrass-core-verify.png" src="_images/greengrass-core-verify.png" />
 <div class="line-block">
@@ -184,14 +194,15 @@
 </div>
 <p>に記載します。config.json は、下記の様な内容になっています。
 記録した ARNは、&#8221;thingArn&#8221; となります。</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="p">{</span>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">config</span><span class="o">.</span><span class="n">json</span>
+<span class="p">{</span>
     <span class="s2">&quot;coreThing&quot;</span><span class="p">:</span> <span class="p">{</span>
         <span class="s2">&quot;caPath&quot;</span><span class="p">:</span> <span class="s2">&quot;root-ca.pem&quot;</span><span class="p">,</span>
         <span class="s2">&quot;certPath&quot;</span><span class="p">:</span> <span class="s2">&quot;cloud.pem.crt&quot;</span><span class="p">,</span>
         <span class="s2">&quot;keyPath&quot;</span><span class="p">:</span> <span class="s2">&quot;cloud.pem.key&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;thingArn&quot;</span><span class="p">:</span> <span class="s2">&quot;arn:aws:iot:us-east-1:292337560880:thing/GGC_Thing&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;iotHost&quot;</span><span class="p">:</span> <span class="s2">&quot;axxzd0p5x0eif.iot.us-east-1.amazonaws.com&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;ggHost&quot;</span><span class="p">:</span> <span class="s2">&quot;greengrass.iot.us-east-1.amazonaws.com&quot;</span>
+        <span class="s2">&quot;thingArn&quot;</span><span class="p">:</span> <span class="s2">&quot;arn:aws:iot:us-west-2:000000000000:thing/GGC_Thing-00&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;iotHost&quot;</span><span class="p">:</span> <span class="s2">&quot;axxzxxxxxxxx.iot.us-west-2.amazonaws.com&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;ggHost&quot;</span><span class="p">:</span> <span class="s2">&quot;greengrass.iot.us-west-2.amazonaws.com&quot;</span>
     <span class="p">},</span>
     <span class="s2">&quot;runtime&quot;</span><span class="p">:</span> <span class="p">{</span>
         <span class="s2">&quot;cgroup&quot;</span><span class="p">:</span> <span class="p">{</span>
@@ -204,11 +215,23 @@
 <div class="line-block">
 <div class="line"><br /></div>
 </div>
+<p><strong>記録</strong></p>
+<div class="highlight-python"><pre>Greengrass core device: GGC_Thing-00
+"certPath": "xxxxxxxxxx-certificate.pem.crt",
+"keyPath": "xxxxxxxxxx-private.pem.key",
+"thingArn": "arn:aws:iot:us-west-2:000000000000:thing/GGC_Thing-00"</pre>
+</div>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
 <p>[←]をクリックして下さい。メニューから [セキュリティー] をクリックして、自動的に生成された証明書を確認します。</p>
 <img alt="_images/geengrass-security-check.png" src="_images/geengrass-security-check.png" />
 <div class="line-block">
 <div class="line"><br /></div>
 </div>
+</div>
+<div class="section" id="id1">
+<h3>2.2.2. 証明書を確認する<a class="headerlink" href="#id1" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <p>作成された証明書が表示されます。先ほど記録しておいたGreengrassコアデバイス用の証明書の番号があるか確認して下さい。また、証明書が アクティブ になっているかも確認して下さい。Greengrassコアデバイス用の証明書をクリックして下さい。</p>
 <img alt="_images/geengrass-security-check-2.png" src="_images/geengrass-security-check-2.png" />
 <div class="line-block">
@@ -225,13 +248,58 @@
 <div class="line-block">
 <div class="line"><br /></div>
 </div>
+<p>ポリシーの内容は、ポリシーをクリックすれば、ポリシードキュメントの内容が表示されます。</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="p">{</span>
+  <span class="s2">&quot;Version&quot;</span><span class="p">:</span> <span class="s2">&quot;2012-10-17&quot;</span><span class="p">,</span>
+  <span class="s2">&quot;Statement&quot;</span><span class="p">:</span> <span class="p">[</span>
+    <span class="p">{</span>
+      <span class="s2">&quot;Effect&quot;</span><span class="p">:</span> <span class="s2">&quot;Allow&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;Action&quot;</span><span class="p">:</span> <span class="p">[</span>
+        <span class="s2">&quot;iot:Publish&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;iot:Subscribe&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;iot:Connect&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;iot:Receive&quot;</span>
+      <span class="p">],</span>
+      <span class="s2">&quot;Resource&quot;</span><span class="p">:</span> <span class="p">[</span>
+        <span class="s2">&quot;*&quot;</span>
+      <span class="p">]</span>
+    <span class="p">},</span>
+    <span class="p">{</span>
+      <span class="s2">&quot;Effect&quot;</span><span class="p">:</span> <span class="s2">&quot;Allow&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;Action&quot;</span><span class="p">:</span> <span class="p">[</span>
+        <span class="s2">&quot;iot:GetThingShadow&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;iot:UpdateThingShadow&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;iot:DeleteThingShadow&quot;</span>
+      <span class="p">],</span>
+      <span class="s2">&quot;Resource&quot;</span><span class="p">:</span> <span class="p">[</span>
+        <span class="s2">&quot;*&quot;</span>
+      <span class="p">]</span>
+    <span class="p">},</span>
+    <span class="p">{</span>
+      <span class="s2">&quot;Effect&quot;</span><span class="p">:</span> <span class="s2">&quot;Allow&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;Action&quot;</span><span class="p">:</span> <span class="p">[</span>
+        <span class="s2">&quot;greengrass:*&quot;</span>
+      <span class="p">],</span>
+      <span class="s2">&quot;Resource&quot;</span><span class="p">:</span> <span class="p">[</span>
+        <span class="s2">&quot;*&quot;</span>
+      <span class="p">]</span>
+    <span class="p">}</span>
+  <span class="p">]</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<p>モノへの接続、トピックのパブリッシュ/サブスクライブ、デバイスシャドウの操作、greengrassの操作が可能になっています。</p>
 <p>メニューから [モノ] をクリックして下さい。
-自動的に生成されたポリシー [GGC_Thing-&lt;参加者番号&gt;] が、証明書と関連付けれていることが分かります。</p>
+自動的に生成されたGreengrassコアデバイス [GGC_Thing-&lt;参加者番号&gt;] が、モノとして表示されるはずです。</p>
 <img alt="_images/geengrass-security-check-thing.png" src="_images/geengrass-security-check-thing.png" />
 <div class="line-block">
 <div class="line"><br /></div>
 </div>
 <p>これで、AWS Greengrass の基本設定は、終わりです。</p>
+</div>
 </div>
 </div>
 
@@ -245,8 +313,11 @@
             <ul>
 <li><a class="reference external" href="#">2. AWS Greengrass基本設定</a><ul>
 <li><a class="reference external" href="#aws">2.1. AWS マネジメントコンソールにログイン</a></li>
-<li><a class="reference external" href="#greengrass">2.2. Greengrassグループの作成</a></li>
-<li><a class="reference external" href="#id1">2.3. 確認</a></li>
+<li><a class="reference external" href="#greengrass">2.2. Greengrassグループの作成</a><ul>
+<li><a class="reference external" href="#thing">2.2.1. モノ(Thing)を確認する</a></li>
+<li><a class="reference external" href="#id1">2.2.2. 証明書を確認する</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>

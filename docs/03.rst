@@ -71,7 +71,7 @@ Name	          Sensor-<参加者番号>
 証明書の作成
 =======================
 
-センサーデバイス、アラートデバイス用の証明書を作成します。
+アラートデバイス用の証明書を作成します。
 
 メニューから[セキュリティー]をクリックします。
 
@@ -111,7 +111,7 @@ Name	          Sensor-<参加者番号>
 
   Alarm Device: Alert-00
   "device_certificate_relative_path": "certs/handsonAlarm/xxxxxxxxxx-certificate.pem.crt",
-  "device_private_key_relative_path": "certs/handsonAlarm/cccccccccc-private.pem.key",
+  "device_private_key_relative_path": "certs/handsonAlarm/xxxxxxxxxx-private.pem.key",
 
 |
 
@@ -174,7 +174,7 @@ Greengrassグループの作成で自動的に生成されたポリシー [GGC_T
 証明書にモノをアタッチする
 ====================================
 
-モノに権限が紐付けられたを証明書をアタッチすることで、モノの認証と権限を設定します。
+権限が紐付けられたを証明書にモノをアタッチすることで、モノの認証と権限の設定が完了します。
 
 証明書の画面に戻ります。アラートデバイス用の証明書をクリックしてください。
 
@@ -182,125 +182,102 @@ Greengrassグループの作成で自動的に生成されたポリシー [GGC_T
 
 |
 
-証明書の
+証明書の詳細が表示されます。右上の [アクション] メニューから [モノをアタッチする] を撰んで下さい。
 
-
-
-
-
-
-これらは、後ほど、BLEゲートウェイにアップロードします。証明書の番号は、後ほど証明書の割当てのところで参照しますので、ノートパッドなどに記録しておいて下さい。
-証明書の番号とは、ファイル名が "xxxxxxxxxx-certificate.pem.crt" の場合、冒頭の "xxxxxxxxxx" になります。
-
-証明書とプライベートキーのダウンロードが終わったら、[Activate] をクリックして証明書を有効にして下さい。
-
-.. image:: images/02/certificate-created.png
+.. image:: images/03/attach-thing-Alert-2.png
 
 |
 
-最後に、左上の[←]を２回押して、戻って下さい。先ほど作成した証明書が表示され、"**ACTIVATE**" 状態になっている確認して下さい。
+[Alert-<参加者番号＞] が、表示されますので、チェックを入れて、[アタッチ] をクリックして下さい。
 
-.. image:: images/02/confirm-certificate.png
+.. image:: images/03/attach-thing-Alert-3.png
 
 |
 
 
-.. image:: images/02/create-thing-4.png
+**センサーデバイスについても、同様の操作を行い、証明書の作成、権限を追加、モノをアタッチして下さい。**
+
+
+証明書の作成
+=======================
+
+センサーデバイス用の証明書を作成します。
+
+メニューから[セキュリティー]をクリックします。
+
+.. image:: images/03/goto-security-2.png
 
 |
 
-モノに証明書をアタッチする
-=================================
+証明書の画面が表示されます。[作成] をクリックします。
 
-
-
-メニューから[Settings]をクリックします。以下の様な画面が表示されます。
-EndpointのURLが表示されます。このEndpointは、ゲートウェイがデータを送信する宛先になります。後ほどゲートウェイの設定のところで参照しますので、ノートパッドなどに記録しておいて下さい。
-
-.. image:: images/02/endpoint.png
+.. image:: images/03/create-certificate-2.png
 
 |
 
+[1-Click 証明書作成 (推薦)]の右の[証明書の作成]をクリックします。
 
-
-
-
-
-
-
-
-ポリシーの作成
-===========================
-
-デバイスに対して、AWS IoTの各種操作を許可するためのポリシーを作成します。メニューから[Security]-[Policies]をクリックします。以下の様な画面が表示された場合は、[Create a policy] をクリックします。
-
-.. image:: images/02/create-policy.png
+.. image:: images/03/create-certificate-one-click.png
 
 |
 
-あるいは、ポリシー一覧が表示された場合は、[Create]をクリックします。
+"証明書が作成されました!" と表示されたら、[このモノの証明書] と [プライベートキー] をダウンロードして下さい。
+Greengrassコアデバイス用の証明書とプライベートキーをPCにダウンロードして下さい。
+[有効化] をクリックして、証明書をアクティブにして下さい。最後に、[ポリシーのアタッチ] をクリックして、ポリシーをアタッチします。
 
-.. image:: images/02/create-policy-2.png
-
-|
-
-フォームにそれぞれ以下のパラメータを入力し、[Create] をクリックします。
-
-============= ============================
-項目            値
-============= ============================
-Name	          awsiot-handson-policy-<参加者番号>
-Action	        iot:*
-Resource ARN	  *
-Effect	        Allow (チェックを入れて下さい)
-============= ============================
-
-"*"は、半角の＊(アスタリスク)です。
-
-.. image:: images/02/create-policy-3.png
+.. image:: images/03/download-certificate-activate.png
 
 |
 
-[←]をクリックして下さい。
+ダウンロードした証明書とプライベートキーは、後にRaspberry Piにコピーし、アラートデバイスで使用します。
+(/aws-iot-device-sdk-cpp/certs/handsonAlarm 下にコピーします。) また、証明書の番号は、アラートデバイス用と分かる様にノートパッドなどに記録しておいて下さい。
 
-ポリシーの一覧が表示され、作成したポリシーが表示されている事を確認します。
+**記録**
 
-.. image:: images/02/create-policy-4.png
+::
+
+  Sensor Device: Sensor-00
+  "device_certificate_relative_path": "certs/handsonSensor/yyyyyyyyyy-certificate.pem.crt",
+  "device_private_key_relative_path": "certs/handsonSensor/yyyyyyyyyy-private.pem.key",
+
+|
+
+アラートデバイス用の証明書とプライベートキーは、Raspberry Pi上の アラートデバイス用の設定ファイル
+::
+
+  /aws-iot-device-sdk-cpp/common/HandsonSensorConfig.json
 
 |
 
 
+証明書に権限を追加する
+==========================
 
-デバイス、ポリシーを証明書に割当てる
-===========================================
+Greengrassグループの作成で自動的に生成されたポリシー [GGC_Thing-<参加者番号>-policy] が、表示されますので、チェックを入れて、[完了] をクリックして下さい。
 
-作成したデバイス、ポリシーを証明書に割当てます。メニューから[Security]-[Certificates]をクリックします。証明書一覧から「証明書の作成」のセクションで保存した証明書のIDに一致する証明書をクリックして開きます。
-
-.. image:: images/02/attach-policy-thing.png
-
-|
-
-証明書の詳細が表示されます。[Actions] - [Attach policy]を選択します。
-
-.. image:: images/02/attach-policy.png
+.. image:: images/03/attach-policy-Alert.png
 
 |
 
-”awsiot-handson-policy-<参加者番号>”を選択し、[Attach] をクリックします。
 
-.. image:: images/02/attach-policy-2.png
+証明書にモノをアタッチする
+====================================
 
-|
+証明書の画面に戻ります。アラートデバイス用の証明書をクリックしてください。
 
-[Actions] - [Attach thing]を選択します。
-
-.. image:: images/02/attach-thing.png
+.. image:: images/03/attach-thing-Sensor.png
 
 |
 
-“ranger-gw-<参加者番号>”を入力し、[Attach] をクリックします。
+証明書の詳細が表示されます。右上の [アクション] メニューから [モノをアタッチする] を撰んで下さい。
 
-.. image:: images/02/attach-thing-2.png
+.. image:: images/03/attach-thing-Alert-2.png
+
+|
+
+[Alert-<参加者番号＞] が、表示されますので、チェックを入れて、[アタッチ] をクリックして下さい。
+
+.. image:: images/03/attach-thing-Sensor-2.png
 
 |
 

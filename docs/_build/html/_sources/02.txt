@@ -61,7 +61,7 @@ Greengrasクループ を作成します。[簡単な作成の使用] をクリ�
 
 |
 
-[名前] に”GGC_Thing-<参加者番号>” と入力し、[次へ] をクリックします。
+[名前] に "GGHandsonGroup-<参加者番号>_Core" と出ますが、”GGC_Thing-<参加者番号>” に変更して、[次へ] をクリックします。
 
 ============= ============================
 項目            値
@@ -81,10 +81,28 @@ Greengrasクループ を作成します。[簡単な作成の使用] をクリ�
 
 自動的に、新しいGreengrassグループが作成され、Greengrassコアデバイス用の証明書とセキュリティーポリーシーが作成されGreengrassコアにアタッチされます。
 
-次の [コアデバイスへの接続] 画面で、Greengrassコアデバイス用の証明書とプライベートキーをPCにダウンロードして下さい。ダウンロードした証明書とプライベートキーは、後にRaspberry Piにコピーし、Greengrassコアデバイスで使用します。(/greengrass/configuration/certs/ 下にコピーします。)
-また、証明書の番号は、Greengrassコアデバイス用と分かる様に記録しておいて下さい。
+次の [コアデバイスへの接続] 画面で、Greengrassコアデバイス用の証明書とプライベートキーをPCにダウンロードして下さい。
 
-Greengrass自身のダウンロードもこの画面で可能ですが、このハンズオンでは、導入済みのRaspberry PiのSDカードを使用しますので、ダウンロードは不要です。[完了] をクリックして、Greengrassグループの作成を終了します。
+各ファイルのサイズは、証明書が1,220バイト程度、プライベートキーが1,670バイト程度になります。
+
+ダウンロードした証明書とプライベートキーは、後にRaspberry Piにコピーし、Greengrassコアデバイスで使用します。(/greengrass/configuration/certs/ 下にコピーします。)
+また、証明書の番号は、Greengrassコアデバイス用と分かる様にノートパッドなどに記録しておいて下さい。
+
+証明書の番号とは、ファイル名が "xxxxxxxxxx-certificate.pem.crt" の場合、冒頭の "xxxxxxxxxx" になります。
+
+**記録**
+
+::
+
+  Greengrass core device: GGC_Thing-00
+  "certPath": "xxxxxxxxxx-certificate.pem.crt",
+  "keyPath": "xxxxxxxxxx-private.pem.key",
+
+|
+
+
+
+Greengrass自身のダウンロードもこの画面で可能ですが、このハンズオンでは、Greengrass導入済みのRaspberry PiのSDカードを使用しますので、ダウンロードは不要です。[完了] をクリックして、Greengrassグループの作成を終了します。
 
 .. image:: images/02/geengrass-create-group-complete.png
 
@@ -96,8 +114,8 @@ Greengrassグループが作成されました。
 
 |
 
-確認
-=============
+モノ(Thing)を確認する
+-------------------
 
 メニューから[コア]をクリックします。以下の様な画面が表示されますので、作成したGreengrassコアが表示されている事を確認します。
 
@@ -124,14 +142,15 @@ ARNは、Raspberry Pi上の Greengrassの設定ファイル
 
 ::
 
+  config.json
   {
       "coreThing": {
           "caPath": "root-ca.pem",
           "certPath": "cloud.pem.crt",
           "keyPath": "cloud.pem.key",
-          "thingArn": "arn:aws:iot:us-east-1:292337560880:thing/GGC_Thing",
-          "iotHost": "axxzd0p5x0eif.iot.us-east-1.amazonaws.com",
-          "ggHost": "greengrass.iot.us-east-1.amazonaws.com"
+          "thingArn": "arn:aws:iot:us-west-2:000000000000:thing/GGC_Thing-00",
+          "iotHost": "axxzxxxxxxxx.iot.us-west-2.amazonaws.com",
+          "ggHost": "greengrass.iot.us-west-2.amazonaws.com"
       },
       "runtime": {
           "cgroup": {
@@ -142,16 +161,25 @@ ARNは、Raspberry Pi上の Greengrassの設定ファイル
 
 |
 
+**記録**
 
+::
 
+  Greengrass core device: GGC_Thing-00
+  "certPath": "xxxxxxxxxx-certificate.pem.crt",
+  "keyPath": "xxxxxxxxxx-private.pem.key",
+  "thingArn": "arn:aws:iot:us-west-2:000000000000:thing/GGC_Thing-00"
 
-
+|
 
 [←]をクリックして下さい。メニューから [セキュリティー] をクリックして、自動的に生成された証明書を確認します。
 
 .. image:: images/02/geengrass-security-check.png
 
 |
+
+証明書を確認する
+-------------------
 
 作成された証明書が表示されます。先ほど記録しておいたGreengrassコアデバイス用の証明書の番号があるか確認して下さい。また、証明書が アクティブ になっているかも確認して下さい。Greengrassコアデバイス用の証明書をクリックして下さい。
 
@@ -172,8 +200,54 @@ ARNは、Raspberry Pi上の Greengrassの設定ファイル
 
 |
 
+ポリシーの内容は、ポリシーをクリックすれば、ポリシードキュメントの内容が表示されます。
+
+::
+
+  {
+    "Version": "2012-10-17",
+    "Statement": [
+      {
+        "Effect": "Allow",
+        "Action": [
+          "iot:Publish",
+          "iot:Subscribe",
+          "iot:Connect",
+          "iot:Receive"
+        ],
+        "Resource": [
+          "*"
+        ]
+      },
+      {
+        "Effect": "Allow",
+        "Action": [
+          "iot:GetThingShadow",
+          "iot:UpdateThingShadow",
+          "iot:DeleteThingShadow"
+        ],
+        "Resource": [
+          "*"
+        ]
+      },
+      {
+        "Effect": "Allow",
+        "Action": [
+          "greengrass:*"
+        ],
+        "Resource": [
+          "*"
+        ]
+      }
+    ]
+  }
+
+|
+
+モノへの接続、トピックのパブリッシュ/サブスクライブ、デバイスシャドウの操作、greengrassの操作が可能になっています。
+
 メニューから [モノ] をクリックして下さい。
-自動的に生成されたポリシー [GGC_Thing-<参加者番号>] が、証明書と関連付けれていることが分かります。
+自動的に生成されたGreengrassコアデバイス [GGC_Thing-<参加者番号>] が、モノとして表示されるはずです。
 
 .. image:: images/02/geengrass-security-check-thing.png
 

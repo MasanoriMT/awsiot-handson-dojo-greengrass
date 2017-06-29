@@ -62,8 +62,6 @@ AWS Lambda と AWS IoT を使用して AWS クラウドとローカルデバイ�
 
 .. image:: images/01/AWS_Greengrass.png
 
-  :scale: 20
-  :align: right
 
 |
 
