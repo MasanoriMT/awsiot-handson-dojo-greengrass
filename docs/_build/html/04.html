@@ -48,7 +48,114 @@
             
   <div class="section" id="greengrasslambda">
 <h1>4. Greengrass向けLambda関数の登録とサブスクリプションの設定<a class="headerlink" href="#greengrasslambda" title="このヘッドラインへのパーマリンク">¶</a></h1>
-<hr class="docutils" />
+<div class="section" id="lambda">
+<h2>4.1. Lambda関数の登録<a class="headerlink" href="#lambda" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>Greengrassコアにデプロイする Lambda関数を登録します。</p>
+<p>はじめに、Lambda関数パッケージを下記のリンクからPCにダウンロードして下さい。このzipファイルは、後ほどLambdaの設定画面でアップロードします。</p>
+<p><a class="reference external" href="https://s3-us-west-2.amazonaws.com/greengrass-trial/GGhandsonLambda.zip">https://s3-us-west-2.amazonaws.com/greengrass-trial/GGhandsonLambda.zip</a></p>
+<p>このパッケージは、Lambda関数(greengrassCpuUsage.py)の他に、AWS Greengrass コア Python SDKが含まれています。
+このSDKは、Lambda関数は実行中にGreengrassコアとの通信を可能にします。</p>
+<p>サービス一覧から[Lambda] をクリックして開きます。</p>
+<img alt="_images/lambda1.png" src="_images/lambda1.png" />
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<p>下記のような画面が表示されるので、[今すぐ始める] をクリックします。</p>
+<img alt="_images/lambda-21.png" src="_images/lambda-21.png" />
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<p>Lambda関数の作成画面が表示されるので、&#8221;Blank Function&#8221; をクリックします。</p>
+<img alt="_images/lambda-31.png" src="_images/lambda-31.png" />
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<p>トリガーの設定画面が表示されるので、[次へ]をクリックします。</p>
+<img alt="_images/lambda-41.png" src="_images/lambda-41.png" />
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<p>ダウンロード済みのLambda関数パッケージ(GGhandsonLambda.zip)をアップロードします。
+下記のような画面が表示されるので、必要事項を入力して下さい。</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="37%" />
+<col width="63%" />
+</colgroup>
+<thead valign="bottom">
+<tr><th class="head">項目</th>
+<th class="head">設定</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr><td>名前</td>
+<td>greengrassCpuUsage-&lt;参加者番号&gt;</td>
+</tr>
+<tr><td>説明</td>
+<td>ALambda func. to run Greengrass core</td>
+</tr>
+<tr><td>ランタイム</td>
+<td>Python 2.8</td>
+</tr>
+<tr><td>コード エントリ タイプ</td>
+<td>.ZIPファイルをアップロード</td>
+</tr>
+<tr><td>関数パッケージ</td>
+<td>GGhandsonLambda.zip</td>
+</tr>
+<tr><td>ハンドラ</td>
+<td>greengrassCpuUsage.message_handler</td>
+</tr>
+<tr><td>ロール</td>
+<td>カスタムロールの作成</td>
+</tr>
+</tbody>
+</table>
+<img alt="_images/lambda-51.png" src="_images/lambda-51.png" />
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<p>ロール：[カスタムロールの作成] を選択すると、別画面でIAMの設定画面が出てきます。[許可] をクリックするとIAMの設定画面は閉じます。</p>
+<img alt="_images/lambda-role2.png" src="_images/lambda-role2.png" />
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<p>Lambdaの画面に戻ります。ロールが [既存のロールを選択] に変更され、ロール名として、&#8221;lambda_basic_execution&#8221; になって居居ることを確認し、[次へ] をクリックして下さい。</p>
+<img alt="_images/lambda-61.png" src="_images/lambda-61.png" />
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<p>確認画面が表示されますので、下までスクロースし、[関数の作成] をクリックして下さい。</p>
+<img alt="_images/lambda-create1.png" src="_images/lambda-create1.png" />
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<p>Lambda関数の作成に成功すると、下記の様な画面が表示されます。</p>
+<img alt="_images/lambda-complete.png" src="_images/lambda-complete.png" />
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<p>Lambda関数のバージョンを設定します。[アクション ▼] メニューから、[新しいバージョンを発行] をクリックします。</p>
+<img alt="_images/lambda-version.png" src="_images/lambda-version.png" />
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<p>[バージョンの説明] に、&#8221;Handson&#8221; と入力し、[発行] をクリックします。</p>
+<img alt="_images/lambda-version-2.png" src="_images/lambda-version-2.png" />
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<p>Lambda関数の登録は、終了です。</p>
+</div>
+<div class="section" id="id1">
+<h2>4.2. サブスクリプションの設定<a class="headerlink" href="#id1" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>サブスクリプションは、メッセージの送信先を定義するものです。今回のハンズオンでは、下記のサブスクリプションを設定します。</p>
+<p>Greengrassの設定画面に戻り、Greengrassグループ：GGHandsonGroup-&lt;参加者番号&gt;　をクリックして下さい。</p>
+<img alt="_images/greengrass-group.png" src="_images/greengrass-group.png" />
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+</div>
 </div>
 
 
@@ -57,6 +164,15 @@
       </div>
       <div class="sphinxsidebar">
         <div class="sphinxsidebarwrapper">
+            <h3><a href="index.html">目次</a></h3>
+            <ul>
+<li><a class="reference external" href="#">4. Greengrass向けLambda関数の登録とサブスクリプションの設定</a><ul>
+<li><a class="reference external" href="#lambda">4.1. Lambda関数の登録</a></li>
+<li><a class="reference external" href="#id1">4.2. サブスクリプションの設定</a></li>
+</ul>
+</li>
+</ul>
+
             <h4>前のトピックへ</h4>
             <p class="topless"><a href="03.html"
                                   title="前の章へ">3. AWS IoTの設定</a></p>
