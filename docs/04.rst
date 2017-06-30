@@ -146,25 +146,8 @@ Lambda関数のバージョンが、Greengrassグループに追加されまし�
 
 .. image:: images/04/subscription-overview.png
 
-.. csv-table:: Frozen Delights!
-    :header: ルート,ソース,,ターゲット,,トピックフィルター
-    :widths: 15, 10, 30, 15, 10, 30
-
-    ①,デバイス,Sensor-00,サービス,IoT Cloud ,sensing/data
-    ②,デバイス,Sensor-00,Lambda,greengrassCpuUsage-00,sensing/data
-    ③,Lambda,greengrassCpuUsage-00,サービス,Local Shadow Service ,$aws/things/Alert/shadow/update
-    ④,デバイス,Alert-00,サービス,Local Shadow Service ,$aws/things/Alert/shadow/update
-    ,サービス,Local Shadow Service ,デバイス,Alert-00,$aws/things/Alert/shadow/update/accepted
-    ,サービス,Local Shadow Service ,デバイス,Alert-00,$aws/things/Alert/shadow/update/rejected
-    ,サービス,Local Shadow Service ,デバイス,Alert-00,$aws/things/Alert/shadow/update/delta
-    ⑤,デバイス,Sensor-00,サービス,Local Shadow Service ,$aws/things/Sensor/shadow/update
-    ,サービス,Local Shadow Service ,デバイス,Sensor-00,$aws/things/Sensor/shadow/update/accepted
-    ,サービス,Local Shadow Service ,デバイス,Sensor-00,$aws/things/Sensor/shadow/update/rejected
-    ,サービス,Local Shadow Service ,デバイス,Sensor-00,$aws/things/Sensor/shadow/update/delta
-
-|
-
 .. csv-table::
+    :header-rows: 1
     :file: table/subscription.csv
 |
 
