@@ -298,6 +298,51 @@ Greengrassコアデバイス用の証明書とプライベートキーをPCに�
 </div>
 <p>これで、AWS IoTの基本設定は、終わりです。</p>
 </div>
+<div class="section" id="greengrass">
+<h2>3.8. デバイスをGreengrassグループに追加する<a class="headerlink" href="#greengrass" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>作成した、センサーデバイス、アラートデバイスをGreengrassグループに追加します。</p>
+<p>Greengrassの設定画面に戻り、Greengrassグループ：GGHandsonGroup-&lt;参加者番号&gt; をクリックして下さい。</p>
+<img alt="_images/greengrass-group.png" src="_images/greengrass-group.png" />
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<p>メニューから [デバイス] をクリックします。以下の様な画面が表示されますので、[デバイスの追加] をクリックします。</p>
+<img alt="images/04/add-thing-to-group.png" src="images/04/add-thing-to-group.png" />
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<p>[IoT Thingを選択する] をクリックします。</p>
+<img alt="_images/add-thing-to-group-2.png" src="_images/add-thing-to-group-2.png" />
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<p>アラートデバイス：Alert-&lt;参加者番号&gt; にチェックを入れ、[完了] をクリックします。</p>
+<img alt="_images/add-thing-to-group-3.png" src="_images/add-thing-to-group-3.png" />
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<p>アラートデバイスが追加されました。[デバイスの追加] をクリックして、センサーデバイスも追加します。</p>
+<img alt="_images/add-thing-to-group-4.png" src="_images/add-thing-to-group-4.png" />
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<p>センサーデバイス、アラートデバイスをGreengrassグループに追加されました。</p>
+<img alt="_images/sync-thing-shadow.png" src="_images/sync-thing-shadow.png" />
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<p>センサーデバイスのデバイス シャドウは、クラウド上のシャドウと同期させる必要があるので、設定を変更します。</p>
+<p>[●●●] をクリックして、[クラウドに同期] をクリックして下さい。</p>
+<img alt="_images/sync-thing-shadow-2.png" src="_images/sync-thing-shadow-2.png" />
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<p>[クラウドへのシャドウ同期] に変更されました。</p>
+<img alt="_images/sync-thing-shadow-3.png" src="_images/sync-thing-shadow-3.png" />
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+</div>
 </div>
 
 
@@ -316,6 +361,7 @@ Greengrassコアデバイス用の証明書とプライベートキーをPCに�
 <li><a class="reference external" href="#id4">3.5. 証明書の作成</a></li>
 <li><a class="reference external" href="#id5">3.6. 証明書に権限を追加する</a></li>
 <li><a class="reference external" href="#id6">3.7. 証明書にモノをアタッチする</a></li>
+<li><a class="reference external" href="#greengrass">3.8. デバイスをGreengrassグループに追加する</a></li>
 </ul>
 </li>
 </ul>

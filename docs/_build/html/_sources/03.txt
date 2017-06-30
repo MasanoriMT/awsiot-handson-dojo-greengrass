@@ -282,3 +282,59 @@ Greengrassグループの作成で自動的に生成されたポリシー [GGC_T
 |
 
 これで、AWS IoTの基本設定は、終わりです。
+
+デバイスをGreengrassグループに追加する
+=========================================
+
+作成した、センサーデバイス、アラートデバイスをGreengrassグループに追加します。
+
+Greengrassの設定画面に戻り、Greengrassグループ：GGHandsonGroup-<参加者番号> をクリックして下さい。
+
+.. image:: images/04/greengrass-group.png
+
+|
+
+メニューから [デバイス] をクリックします。以下の様な画面が表示されますので、[デバイスの追加] をクリックします。
+
+.. image:: images/04/add-thing-to-group.png
+
+|
+
+[IoT Thingを選択する] をクリックします。
+
+
+.. image:: images/03/add-thing-to-group-2.png
+
+|
+
+アラートデバイス：Alert-<参加者番号> にチェックを入れ、[完了] をクリックします。
+
+.. image:: images/03/add-thing-to-group-3.png
+
+|
+
+アラートデバイスが追加されました。[デバイスの追加] をクリックして、センサーデバイスも追加します。
+
+.. image:: images/03/add-thing-to-group-4.png
+
+|
+
+センサーデバイス、アラートデバイスをGreengrassグループに追加されました。
+
+.. image:: images/03/sync-thing-shadow.png
+
+|
+
+センサーデバイスのデバイス シャドウは、クラウド上のシャドウと同期させる必要があるので、設定を変更します。
+
+[●●●] をクリックして、[クラウドに同期] をクリックして下さい。
+
+.. image:: images/03/sync-thing-shadow-2.png
+
+|
+
+[クラウドへのシャドウ同期] に変更されました。
+
+.. image:: images/03/sync-thing-shadow-3.png
+
+|

@@ -145,12 +145,151 @@
 <div class="line-block">
 <div class="line"><br /></div>
 </div>
-<p>Lambda関数の登録は、終了です。</p>
+<p>これで、Lambda関数の登録は、終了です。</p>
+<p>次に、このLambda関数をGreengrassクループに追加します。</p>
+<p>Greengrassの設定画面に戻り、Greengrassグループ：GGHandsonGroup-&lt;参加者番号&gt; をクリックして下さい。</p>
+<img alt="_images/greengrass-group.png" src="_images/greengrass-group.png" />
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<p>メニューから [Lambda] をクリックします。</p>
+<img alt="_images/add-lambda-to-group.png" src="_images/add-lambda-to-group.png" />
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<p>[Lambdaの追加] をクリックします。</p>
+<img alt="_images/add-lambda-to-group-2.png" src="_images/add-lambda-to-group-2.png" />
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<p>[]既存のLambdaの使用] をクリックします。</p>
+<img alt="_images/add-lambda-to-group-3.png" src="_images/add-lambda-to-group-3.png" />
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<p>[greengrassCpuUsage-&lt;参加者番号&gt;] にチェックを入れ、[次へ] をクリックします。</p>
+<img alt="_images/add-lambda-to-group-4.png" src="_images/add-lambda-to-group-4.png" />
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<p>先ほど作成したLambda関数のバージョンにチェックを入れ、[次へ] をクリックします。</p>
+<img alt="_images/add-lambda-to-group-5.png" src="_images/add-lambda-to-group-5.png" />
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<p>Lambda関数のバージョンが、Greengrassグループに追加されました。</p>
+<img alt="_images/add-lambda-to-group-6.png" src="_images/add-lambda-to-group-6.png" />
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
 </div>
 <div class="section" id="id1">
 <h2>4.2. サブスクリプションの設定<a class="headerlink" href="#id1" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>サブスクリプションは、メッセージの送信先を定義するものです。今回のハンズオンでは、下記のサブスクリプションを設定します。</p>
-<p>Greengrassの設定画面に戻り、Greengrassグループ：GGHandsonGroup-&lt;参加者番号&gt;　をクリックして下さい。</p>
+<img alt="_images/subscription-overview.png" src="_images/subscription-overview.png" />
+<table border="1" class="colwidths-given docutils">
+<caption>Frozen Delights!</caption>
+<colgroup>
+<col width="14%" />
+<col width="9%" />
+<col width="27%" />
+<col width="14%" />
+<col width="9%" />
+<col width="27%" />
+</colgroup>
+<thead valign="bottom">
+<tr><th class="head">ルート</th>
+<th class="head">ソース</th>
+<th class="head">&nbsp;</th>
+<th class="head">ターゲット</th>
+<th class="head">&nbsp;</th>
+<th class="head">トピックフィルター</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr><td>①</td>
+<td>デバイス</td>
+<td>Sensor-00</td>
+<td>サービス</td>
+<td>IoT Cloud</td>
+<td>sensing/data</td>
+</tr>
+<tr><td>②</td>
+<td>デバイス</td>
+<td>Sensor-00</td>
+<td>Lambda</td>
+<td>greengrassCpuUsage-00</td>
+<td>sensing/data</td>
+</tr>
+<tr><td>③</td>
+<td>Lambda</td>
+<td>greengrassCpuUsage-00</td>
+<td>サービス</td>
+<td>Local Shadow Service</td>
+<td>$aws/things/Alert/shadow/update</td>
+</tr>
+<tr><td>④</td>
+<td>デバイス</td>
+<td>Alert-00</td>
+<td>サービス</td>
+<td>Local Shadow Service</td>
+<td>$aws/things/Alert/shadow/update</td>
+</tr>
+<tr><td>&nbsp;</td>
+<td>サービス</td>
+<td>Local Shadow Service</td>
+<td>デバイス</td>
+<td>Alert-00</td>
+<td>$aws/things/Alert/shadow/update/accepted</td>
+</tr>
+<tr><td>&nbsp;</td>
+<td>サービス</td>
+<td>Local Shadow Service</td>
+<td>デバイス</td>
+<td>Alert-00</td>
+<td>$aws/things/Alert/shadow/update/rejected</td>
+</tr>
+<tr><td>&nbsp;</td>
+<td>サービス</td>
+<td>Local Shadow Service</td>
+<td>デバイス</td>
+<td>Alert-00</td>
+<td>$aws/things/Alert/shadow/update/delta</td>
+</tr>
+<tr><td>⑤</td>
+<td>デバイス</td>
+<td>Sensor-00</td>
+<td>サービス</td>
+<td>Local Shadow Service</td>
+<td>$aws/things/Sensor/shadow/update</td>
+</tr>
+<tr><td>&nbsp;</td>
+<td>サービス</td>
+<td>Local Shadow Service</td>
+<td>デバイス</td>
+<td>Sensor-00</td>
+<td>$aws/things/Sensor/shadow/update/accepted</td>
+</tr>
+<tr><td>&nbsp;</td>
+<td>サービス</td>
+<td>Local Shadow Service</td>
+<td>デバイス</td>
+<td>Sensor-00</td>
+<td>$aws/things/Sensor/shadow/update/rejected</td>
+</tr>
+<tr><td>&nbsp;</td>
+<td>サービス</td>
+<td>Local Shadow Service</td>
+<td>デバイス</td>
+<td>Sensor-00</td>
+<td>$aws/things/Sensor/shadow/update/delta</td>
+</tr>
+</tbody>
+</table>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<p>Greengrassの設定画面に戻り、Greengrassグループ：GGHandsonGroup-&lt;参加者番号&gt; をクリックして下さい。</p>
 <img alt="_images/greengrass-group.png" src="_images/greengrass-group.png" />
 <div class="line-block">
 <div class="line"><br /></div>
