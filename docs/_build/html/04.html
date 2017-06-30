@@ -79,8 +79,8 @@
 下記のような画面が表示されるので、必要事項を入力して下さい。</p>
 <table border="1" class="docutils">
 <colgroup>
-<col width="37%" />
-<col width="63%" />
+<col width="36%" />
+<col width="64%" />
 </colgroup>
 <thead valign="bottom">
 <tr><th class="head">項目</th>
@@ -92,7 +92,7 @@
 <td>greengrassCpuUsage-&lt;参加者番号&gt;</td>
 </tr>
 <tr><td>説明</td>
-<td>ALambda func. to run Greengrass core</td>
+<td>a Lambda func. to run Greengrass core</td>
 </tr>
 <tr><td>ランタイム</td>
 <td>Python 2.8</td>
@@ -132,6 +132,12 @@
 </div>
 <p>Lambda関数の作成に成功すると、下記の様な画面が表示されます。</p>
 <img alt="_images/lambda-complete.png" src="_images/lambda-complete.png" />
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<p>コード内の &#8220;thingName&#8221; が、&#8221;Alert-01&#8221; となっていますので、01 の所をご自分の参加者番号に置き換えて下さい。</p>
+<p>修正したら、 [保存] をクリックします。</p>
+<img alt="_images/lambda-save.png" src="_images/lambda-save.png" />
 <div class="line-block">
 <div class="line"><br /></div>
 </div>
@@ -184,215 +190,114 @@
 </div>
 </div>
 <div class="section" id="id1">
-<h2>4.2. サブスクリプションの設定<a class="headerlink" href="#id1" title="このヘッドラインへのパーマリンク">¶</a></h2>
-<p>サブスクリプションは、メッセージの送信先を定義するものです。今回のハンズオンでは、下記のサブスクリプションを設定します。</p>
+<h2>4.2. シナリオ<a class="headerlink" href="#id1" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>今回のハンズオンでは、下記のシナリオでGreengrassの動作を確認します。</p>
+<ul class="simple">
+<li>① センサーデバイスが、Raspberry PiのCPUロードを定期的にトピック&#8221;sensing/data&#8221;にPublish</li>
+<li>② トピック&#8221;sensing/data&#8221;をローカルLambdaにも流す</li>
+<li>③ ローカルLambdaが、CPUロードを確認し、シャドウ &#8220;Alert&#8221;を&#8221;更新する</li>
+<li>④ アラートデバイスは、シャドウ &#8220;Alert&#8221;がセットされると、アラートを出す</li>
+<li>⑤ センサー用のシャドウ &#8220;LoadSwitch&#8221;は、クラウドとSyncする設定にしておき、クラウド側でシャドウを更新すると、センサーデバイスでRaspberry Piに負荷がかかる処理を実行する</li>
+</ul>
 <img alt="_images/subscription-overview.png" src="_images/subscription-overview.png" />
-<table border="1" class="colwidths-given docutils">
-<caption>Frozen Delights!</caption>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+</div>
+<div class="section" id="id2">
+<h2>4.3. サブスクリプションの設定<a class="headerlink" href="#id2" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>サブスクリプションは、ローカルデバイス、Greengrassコア、クラウド間のメッセージの送信先を定義するものです。今回のハンズオンでは、下記のサブスクリプションを設定します。</p>
+<table border="1" class="docutils">
 <colgroup>
-<col width="14%" />
-<col width="9%" />
-<col width="27%" />
-<col width="14%" />
-<col width="9%" />
-<col width="27%" />
+<col width="100%" />
 </colgroup>
 <thead valign="bottom">
-<tr><th class="head">ルート</th>
-<th class="head">ソース</th>
-<th class="head">&nbsp;</th>
-<th class="head">ターゲット</th>
-<th class="head">&nbsp;</th>
-<th class="head">トピックフィルター</th>
+<tr><th class="head">ルート	ソース	ターゲット	トピックフィルター</th>
 </tr>
 </thead>
 <tbody valign="top">
-<tr><td>①</td>
-<td>デバイス</td>
-<td>Sensor-00</td>
-<td>サービス</td>
-<td>IoT Cloud</td>
-<td>sensing/data</td>
+<tr><td>①	デバイス:Sensor-01	サービス:IoT Cloud 	sensing/data</td>
 </tr>
-<tr><td>②</td>
-<td>デバイス</td>
-<td>Sensor-00</td>
-<td>Lambda</td>
-<td>greengrassCpuUsage-00</td>
-<td>sensing/data</td>
+<tr><td>②	デバイス:Sensor-01	Lambda:greengrassCpuUsage-01	sensing/data</td>
 </tr>
-<tr><td>③</td>
-<td>Lambda</td>
-<td>greengrassCpuUsage-00</td>
-<td>サービス</td>
-<td>Local Shadow Service</td>
-<td>$aws/things/Alert/shadow/update</td>
+<tr><td>③	Lambda:greengrassCpuUsage-01	サービス:Local Shadow Service 	$aws/things/Alert-01/shadow/update</td>
 </tr>
-<tr><td>④</td>
-<td>デバイス</td>
-<td>Alert-00</td>
-<td>サービス</td>
-<td>Local Shadow Service</td>
-<td>$aws/things/Alert/shadow/update</td>
+<tr><td>④	デバイス:Alert-01	サービス:Local Shadow Service 	$aws/things/Alert-01/shadow/update</td>
 </tr>
-<tr><td>&nbsp;</td>
-<td>サービス</td>
-<td>Local Shadow Service</td>
-<td>デバイス</td>
-<td>Alert-00</td>
-<td>$aws/things/Alert/shadow/update/accepted</td>
+<tr><td>	サービス:Local Shadow Service 	デバイス:Alert-01	$aws/things/Alert-01/shadow/update/accepted</td>
 </tr>
-<tr><td>&nbsp;</td>
-<td>サービス</td>
-<td>Local Shadow Service</td>
-<td>デバイス</td>
-<td>Alert-00</td>
-<td>$aws/things/Alert/shadow/update/rejected</td>
+<tr><td>	サービス:Local Shadow Service 	デバイス:Alert-01	$aws/things/Alert-01/shadow/update/rejected</td>
 </tr>
-<tr><td>&nbsp;</td>
-<td>サービス</td>
-<td>Local Shadow Service</td>
-<td>デバイス</td>
-<td>Alert-00</td>
-<td>$aws/things/Alert/shadow/update/delta</td>
+<tr><td>	サービス:Local Shadow Service 	デバイス:Alert-01	$aws/things/Alert-01/shadow/update/delta</td>
 </tr>
-<tr><td>⑤</td>
-<td>デバイス</td>
-<td>Sensor-00</td>
-<td>サービス</td>
-<td>Local Shadow Service</td>
-<td>$aws/things/Sensor/shadow/update</td>
+<tr><td>⑤	デバイス:Sensor-01	サービス:Local Shadow Service 	$aws/things/Sensor-01/shadow/update</td>
 </tr>
-<tr><td>&nbsp;</td>
-<td>サービス</td>
-<td>Local Shadow Service</td>
-<td>デバイス</td>
-<td>Sensor-00</td>
-<td>$aws/things/Sensor/shadow/update/accepted</td>
+<tr><td>	サービス:Local Shadow Service 	デバイス:Sensor-01	$aws/things/Sensor-01/shadow/update/accepted</td>
 </tr>
-<tr><td>&nbsp;</td>
-<td>サービス</td>
-<td>Local Shadow Service</td>
-<td>デバイス</td>
-<td>Sensor-00</td>
-<td>$aws/things/Sensor/shadow/update/rejected</td>
+<tr><td>	サービス:Local Shadow Service 	デバイス:Sensor-01	$aws/things/Sensor-01/shadow/update/rejected</td>
 </tr>
-<tr><td>&nbsp;</td>
-<td>サービス</td>
-<td>Local Shadow Service</td>
-<td>デバイス</td>
-<td>Sensor-00</td>
-<td>$aws/things/Sensor/shadow/update/delta</td>
+<tr><td>	サービス:Local Shadow Service 	デバイス:Sensor-01	$aws/things/Sensor-01/shadow/update/delta</td>
 </tr>
 </tbody>
 </table>
 <div class="line-block">
 <div class="line"><br /></div>
 </div>
-<table border="1" class="docutils">
-<colgroup>
-<col width="17%" />
-<col width="17%" />
-<col width="17%" />
-<col width="17%" />
-<col width="17%" />
-<col width="17%" />
-</colgroup>
-<tbody valign="top">
-<tr><td>ルート</td>
-<td>ソース</td>
-<td>&nbsp;</td>
-<td>ターゲット</td>
-<td>&nbsp;</td>
-<td>トピックフィルター</td>
-</tr>
-<tr><td>①</td>
-<td>デバイス</td>
-<td>Sensor-00</td>
-<td>サービス</td>
-<td>IoT Cloud</td>
-<td>sensing/data</td>
-</tr>
-<tr><td>②</td>
-<td>デバイス</td>
-<td>Sensor-00</td>
-<td>Lambda</td>
-<td>greengrassCpuUsage-00</td>
-<td>sensing/data</td>
-</tr>
-<tr><td>③</td>
-<td>Lambda</td>
-<td>greengrassCpuUsage-00</td>
-<td>サービス</td>
-<td>Local Shadow Service</td>
-<td>$aws/things/Alert/shadow/update</td>
-</tr>
-<tr><td>④</td>
-<td>デバイス</td>
-<td>Alert-00</td>
-<td>サービス</td>
-<td>Local Shadow Service</td>
-<td>$aws/things/Alert/shadow/update</td>
-</tr>
-<tr><td>&nbsp;</td>
-<td>サービス</td>
-<td>Local Shadow Service</td>
-<td>デバイス</td>
-<td>Alert-00</td>
-<td>$aws/things/Alert/shadow/update/accepted</td>
-</tr>
-<tr><td>&nbsp;</td>
-<td>サービス</td>
-<td>Local Shadow Service</td>
-<td>デバイス</td>
-<td>Alert-00</td>
-<td>$aws/things/Alert/shadow/update/rejected</td>
-</tr>
-<tr><td>&nbsp;</td>
-<td>サービス</td>
-<td>Local Shadow Service</td>
-<td>デバイス</td>
-<td>Alert-00</td>
-<td>$aws/things/Alert/shadow/update/delta</td>
-</tr>
-<tr><td>⑤</td>
-<td>デバイス</td>
-<td>Sensor-00</td>
-<td>サービス</td>
-<td>Local Shadow Service</td>
-<td>$aws/things/Sensor/shadow/update</td>
-</tr>
-<tr><td>&nbsp;</td>
-<td>サービス</td>
-<td>Local Shadow Service</td>
-<td>デバイス</td>
-<td>Sensor-00</td>
-<td>$aws/things/Sensor/shadow/update/accepted</td>
-</tr>
-<tr><td>&nbsp;</td>
-<td>サービス</td>
-<td>Local Shadow Service</td>
-<td>デバイス</td>
-<td>Sensor-00</td>
-<td>$aws/things/Sensor/shadow/update/rejected</td>
-</tr>
-<tr><td>&nbsp;</td>
-<td>サービス</td>
-<td>Local Shadow Service</td>
-<td>デバイス</td>
-<td>Sensor-00</td>
-<td>$aws/things/Sensor/shadow/update/delta</td>
-</tr>
-</tbody>
-</table>
-<div class="line-block">
-<div class="line"><br /></div>
-</div>
+<p><strong>【注意】トピックフィルターの $aws/things/Alert-01/、$aws/things/Sensor-01/ の &#8220;01&#8221;は、ご自分の参加者番号に置き換えて下さい。</strong></p>
+<p>このテーブルに従って、サブスクリプションの設定を行います。</p>
 <p>Greengrassの設定画面に戻り、Greengrassグループ：GGHandsonGroup-&lt;参加者番号&gt; をクリックして下さい。</p>
 <img alt="_images/greengrass-group.png" src="_images/greengrass-group.png" />
 <div class="line-block">
 <div class="line"><br /></div>
 </div>
+<p>メニューから [サブスクリプション] をクリックします。</p>
+<img alt="_images/subscription.png" src="_images/subscription.png" />
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<p>まずは、①のソースのセンサーデバイスを設定します。ソースの [選択] をクリックします。</p>
+<img alt="_images/source-1.png" src="_images/source-1.png" />
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<p>[デバイス] をクリックし、Sensor-&lt;参加者番号&gt; をクリックします。</p>
+<img alt="_images/source-1-select.png" src="_images/source-1-select.png" />
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<p>次に、①のターゲットの IoT Cloud を設定します。ターゲットの [選択] をクリックします。</p>
+<p>[デバイス] をクリックし、Sensor-&lt;参加者番号&gt; をクリックします。</p>
+<img alt="_images/target-1.png" src="_images/target-1.png" />
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<p>[サービス] をクリックし、IoT Cloud をクリックします。</p>
+<img alt="_images/target-1-select.png" src="_images/target-1-select.png" />
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<p>[次へ] をクリックします。</p>
+<img alt="_images/next.png" src="_images/next.png" />
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<p>オプションのトピックのフィルターに sensing/data を入力し、[次へ] をクリックします。</p>
+<img alt="_images/topic-filter-1.png" src="_images/topic-filter-1.png" />
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<p>確認画面が出てきますので、[完了] をクリックして、設定を保存します。</p>
+<img alt="_images/subscription-confirm.png" src="_images/subscription-confirm.png" />
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<p>上記の操作を繰り返して、残りのサブスクリプションの設定を行って下さい。</p>
+<p>最終的には、下記の様になります。</p>
+<img alt="_images/subscription-result.png" src="_images/subscription-result.png" />
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<p>これで、クラウド側の設定は、終わりです。</p>
 </div>
 </div>
 
@@ -406,7 +311,8 @@
             <ul>
 <li><a class="reference external" href="#">4. Greengrass向けLambda関数の登録とサブスクリプションの設定</a><ul>
 <li><a class="reference external" href="#lambda">4.1. Lambda関数の登録</a></li>
-<li><a class="reference external" href="#id1">4.2. サブスクリプションの設定</a></li>
+<li><a class="reference external" href="#id1">4.2. シナリオ</a></li>
+<li><a class="reference external" href="#id2">4.3. サブスクリプションの設定</a></li>
 </ul>
 </li>
 </ul>

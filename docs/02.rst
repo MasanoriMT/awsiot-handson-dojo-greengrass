@@ -94,9 +94,9 @@ Greengrasクループ を作成します。[簡単な作成の使用] をクリ�
 
 ::
 
-  Greengrass core device: GGC_Thing-00
-  "certPath": "xxxxxxxxxx-certificate.pem.crt",
-  "keyPath": "xxxxxxxxxx-private.pem.key",
+  Greengrass core device: GGC_Thing-01
+    "certPath": "xxxxxxxxxx-certificate.pem.crt",
+    "keyPath": "xxxxxxxxxx-private.pem.key",
 
 |
 
@@ -148,7 +148,7 @@ ARNは、Raspberry Pi上の Greengrassの設定ファイル
           "caPath": "root-ca.pem",
           "certPath": "cloud.pem.crt",
           "keyPath": "cloud.pem.key",
-          "thingArn": "arn:aws:iot:us-west-2:000000000000:thing/GGC_Thing-00",
+          "thingArn": "arn:aws:iot:us-west-2:000000000000:thing/GGC_Thing-01",
           "iotHost": "axxzxxxxxxxx.iot.us-west-2.amazonaws.com",
           "ggHost": "greengrass.iot.us-west-2.amazonaws.com"
       },
@@ -165,10 +165,10 @@ ARNは、Raspberry Pi上の Greengrassの設定ファイル
 
 ::
 
-  Greengrass core device: GGC_Thing-00
-  "certPath": "xxxxxxxxxx-certificate.pem.crt",
-  "keyPath": "xxxxxxxxxx-private.pem.key",
-  "thingArn": "arn:aws:iot:us-west-2:000000000000:thing/GGC_Thing-00"
+  Greengrass core device: GGC_Thing-01
+    "certPath": "xxxxxxxxxx-certificate.pem.crt",
+    "keyPath": "xxxxxxxxxx-private.pem.key",
+    "thingArn": "arn:aws:iot:us-west-2:000000000000:thing/GGC_Thing-01"
 
 |
 

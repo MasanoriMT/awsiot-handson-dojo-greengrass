@@ -4,10 +4,36 @@ AWS IoTの設定
 
 AWS IoTにセンサーデバイス、アラートデバイスを作成し、セキュリティーやポリシーの設定を行います。
 
+AWS IoT エンドポイント
+===========================
+
+Raspberry Pi上のGreengrassコア、センサーデバイス、アラートデバイスの設定ファイルに、AWS IoTのエンドポイントを記入する必要があります。
+
+[←]をクリックして下さい。メニューから [設定] をクリックして下さい。エンドポイントが表示されます。
+
+.. image:: images/03/endpoint.png
+
+|
+
+ノートパッドなどに記録しておいて下さい。
+
+
+**記録**
+
+::
+
+  AWS IoT endpoint
+    "endpoint": "xxxxxxxxxxxx.iot.us-west-2.amazonaws.com"
+
+|
+
+
+
+
 モノ(Thing)の作成
 ======================
 
-[←]をクリックして下さい。メニューから [登録] をクリックして下さい。
+メニューから [登録] をクリックして下さい。
 
 モノ(Thing)の一覧が表示されます。
 
@@ -109,9 +135,9 @@ Name	          Sensor-<参加者番号>
 
 ::
 
-  Alarm Device: Alert-00
-  "device_certificate_relative_path": "certs/handsonAlarm/xxxxxxxxxx-certificate.pem.crt",
-  "device_private_key_relative_path": "certs/handsonAlarm/xxxxxxxxxx-private.pem.key",
+  Alarm Device: Alert-01
+    "device_certificate_relative_path": "certs/handsonAlarm/yyyyyyyyyy-certificate.pem.crt",
+    "device_private_key_relative_path": "certs/handsonAlarm/yyyyyyyyyy-private.pem.key",
 
 |
 
@@ -134,8 +160,8 @@ Name	          Sensor-<参加者番号>
     "https_port": 443,
     "greengrass_discovery_port": 8443,
     "root_ca_relative_path": "certs/handsonAlarm/root-ca.pem",
-    "device_certificate_relative_path": "certs/handsonAlarm/xxxxxxxxxx-certificate.pem.crt",
-    "device_private_key_relative_path": "certs/handsonAlarm/xxxxxxxxxx-private.pem.key",
+    "device_certificate_relative_path": "certs/handsonAlarm/yyyyyyyyyy-certificate.pem.crt",
+    "device_private_key_relative_path": "certs/handsonAlarm/yyyyyyyyyy-private.pem.key",
     "tls_handshake_timeout_msecs": 60000,
     "tls_read_timeout_msecs": 2000,
     "tls_write_timeout_msecs": 2000,
@@ -143,8 +169,8 @@ Name	          Sensor-<参加者番号>
     "aws_access_key_id": "",
     "aws_secret_access_key": "",
     "aws_session_token": "",
-    "client_id":  "Alert-00",
-    "thing_name": "Alert-00",
+    "client_id":  "Alert-01",
+    "thing_name": "Alert-01",
     "is_clean_session": true,
     "mqtt_command_timeout_msecs": 20000,
     "keepalive_interval_secs": 30,
@@ -236,9 +262,9 @@ Greengrassコアデバイス用の証明書とプライベートキーをPCに�
 
 ::
 
-  Sensor Device: Sensor-00
-  "device_certificate_relative_path": "certs/handsonSensor/yyyyyyyyyy-certificate.pem.crt",
-  "device_private_key_relative_path": "certs/handsonSensor/yyyyyyyyyy-private.pem.key",
+  Sensor Device: Sensor-01
+    "device_certificate_relative_path": "certs/handsonSensor/zzzzzzzzzz-certificate.pem.crt",
+    "device_private_key_relative_path": "certs/handsonSensor/zzzzzzzzzz-private.pem.key",
 
 |
 

@@ -21,7 +21,7 @@
     <script type="text/javascript" src="_static/doctools.js"></script>
     <script type="text/javascript" src="_static/translations.js"></script>
     <link rel="top" title="awsiot-handson-dojo-greengrass v0.0 documentation" href="index.html" />
-    <link rel="next" title="6. 動作確認" href="06.html" />
+    <link rel="next" title="6. Greengrassコアへのデプロイと動作確認" href="06.html" />
     <link rel="prev" title="4. Greengrass向けLambda関数の登録とサブスクリプションの設定" href="04.html" /> 
   </head>
   <body>
@@ -32,7 +32,7 @@
           <a href="genindex.html" title="総合索引"
              accesskey="I">索引</a></li>
         <li class="right" >
-          <a href="06.html" title="6. 動作確認"
+          <a href="06.html" title="6. Greengrassコアへのデプロイと動作確認"
              accesskey="N">次へ</a> |</li>
         <li class="right" >
           <a href="04.html" title="4. Greengrass向けLambda関数の登録とサブスクリプションの設定"
@@ -48,8 +48,149 @@
             
   <div class="section" id="raspberry-pi">
 <h1>5. Raspberry Piの設定<a class="headerlink" href="#raspberry-pi" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<div class="section" id="id1">
+<h2>5.1. ハードウェアの確認<a class="headerlink" href="#id1" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>下記の３つのハードウエアを確認して下さい。</p>
+<p>① Raspberry Pi 3</p>
+<img alt="_images/RaspberryPi3.jpg" src="_images/RaspberryPi3.jpg" />
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<p>② 電源アダプタ</p>
+<img alt="_images/PowerAddapter.png" src="_images/PowerAddapter.png" />
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<p>③ マイクロSDカード</p>
+<img alt="_images/SDCard.png" src="_images/SDCard.png" />
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<p>参加者番号の紙が入っています。確認して下さい。</p>
+</div>
+<div class="section" id="id2">
+<h2>5.2. 組み立て<a class="headerlink" href="#id2" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>SDカードをRaspberry Piに装着します。向きがあるので注意して下さい。</p>
+<img alt="_images/SDCard-2.png" src="_images/SDCard-2.png" />
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<p>電源プラグをマイクロUDBソケットに差し込みます。</p>
+<img alt="_images/USB-Plug-in.png" src="_images/USB-Plug-in.png" />
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<p>電源を投入すると、SDカードスロット右の赤LEDが点灯します。OSブートが始まり、SDカードへのアクセスがあると、、緑LEDが点滅します。</p>
+</div>
 <div class="section" id="wifi">
-<h2>5.1. WiFi接続<a class="headerlink" href="#wifi" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<h2>5.3. WiFi接続<a class="headerlink" href="#wifi" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>お手持ちのPCをハンズオンのWiFiアクセスポイントに接続します。WiFi設定は、下記になります。</p>
+<div class="highlight-python"><pre>- SSID：awshandson
+- パスフレーズ：awshandson</pre>
+</div>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<p>お手持ちのPCにインストールした、VNC Viewer を起動して下さい。下記の画面が表示されます。</p>
+<p>接続先として、&#8217;raspberrypi-&lt;参加者番号&gt;.local&#8217;と入力して[エンター]を押します。</p>
+<img alt="_images/VNC_Viewer.png" src="_images/VNC_Viewer.png" />
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<p>Username と、Password を入力して [OK] を押します。</p>
+<img alt="_images/VNC_Connect.png" src="_images/VNC_Connect.png" />
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<p>無事、Raspberry Piに接続出来たら、Raspberry Piのリモート画面が表示されます。</p>
+<img alt="_images/VNC_login-OK.png" src="_images/VNC_login-OK.png" />
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<p>Raspberry Piは、WiFi SSID = awshandson に接続するように設定してあります。
+VNC Viewerでの接続ができれば、Raspberry PiもWiFiに接続出来ているはずです。</p>
+<p>うまく接続出来ない場合は、Ethernet接続を試してみましょう。
+Raspberry PiのEthernetは、固定IPアドレス 192.168.11.100 に設定されています。
+PCとRaspberry PiをEthernetで接続し(ストレートケーブルでも構いません。)</p>
+<p>PC側のIPアドレスを、192.168.11.xxx に設定して下さい。
+VNC Viewerの接続先を、192.168.11.100 にして、接続してみてください。</p>
+</div>
+<div class="section" id="id3">
+<h2>5.4. ダウンロード済みの証明書をRaspberry Piにコピー<a class="headerlink" href="#id3" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>Greengrassコア、センサーデバイス、アラートデバイス用に証明書を３セットダウンロードしていました。
+Raspberry Piに転送、します。VNC Viewrのタイトルバーの中心にマウスを移動させると、ツールが表示されます。矢印が交差したアイコンをクリックします。</p>
+<img alt="_images/file-txfer.png" src="_images/file-txfer.png" />
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<p>ファイル転送の画面が表示されます。 [Send files...] ボタンを押します。</p>
+<img alt="_images/file-txfer-2.png" src="_images/file-txfer-2.png" />
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<p>ファイルの選択画面が表示されるので、全ての証明書を選択して、[Open] を押します。</p>
+<img alt="_images/file-txfer-3.png" src="_images/file-txfer-3.png" />
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<p>ファイルがRaspberry Piのデスクトップに転送されます。</p>
+<img alt="_images/file-txfer-done.png" src="_images/file-txfer-done.png" />
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<p>設定のおさらい、</p>
+<p>ここで、設定のおさらいをしてみましょう。Raspberry Piの設定邸のために記録した内容は、下記の様になっているはずです。</p>
+<div class="highlight-python"><pre>Greengrass core device: GGC_Thing-01
+  "certPath": "xxxxxxxxxx-certificate.pem.crt",
+  "keyPath": "xxxxxxxxxx-private.pem.key",
+  "thingArn": "arn:aws:iot:us-west-2:000000000000:thing/GGC_Thing-01"
+
+AWS IoT endpoint
+  "endpoint": "xxxxxxxxxxxx.iot.us-west-2.amazonaws.com"
+
+Alarm Device: Alert-01
+  "device_certificate_relative_path": "certs/handsonAlarm/yyyyyyyyyy-certificate.pem.crt",
+  "device_private_key_relative_path": "certs/handsonAlarm/yyyyyyyyyy-private.pem.key",
+
+Sensor Device: Sensor-01
+  "device_certificate_relative_path": "certs/handsonSensor/zzzzzzzzzz-certificate.pem.crt",
+  "device_private_key_relative_path": "certs/handsonSensor/zzzzzzzzzz-private.pem.key",</pre>
+</div>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<p>Raspberry Pi 上の設定ファイルは、下記の3つになります。</p>
+<ul class="simple">
+<li>Greengrassコアの設定
+/greengrass/configuration/config.json</li>
+<li>センサーデバイスの設定
+/aws-iot-device-sdk-cpp/common/HandsonSensorConfig.json</li>
+<li>アラートデバイスの設定
+/aws-iot-device-sdk-cpp/common/HandsonAlarmConfig.json</li>
+</ul>
+</div>
+<div class="section" id="id4">
+<h2>5.5. Raspberry Pi上のファイル<a class="headerlink" href="#id4" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>Raspbery Piのメニューバーをクリックしてファイラーを開きます。</p>
+<img alt="_images/files-on-raspi.png" src="_images/files-on-raspi.png" />
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<ul class="simple">
+<li>aws-iot-device-sdk-cpp
+AWS IoT Device SDK C++ のパスです。センサーデバイス、アラートデバイスのアプリが存在します。
+証明書を格納するパスや、設定ファイル、アプリのソースコードが入っています。</li>
+<li>greengrass
+AWS Greengrass のパスです。
+証明書を格納するパスや、設定ファイル、Greengrassコアが入っています。</li>
+</ul>
+<div class="section" id="id5">
+<h3>5.5.1. アラートデバイス用の証明書<a class="headerlink" href="#id5" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p>/home/pi/aws-iot-device-sdk-cpp/certs</p>
+</div>
+</div>
+<div class="section" id="id6">
+<h2>5.6. 証明書を所定の位置にコピー<a class="headerlink" href="#id6" title="このヘッドラインへのパーマリンク">¶</a></h2>
 </div>
 </div>
 
@@ -62,7 +203,15 @@
             <h3><a href="index.html">目次</a></h3>
             <ul>
 <li><a class="reference external" href="#">5. Raspberry Piの設定</a><ul>
-<li><a class="reference external" href="#wifi">5.1. WiFi接続</a></li>
+<li><a class="reference external" href="#id1">5.1. ハードウェアの確認</a></li>
+<li><a class="reference external" href="#id2">5.2. 組み立て</a></li>
+<li><a class="reference external" href="#wifi">5.3. WiFi接続</a></li>
+<li><a class="reference external" href="#id3">5.4. ダウンロード済みの証明書をRaspberry Piにコピー</a></li>
+<li><a class="reference external" href="#id4">5.5. Raspberry Pi上のファイル</a><ul>
+<li><a class="reference external" href="#id5">5.5.1. アラートデバイス用の証明書</a></li>
+</ul>
+</li>
+<li><a class="reference external" href="#id6">5.6. 証明書を所定の位置にコピー</a></li>
 </ul>
 </li>
 </ul>
@@ -72,7 +221,7 @@
                                   title="前の章へ">4. Greengrass向けLambda関数の登録とサブスクリプションの設定</a></p>
             <h4>次のトピックへ</h4>
             <p class="topless"><a href="06.html"
-                                  title="次の章へ">6. 動作確認</a></p>
+                                  title="次の章へ">6. Greengrassコアへのデプロイと動作確認</a></p>
             <h3>このページ</h3>
             <ul class="this-page-menu">
               <li><a href="_sources/05.txt"
@@ -102,7 +251,7 @@
           <a href="genindex.html" title="総合索引"
              >索引</a></li>
         <li class="right" >
-          <a href="06.html" title="6. 動作確認"
+          <a href="06.html" title="6. Greengrassコアへのデプロイと動作確認"
              >次へ</a> |</li>
         <li class="right" >
           <a href="04.html" title="4. Greengrass向けLambda関数の登録とサブスクリプションの設定"
