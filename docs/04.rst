@@ -164,6 +164,10 @@ Lambda関数のバージョンが、Greengrassグループに追加されまし�
 
 |
 
+.. csv-table::
+    :file: table/subscription.csv
+|
+
 Greengrassの設定画面に戻り、Greengrassグループ：GGHandsonGroup-<参加者番号> をクリックして下さい。
 
 .. image:: images/04/greengrass-group.png

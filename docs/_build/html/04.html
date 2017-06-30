@@ -289,6 +289,105 @@
 <div class="line-block">
 <div class="line"><br /></div>
 </div>
+<table border="1" class="docutils">
+<colgroup>
+<col width="17%" />
+<col width="17%" />
+<col width="17%" />
+<col width="17%" />
+<col width="17%" />
+<col width="17%" />
+</colgroup>
+<tbody valign="top">
+<tr><td>ルート</td>
+<td>ソース</td>
+<td>&nbsp;</td>
+<td>ターゲット</td>
+<td>&nbsp;</td>
+<td>トピックフィルター</td>
+</tr>
+<tr><td>①</td>
+<td>デバイス</td>
+<td>Sensor-00</td>
+<td>サービス</td>
+<td>IoT Cloud</td>
+<td>sensing/data</td>
+</tr>
+<tr><td>②</td>
+<td>デバイス</td>
+<td>Sensor-00</td>
+<td>Lambda</td>
+<td>greengrassCpuUsage-00</td>
+<td>sensing/data</td>
+</tr>
+<tr><td>③</td>
+<td>Lambda</td>
+<td>greengrassCpuUsage-00</td>
+<td>サービス</td>
+<td>Local Shadow Service</td>
+<td>$aws/things/Alert/shadow/update</td>
+</tr>
+<tr><td>④</td>
+<td>デバイス</td>
+<td>Alert-00</td>
+<td>サービス</td>
+<td>Local Shadow Service</td>
+<td>$aws/things/Alert/shadow/update</td>
+</tr>
+<tr><td>&nbsp;</td>
+<td>サービス</td>
+<td>Local Shadow Service</td>
+<td>デバイス</td>
+<td>Alert-00</td>
+<td>$aws/things/Alert/shadow/update/accepted</td>
+</tr>
+<tr><td>&nbsp;</td>
+<td>サービス</td>
+<td>Local Shadow Service</td>
+<td>デバイス</td>
+<td>Alert-00</td>
+<td>$aws/things/Alert/shadow/update/rejected</td>
+</tr>
+<tr><td>&nbsp;</td>
+<td>サービス</td>
+<td>Local Shadow Service</td>
+<td>デバイス</td>
+<td>Alert-00</td>
+<td>$aws/things/Alert/shadow/update/delta</td>
+</tr>
+<tr><td>⑤</td>
+<td>デバイス</td>
+<td>Sensor-00</td>
+<td>サービス</td>
+<td>Local Shadow Service</td>
+<td>$aws/things/Sensor/shadow/update</td>
+</tr>
+<tr><td>&nbsp;</td>
+<td>サービス</td>
+<td>Local Shadow Service</td>
+<td>デバイス</td>
+<td>Sensor-00</td>
+<td>$aws/things/Sensor/shadow/update/accepted</td>
+</tr>
+<tr><td>&nbsp;</td>
+<td>サービス</td>
+<td>Local Shadow Service</td>
+<td>デバイス</td>
+<td>Sensor-00</td>
+<td>$aws/things/Sensor/shadow/update/rejected</td>
+</tr>
+<tr><td>&nbsp;</td>
+<td>サービス</td>
+<td>Local Shadow Service</td>
+<td>デバイス</td>
+<td>Sensor-00</td>
+<td>$aws/things/Sensor/shadow/update/delta</td>
+</tr>
+</tbody>
+</table>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
 <p>Greengrassの設定画面に戻り、Greengrassグループ：GGHandsonGroup-&lt;参加者番号&gt; をクリックして下さい。</p>
 <img alt="_images/greengrass-group.png" src="_images/greengrass-group.png" />
 <div class="line-block">
