@@ -48,26 +48,6 @@
             
   <div class="section" id="greengrass">
 <h1>6. Greengrassコアへのデプロイと動作確認<a class="headerlink" href="#greengrass" title="このヘッドラインへのパーマリンク">¶</a></h1>
-<p>ゲートウェイは、温湿度センサーが送信するBeaconを受信し、定期的にAWS IoTに送信します。AWS IoTではルールに基づきKinesis Firehoseにデータを送り、Kinesis Firehoseは、受け取ったデータをLambda関数で加工し、S3に保存します。</p>
-<img alt="_images/overview1.png" src="_images/overview1.png" />
-<div class="line-block">
-<div class="line"><br /></div>
-</div>
-<p>S3に保存されるデータは、下記のJSON形式になります。</p>
-<div class="highlight-python"><pre>{
-  "model": "590080BC",       ← センサーのモデル番号
-  "src_mac": "FFEAD7E638B8", ← センサーのMACアドレス
-  "dst_mac": "AC83F3A041D2", ← ゲートウェイのMACアドレス
-  "rssi": -47,               ← Beaconの電波強度
-  "vbat": 3.34,              ← 電池電圧
-  "tempreature": 26.97,      ← 温度
-  "humidity": 42,            ← 湿度
-  "@timestamp": "2017-05-11T08:34:43" ← タイムスタンプ
-}</pre>
-</div>
-<div class="line-block">
-<div class="line"><br /></div>
-</div>
 </div>
 
 

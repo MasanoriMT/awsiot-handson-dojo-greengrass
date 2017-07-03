@@ -117,7 +117,7 @@ Raspberry Piに転送、します。VNC Viewrのタイトルバーの中心に�
 
 設定のおさらい、
 
-ここで、設定のおさらいをしてみましょう。Raspberry Piの設定邸のために記録した内容は、下記の様になっているはずです。
+ここで、設定のおさらいをしてみましょう。Raspberry Piの設定邸のために記録した内容は、下記の様になっているはずです。この内容をテキストファイルにして、Raspberry Piに転送しておきましょう。PC側でコピーしてVNCの画面にペーストすることも出来ますが、うまくいかないこともあり、ファイルを転送することをお勧めします。
 
 ::
 
@@ -163,12 +163,197 @@ Raspbery Piのメニューバーをクリックしてファイラーを開きま
 - greengrass
   AWS Greengrass のパスです。
   証明書を格納するパスや、設定ファイル、Greengrassコアが入っています。
+  greengrass/ パスが無い場合は、/home/pi/にARMv7版のgreengrassパッケージがありますので、下記のコマンドで解凍して下さい。
 
-アラートデバイス用の証明書
--------------------------------
+::
+
+  tar -zxf greengrass-linux-x86-64-1.0.0.tar.gz -C .
+
+|
+
+コンソールを表示
+------------------------
+
+コンソールは、メニューバーのアイコンをクリックすると表示されます。
+
+.. image:: images/05/console.png
+
+|
+
+Greengrassコアの設定と起動
+==================================
 
 
-/home/pi/aws-iot-device-sdk-cpp/certs
+Greengrassコアの設定は、/home/pi/greengrass/configuration で行います。
 
-証明書を所定の位置にコピー
-================================
+.. image:: images/05/greengrass-core-setting.png
+
+|
+
+Greengrassコア用の証明書をコピー
+----------------------------------
+
+/home/pi/greengrass/configuration/certs にGreengrassコア用の証明書をコピーして下さい。
+
+コピーするファイルは、デスクトップ上の下記の３つのファイルになります。
+
+- root-ca.pem
+- xxxxxxxxxx-certificate.pem.crt
+- xxxxxxxxxx-private.pem.key
+
+設定ファイルの修正
+---------------------------
+
+/home/pi/greengrass/configuration/config.json をダブルクリックします。Text Editorが開きます。
+
+.. image:: images/05/greengrass-core-text-editor.png
+
+|
+
+赤線の部分を書き換えて下さい。
+
+::
+
+  {
+      "coreThing": {
+          "caPath": "root-ca.pem",
+          "certPath": "xxxxxxxxxx-certificate.pem.crt",
+          "keyPath": "xxxxxxxxxx-private.pem.key",
+          "thingArn": "arn:aws:iot:us-west-2:000000000000:thing/GGC_Thing-01",
+          "iotHost": "xxxxxxxxxxxx.iot.us-west-2.amazonaws.com",
+          "ggHost": "greengrass.iot.us-west-2.amazonaws.com"
+      },
+      "runtime": {
+          "cgroup": {
+              "useSystemd": "yes"
+          }
+      }
+  }
+
+|
+
+"iotHost"は、AWS IoTのエンドポイント(endpoint)です。
+
+"ggHost"のリージョン(AWS_REGION_HERE)も、us-west-2に書き換えて下さい。"useSystemd"は、yesにして下さい。
+
+Greengrassを起動する
+-----------------------------
+
+コンソールを開き、下記を入力して、Greengrassを起動します。
+
+::
+
+  cd greengrass
+  sudo ./greengrassd start
+
+|
+
+Greengrassが正常に起動できれば、下記が表示されます。
+
+.. image:: images/05/greengrass-start.png
+
+|
+
+デバイスの設定とビルド
+==================================
+
+センサーデバイス、アラートデバイスは、AWS IoT Device SDK C++で作成します。今回のハンズオンでは、Device SDKの開発環境と、各デバイスのコードは、導入済みです。証明書を所定のパスにコピーし、設定ファイルを修正し、アプリケーションのビルドを行います。
+
+デバイスの用の証明書をコピー
+----------------------------------
+
+/home/pi/aws-iot-device-sdk-cpp/certs にDevice SDK用の証明書のパスがあります。
+
+.. image:: images/05/device-certs.png
+
+|
+
+アラートデバイス用の証明書は、handsonAlarm、センサーデバイス用の証明書は、handsonSensorにコピーして下さい。
+
+root-ca.pem は、既に、コピー済みです。
+
+/home/pi/aws-iot-device-sdk-cpp/certs/handsonAlarm にコピー
+
+- yyyyyyyyyy-certificate.pem.crt
+- yyyyyyyyyy-private.pem.key
+
+/home/pi/aws-iot-device-sdk-cpp/certs/handsonSensor にコピー
+
+- zzzzzzzzzz-certificate.pem.crt
+- zzzzzzzzzz-private.pem.key
+
+
+設定ファイルの修正
+---------------------------
+
+設定ファイルは、下記になります。
+
+- /home/pi/aws-iot-device-sdk-cpp/common/HandsonAlarmConfig.json
+- /home/pi/aws-iot-device-sdk-cpp/common/HandsonSensorConfig.json
+
+Text Editorで開いて下さい。
+
+.. image:: images/05/greengrass-device-settings.png
+
+|
+
+**アラートデバイス用設定ファイル：HandsonAlarmConfig.json**
+
+赤字の部分を書き換えて下さい。
+
+.. image:: images/05/json-Alerm.png
+
+"client_id"、"thing_name"は、アラートデバイス名 Alert-<参加者番号>　になります。
+
+**センサーデバイス用設定ファイル：HandsonSensorConfig.json**
+
+同様に、赤字の部分を書き換えて下さい。
+
+.. image:: images/05/json-Sensor.png
+
+|
+
+Device SDKアプリケーションのビルド
+-----------------------------------------
+
+センサーデバイス、アラートデバイス用アプリケーションのビルドを行います。コンソ-ルを開き、:~/aws-iot-device-sdk-cpp/build に移動して下さい。
+
+.. image:: images/05/build.png
+
+|
+
+下記を入力し、リターンを押します。アラートデバイス用アプリがビルドされます。
+
+::
+
+  make handson-alarm-sample
+
+|
+
+ビルに成功すると、下記の様に表示されます。
+
+.. image:: images/05/build-2.png
+
+|
+
+~/aws-iot-device-sdk-cpp/build/bin 内に、実行ファイル handson-alarm-sample が生成されていることを確認します。
+
+.. image:: images/05/build-3.png
+
+|
+
+同様に、センサーデバイス用の用アプリもビルドします。
+
+::
+
+  make handson-sensor-sample
+
+|
+
+~/aws-iot-device-sdk-cpp/build/bin 下に、実行ファイル handson-sensor-sample が生成されていることを確認します。
+
+/home/pi/aws-iot-device-sdk-cpp/build/bin/certs 下に、証明書がコピーされているかも確認してください。
+
+.. image:: images/05/certs-after-build.png
+
+|

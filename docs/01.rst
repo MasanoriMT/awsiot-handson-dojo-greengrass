@@ -109,13 +109,17 @@ https://www.realvnc.com/download/viewer/
 |
 
 
-サンプルプログラム
+サンプルファイル
 ======================
 
 本ハンズオンで利用するファイルです。
 
 # Raspberry Pi 用 SDカードイメージ
   https://s3-us-west-2.amazonaws.com/greengrass-trial/GG_Handson.img.zip
+
+  本ハンズオンでは、このイメージをSDカードに書き込んだものを用意します。
+  下記のツールを使ってSDカードに書き込むことも出来ます。
+  https://etcher.io/
 
 
 # Lambda関数パッケージ

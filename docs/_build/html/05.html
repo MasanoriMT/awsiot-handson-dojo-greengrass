@@ -139,7 +139,7 @@ Raspberry Piに転送、します。VNC Viewrのタイトルバーの中心に�
 <div class="line"><br /></div>
 </div>
 <p>設定のおさらい、</p>
-<p>ここで、設定のおさらいをしてみましょう。Raspberry Piの設定邸のために記録した内容は、下記の様になっているはずです。</p>
+<p>ここで、設定のおさらいをしてみましょう。Raspberry Piの設定邸のために記録した内容は、下記の様になっているはずです。この内容をテキストファイルにして、Raspberry Piに転送しておきましょう。PC側でコピーしてVNCの画面にペーストすることも出来ますが、うまくいかないこともあり、ファイルを転送することをお勧めします。</p>
 <div class="highlight-python"><pre>Greengrass core device: GGC_Thing-01
   "certPath": "xxxxxxxxxx-certificate.pem.crt",
   "keyPath": "xxxxxxxxxx-private.pem.key",
@@ -182,15 +182,169 @@ AWS IoT Device SDK C++ のパスです。センサーデバイス、アラート
 証明書を格納するパスや、設定ファイル、アプリのソースコードが入っています。</li>
 <li>greengrass
 AWS Greengrass のパスです。
-証明書を格納するパスや、設定ファイル、Greengrassコアが入っています。</li>
+証明書を格納するパスや、設定ファイル、Greengrassコアが入っています。
+greengrass/ パスが無い場合は、/home/pi/にARMv7版のgreengrassパッケージがありますので、下記のコマンドで解凍して下さい。</li>
 </ul>
-<div class="section" id="id5">
-<h3>5.5.1. アラートデバイス用の証明書<a class="headerlink" href="#id5" title="このヘッドラインへのパーマリンク">¶</a></h3>
-<p>/home/pi/aws-iot-device-sdk-cpp/certs</p>
+<div class="highlight-python"><pre>tar -zxf greengrass-linux-x86-64-1.0.0.tar.gz -C .</pre>
 </div>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<div class="section" id="id5">
+<h3>5.5.1. コンソールを表示<a class="headerlink" href="#id5" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p>コンソールは、メニューバーのアイコンをクリックすると表示されます。</p>
+<img alt="_images/console.png" src="_images/console.png" />
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+</div>
+</div>
+<div class="section" id="greengrass">
+<h2>5.6. Greengrassコアの設定と起動<a class="headerlink" href="#greengrass" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>Greengrassコアの設定は、/home/pi/greengrass/configuration で行います。</p>
+<img alt="_images/greengrass-core-setting.png" src="_images/greengrass-core-setting.png" />
+<div class="line-block">
+<div class="line"><br /></div>
 </div>
 <div class="section" id="id6">
-<h2>5.6. 証明書を所定の位置にコピー<a class="headerlink" href="#id6" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<h3>5.6.1. Greengrassコア用の証明書をコピー<a class="headerlink" href="#id6" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p>/home/pi/greengrass/configuration/certs にGreengrassコア用の証明書をコピーして下さい。</p>
+<p>コピーするファイルは、デスクトップ上の下記の３つのファイルになります。</p>
+<ul class="simple">
+<li>root-ca.pem</li>
+<li>xxxxxxxxxx-certificate.pem.crt</li>
+<li>xxxxxxxxxx-private.pem.key</li>
+</ul>
+</div>
+<div class="section" id="id7">
+<h3>5.6.2. 設定ファイルの修正<a class="headerlink" href="#id7" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p>/home/pi/greengrass/configuration/config.json をダブルクリックします。Text Editorが開きます。</p>
+<img alt="_images/greengrass-core-text-editor.png" src="_images/greengrass-core-text-editor.png" />
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<p>赤線の部分を書き換えて下さい。</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="s2">&quot;coreThing&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s2">&quot;caPath&quot;</span><span class="p">:</span> <span class="s2">&quot;root-ca.pem&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;certPath&quot;</span><span class="p">:</span> <span class="s2">&quot;xxxxxxxxxx-certificate.pem.crt&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;keyPath&quot;</span><span class="p">:</span> <span class="s2">&quot;xxxxxxxxxx-private.pem.key&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;thingArn&quot;</span><span class="p">:</span> <span class="s2">&quot;arn:aws:iot:us-west-2:000000000000:thing/GGC_Thing-01&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;iotHost&quot;</span><span class="p">:</span> <span class="s2">&quot;xxxxxxxxxxxx.iot.us-west-2.amazonaws.com&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;ggHost&quot;</span><span class="p">:</span> <span class="s2">&quot;greengrass.iot.us-west-2.amazonaws.com&quot;</span>
+    <span class="p">},</span>
+    <span class="s2">&quot;runtime&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s2">&quot;cgroup&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s2">&quot;useSystemd&quot;</span><span class="p">:</span> <span class="s2">&quot;yes&quot;</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<p>&#8220;iotHost&#8221;は、AWS IoTのエンドポイント(endpoint)です。</p>
+<p>&#8220;ggHost&#8221;のリージョン(AWS_REGION_HERE)も、us-west-2に書き換えて下さい。&#8221;useSystemd&#8221;は、yesにして下さい。</p>
+</div>
+<div class="section" id="id8">
+<h3>5.6.3. Greengrassを起動する<a class="headerlink" href="#id8" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p>コンソールを開き、下記を入力して、Greengrassを起動します。</p>
+<div class="highlight-python"><pre>cd greengrass
+sudo ./greengrassd start</pre>
+</div>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<p>Greengrassが正常に起動できれば、下記が表示されます。</p>
+<img alt="_images/greengrass-start.png" src="_images/greengrass-start.png" />
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+</div>
+</div>
+<div class="section" id="id9">
+<h2>5.7. デバイスの設定とビルド<a class="headerlink" href="#id9" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>センサーデバイス、アラートデバイスは、AWS IoT Device SDK C++で作成します。今回のハンズオンでは、Device SDKの開発環境と、各デバイスのコードは、導入済みです。証明書を所定のパスにコピーし、設定ファイルを修正し、アプリケーションのビルドを行います。</p>
+<div class="section" id="id10">
+<h3>5.7.1. デバイスの用の証明書をコピー<a class="headerlink" href="#id10" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p>/home/pi/aws-iot-device-sdk-cpp/certs にDevice SDK用の証明書のパスがあります。</p>
+<img alt="_images/device-certs.png" src="_images/device-certs.png" />
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<p>アラートデバイス用の証明書は、handsonAlarm、センサーデバイス用の証明書は、handsonSensorにコピーして下さい。</p>
+<p>root-ca.pem は、既に、コピー済みです。</p>
+<p>/home/pi/aws-iot-device-sdk-cpp/certs/handsonAlarm にコピー</p>
+<ul class="simple">
+<li>yyyyyyyyyy-certificate.pem.crt</li>
+<li>yyyyyyyyyy-private.pem.key</li>
+</ul>
+<p>/home/pi/aws-iot-device-sdk-cpp/certs/handsonSensor にコピー</p>
+<ul class="simple">
+<li>zzzzzzzzzz-certificate.pem.crt</li>
+<li>zzzzzzzzzz-private.pem.key</li>
+</ul>
+</div>
+<div class="section" id="id11">
+<h3>5.7.2. 設定ファイルの修正<a class="headerlink" href="#id11" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p>設定ファイルは、下記になります。</p>
+<ul class="simple">
+<li>/home/pi/aws-iot-device-sdk-cpp/common/HandsonAlarmConfig.json</li>
+<li>/home/pi/aws-iot-device-sdk-cpp/common/HandsonSensorConfig.json</li>
+</ul>
+<p>Text Editorで開いて下さい。</p>
+<img alt="_images/greengrass-device-settings.png" src="_images/greengrass-device-settings.png" />
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<p><strong>アラートデバイス用設定ファイル：HandsonAlarmConfig.json</strong></p>
+<p>赤字の部分を書き換えて下さい。</p>
+<img alt="_images/json-Alerm.png" src="_images/json-Alerm.png" />
+<p>&#8220;client_id&#8221;、&#8221;thing_name&#8221;は、アラートデバイス名 Alert-&lt;参加者番号&gt;　になります。</p>
+<p><strong>センサーデバイス用設定ファイル：HandsonSensorConfig.json</strong></p>
+<p>同様に、赤字の部分を書き換えて下さい。</p>
+<img alt="_images/json-Sensor.png" src="_images/json-Sensor.png" />
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+</div>
+<div class="section" id="device-sdk">
+<h3>5.7.3. Device SDKアプリケーションのビルド<a class="headerlink" href="#device-sdk" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p>センサーデバイス、アラートデバイス用アプリケーションのビルドを行います。コンソ-ルを開き、:~/aws-iot-device-sdk-cpp/build に移動して下さい。</p>
+<img alt="_images/build.png" src="_images/build.png" />
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<p>下記を入力し、リターンを押します。アラートデバイス用アプリがビルドされます。</p>
+<div class="highlight-python"><pre>make handson-alarm-sample</pre>
+</div>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<p>ビルに成功すると、下記の様に表示されます。</p>
+<img alt="_images/build-2.png" src="_images/build-2.png" />
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<p>~/aws-iot-device-sdk-cpp/build/bin 内に、実行ファイル handson-alarm-sample が生成されていることを確認します。</p>
+<img alt="_images/build-3.png" src="_images/build-3.png" />
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<p>同様に、センサーデバイス用の用アプリもビルドします。</p>
+<div class="highlight-python"><pre>make handson-sensor-sample</pre>
+</div>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<p>~/aws-iot-device-sdk-cpp/build/bin 下に、実行ファイル handson-sensor-sample が生成されていることを確認します。</p>
+<p>/home/pi/aws-iot-device-sdk-cpp/build/bin/certs 下に、証明書がコピーされているかも確認してください。</p>
+<img alt="_images/certs-after-build.png" src="_images/certs-after-build.png" />
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+</div>
 </div>
 </div>
 
@@ -208,10 +362,21 @@ AWS Greengrass のパスです。
 <li><a class="reference external" href="#wifi">5.3. WiFi接続</a></li>
 <li><a class="reference external" href="#id3">5.4. ダウンロード済みの証明書をRaspberry Piにコピー</a></li>
 <li><a class="reference external" href="#id4">5.5. Raspberry Pi上のファイル</a><ul>
-<li><a class="reference external" href="#id5">5.5.1. アラートデバイス用の証明書</a></li>
+<li><a class="reference external" href="#id5">5.5.1. コンソールを表示</a></li>
 </ul>
 </li>
-<li><a class="reference external" href="#id6">5.6. 証明書を所定の位置にコピー</a></li>
+<li><a class="reference external" href="#greengrass">5.6. Greengrassコアの設定と起動</a><ul>
+<li><a class="reference external" href="#id6">5.6.1. Greengrassコア用の証明書をコピー</a></li>
+<li><a class="reference external" href="#id7">5.6.2. 設定ファイルの修正</a></li>
+<li><a class="reference external" href="#id8">5.6.3. Greengrassを起動する</a></li>
+</ul>
+</li>
+<li><a class="reference external" href="#id9">5.7. デバイスの設定とビルド</a><ul>
+<li><a class="reference external" href="#id10">5.7.1. デバイスの用の証明書をコピー</a></li>
+<li><a class="reference external" href="#id11">5.7.2. 設定ファイルの修正</a></li>
+<li><a class="reference external" href="#device-sdk">5.7.3. Device SDKアプリケーションのビルド</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
