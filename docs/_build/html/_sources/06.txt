@@ -35,6 +35,9 @@ Greengrassグループの設定画面が出てきます。右上の [アクシ�
 
 デプロイできない場合は、設定ファイル ~/greengrass/configuration/config.json を確認してみて下さい。
 
+config.json 修正後は、sudo ./greengrassd start と入力し、greengrassdを再起動して下さい。
+
+
 動作確認
 =================
 
