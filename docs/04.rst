@@ -46,7 +46,7 @@ Lambda関数の作成画面が表示されるので、"Blank Function" をクリ
 ======================== =======================================
 名前                          greengrassCpuUsage-<参加者番号>
 説明                          a Lambda func. to run Greengrass core
-ランタイム                     Python 2.8
+ランタイム                     Python 2.7
 コード エントリ タイプ           .ZIPファイルをアップロード
 関数パッケージ                  GGhandsonLambda.zip
 ハンドラ                       greengrassCpuUsage.message_handler
