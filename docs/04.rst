@@ -170,6 +170,7 @@ Lambda関数のバージョンが、Greengrassグループに追加されまし�
 .. csv-table::
     :header-rows: 1
     :file: table/subscription.csv
+
 |
 
 **【注意】トピックフィルターの $aws/things/Alert-01/、$aws/things/Sensor-01/ の "01"は、ご自分の参加者番号に置き換えて下さい。**
