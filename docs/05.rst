@@ -198,7 +198,7 @@ Greengrassコアの設定と起動
 ==================================
 
 
-Greengrassコアの設定は、/home/pi/greengrass/configuration で行います。
+Greengrassコアの設定は、~/greengrass/configuration で行います。
 
 .. image:: images/05/greengrass-core-setting.png
 
@@ -207,7 +207,7 @@ Greengrassコアの設定は、/home/pi/greengrass/configuration で行います
 Greengrassコア用の証明書をコピー
 ----------------------------------
 
-/home/pi/greengrass/configuration/certs にGreengrassコア用の証明書をコピーして下さい。
+~/greengrass/configuration/certs にGreengrassコア用の証明書をコピーして下さい。
 
 コピーするファイルは、デスクトップ上の下記の３つのファイルになります。
 
@@ -218,7 +218,7 @@ Greengrassコア用の証明書をコピー
 設定ファイルの修正
 ---------------------------
 
-/home/pi/greengrass/configuration/config.json をダブルクリックします。Text Editorが開きます。
+~/greengrass/configuration/config.json をダブルクリックします。Text Editorが開きます。
 
 .. image:: images/05/greengrass-core-text-editor.png
 
@@ -276,7 +276,7 @@ Greengrassが正常に起動できれば、下記が表示されます。
 デバイスの用の証明書をコピー
 ----------------------------------
 
-/home/pi/aws-iot-device-sdk-cpp/certs にDevice SDK用の証明書のパスがあります。
+~/aws-iot-device-sdk-cpp/certs にDevice SDK用の証明書のパスがあります。
 
 .. image:: images/05/device-certs.png
 
@@ -286,12 +286,12 @@ Greengrassが正常に起動できれば、下記が表示されます。
 
 root-ca.pem は、既に、コピー済みです。
 
-/home/pi/aws-iot-device-sdk-cpp/certs/handsonAlarm にコピー
+~/aws-iot-device-sdk-cpp/certs/handsonAlarm にコピー
 
 - yyyyyyyyyy-certificate.pem.crt
 - yyyyyyyyyy-private.pem.key
 
-/home/pi/aws-iot-device-sdk-cpp/certs/handsonSensor にコピー
+~/aws-iot-device-sdk-cpp/certs/handsonSensor にコピー
 
 - zzzzzzzzzz-certificate.pem.crt
 - zzzzzzzzzz-private.pem.key
@@ -302,8 +302,8 @@ root-ca.pem は、既に、コピー済みです。
 
 設定ファイルは、下記になります。
 
-- /home/pi/aws-iot-device-sdk-cpp/common/HandsonAlarmConfig.json
-- /home/pi/aws-iot-device-sdk-cpp/common/HandsonSensorConfig.json
+- ~/aws-iot-device-sdk-cpp/common/HandsonAlarmConfig.json
+- ~/aws-iot-device-sdk-cpp/common/HandsonSensorConfig.json
 
 Text Editorで開いて下さい。
 
@@ -366,7 +366,7 @@ Device SDKアプリケーションのビルド
 
 ~/aws-iot-device-sdk-cpp/build/bin 下に、実行ファイル handson-sensor-sample が生成されていることを確認します。
 
-/home/pi/aws-iot-device-sdk-cpp/build/bin/certs 下に、証明書がコピーされているかも確認してください。
+~/aws-iot-device-sdk-cpp/build/bin/certs 下に、証明書がコピーされているかも確認してください。
 
 .. image:: images/05/certs-after-build.png
 

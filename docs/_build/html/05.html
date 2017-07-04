@@ -210,14 +210,14 @@ AWS Greengrass のパスです。
 </div>
 <div class="section" id="greengrass">
 <h2>5.6. Greengrassコアの設定と起動<a class="headerlink" href="#greengrass" title="このヘッドラインへのパーマリンク">¶</a></h2>
-<p>Greengrassコアの設定は、/home/pi/greengrass/configuration で行います。</p>
+<p>Greengrassコアの設定は、~/greengrass/configuration で行います。</p>
 <img alt="_images/greengrass-core-setting.png" src="_images/greengrass-core-setting.png" />
 <div class="line-block">
 <div class="line"><br /></div>
 </div>
 <div class="section" id="id6">
 <h3>5.6.1. Greengrassコア用の証明書をコピー<a class="headerlink" href="#id6" title="このヘッドラインへのパーマリンク">¶</a></h3>
-<p>/home/pi/greengrass/configuration/certs にGreengrassコア用の証明書をコピーして下さい。</p>
+<p>~/greengrass/configuration/certs にGreengrassコア用の証明書をコピーして下さい。</p>
 <p>コピーするファイルは、デスクトップ上の下記の３つのファイルになります。</p>
 <ul class="simple">
 <li>root-ca.pem</li>
@@ -227,7 +227,7 @@ AWS Greengrass のパスです。
 </div>
 <div class="section" id="id7">
 <h3>5.6.2. 設定ファイルの修正<a class="headerlink" href="#id7" title="このヘッドラインへのパーマリンク">¶</a></h3>
-<p>/home/pi/greengrass/configuration/config.json をダブルクリックします。Text Editorが開きます。</p>
+<p>~/greengrass/configuration/config.json をダブルクリックします。Text Editorが開きます。</p>
 <img alt="_images/greengrass-core-text-editor.png" src="_images/greengrass-core-text-editor.png" />
 <div class="line-block">
 <div class="line"><br /></div>
@@ -277,19 +277,19 @@ sudo ./greengrassd start</pre>
 <p>センサーデバイス、アラートデバイスは、AWS IoT Device SDK C++で作成します。今回のハンズオンでは、Device SDKの開発環境と、各デバイスのコードは、導入済みです。証明書を所定のパスにコピーし、設定ファイルを修正し、アプリケーションのビルドを行います。</p>
 <div class="section" id="id10">
 <h3>5.7.1. デバイスの用の証明書をコピー<a class="headerlink" href="#id10" title="このヘッドラインへのパーマリンク">¶</a></h3>
-<p>/home/pi/aws-iot-device-sdk-cpp/certs にDevice SDK用の証明書のパスがあります。</p>
+<p>~/aws-iot-device-sdk-cpp/certs にDevice SDK用の証明書のパスがあります。</p>
 <img alt="_images/device-certs.png" src="_images/device-certs.png" />
 <div class="line-block">
 <div class="line"><br /></div>
 </div>
 <p>アラートデバイス用の証明書は、handsonAlarm、センサーデバイス用の証明書は、handsonSensorにコピーして下さい。</p>
 <p>root-ca.pem は、既に、コピー済みです。</p>
-<p>/home/pi/aws-iot-device-sdk-cpp/certs/handsonAlarm にコピー</p>
+<p>~/aws-iot-device-sdk-cpp/certs/handsonAlarm にコピー</p>
 <ul class="simple">
 <li>yyyyyyyyyy-certificate.pem.crt</li>
 <li>yyyyyyyyyy-private.pem.key</li>
 </ul>
-<p>/home/pi/aws-iot-device-sdk-cpp/certs/handsonSensor にコピー</p>
+<p>~/aws-iot-device-sdk-cpp/certs/handsonSensor にコピー</p>
 <ul class="simple">
 <li>zzzzzzzzzz-certificate.pem.crt</li>
 <li>zzzzzzzzzz-private.pem.key</li>
@@ -299,8 +299,8 @@ sudo ./greengrassd start</pre>
 <h3>5.7.2. 設定ファイルの修正<a class="headerlink" href="#id11" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <p>設定ファイルは、下記になります。</p>
 <ul class="simple">
-<li>/home/pi/aws-iot-device-sdk-cpp/common/HandsonAlarmConfig.json</li>
-<li>/home/pi/aws-iot-device-sdk-cpp/common/HandsonSensorConfig.json</li>
+<li>~/aws-iot-device-sdk-cpp/common/HandsonAlarmConfig.json</li>
+<li>~/aws-iot-device-sdk-cpp/common/HandsonSensorConfig.json</li>
 </ul>
 <p>Text Editorで開いて下さい。</p>
 <img alt="_images/greengrass-device-settings.png" src="_images/greengrass-device-settings.png" />
@@ -348,7 +348,7 @@ sudo ./greengrassd start</pre>
 <div class="line"><br /></div>
 </div>
 <p>~/aws-iot-device-sdk-cpp/build/bin 下に、実行ファイル handson-sensor-sample が生成されていることを確認します。</p>
-<p>/home/pi/aws-iot-device-sdk-cpp/build/bin/certs 下に、証明書がコピーされているかも確認してください。</p>
+<p>~/aws-iot-device-sdk-cpp/build/bin/certs 下に、証明書がコピーされているかも確認してください。</p>
 <img alt="_images/certs-after-build.png" src="_images/certs-after-build.png" />
 <div class="line-block">
 <div class="line"><br /></div>

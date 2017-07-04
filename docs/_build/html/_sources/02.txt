@@ -135,7 +135,7 @@ Greengrassコア [GGC_Thing-<参加者番号>] をクリックして下さい。
 ARNは、Raspberry Pi上の Greengrassの設定ファイル
 ::
 
-  /greengrass/configuration/config.json
+  ~/greengrass/configuration/config.json
 
 |
 
