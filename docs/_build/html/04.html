@@ -209,34 +209,73 @@
 <p>サブスクリプションは、ローカルデバイス、Greengrassコア、クラウド間のメッセージの送信先を定義するものです。今回のハンズオンでは、下記のサブスクリプションを設定します。</p>
 <table border="1" class="docutils">
 <colgroup>
-<col width="100%" />
+<col width="25%" />
+<col width="25%" />
+<col width="25%" />
+<col width="25%" />
 </colgroup>
 <thead valign="bottom">
-<tr><th class="head">ルート	ソース	ターゲット	トピックフィルター</th>
+<tr><th class="head">ルート</th>
+<th class="head">ソース</th>
+<th class="head">ターゲット</th>
+<th class="head">トピックフィルター</th>
 </tr>
 </thead>
 <tbody valign="top">
-<tr><td>①	デバイス:Sensor-01	サービス:IoT Cloud 	sensing/data</td>
+<tr><td>①</td>
+<td>デバイス:Sensor-01</td>
+<td>サービス:IoT Cloud</td>
+<td>sensing/data</td>
 </tr>
-<tr><td>②	デバイス:Sensor-01	Lambda:greengrassCpuUsage-01	sensing/data</td>
+<tr><td>②</td>
+<td>デバイス:Sensor-01</td>
+<td>Lambda:greengrassCpuUsage-01</td>
+<td>sensing/data</td>
 </tr>
-<tr><td>③	Lambda:greengrassCpuUsage-01	サービス:Local Shadow Service 	$aws/things/Alert-01/shadow/update</td>
+<tr><td>③</td>
+<td>Lambda:greengrassCpuUsage-01</td>
+<td>サービス:Local Shadow Service</td>
+<td>$aws/things/Alert-01/shadow/update</td>
 </tr>
-<tr><td>④	デバイス:Alert-01	サービス:Local Shadow Service 	$aws/things/Alert-01/shadow/update</td>
+<tr><td>④</td>
+<td>デバイス:Alert-01</td>
+<td>サービス:Local Shadow Service</td>
+<td>$aws/things/Alert-01/shadow/update</td>
 </tr>
-<tr><td>	サービス:Local Shadow Service 	デバイス:Alert-01	$aws/things/Alert-01/shadow/update/accepted</td>
+<tr><td>&nbsp;</td>
+<td>サービス:Local Shadow Service</td>
+<td>デバイス:Alert-01</td>
+<td>$aws/things/Alert-01/shadow/update/accepted</td>
 </tr>
-<tr><td>	サービス:Local Shadow Service 	デバイス:Alert-01	$aws/things/Alert-01/shadow/update/rejected</td>
+<tr><td>&nbsp;</td>
+<td>サービス:Local Shadow Service</td>
+<td>デバイス:Alert-01</td>
+<td>$aws/things/Alert-01/shadow/update/rejected</td>
 </tr>
-<tr><td>	サービス:Local Shadow Service 	デバイス:Alert-01	$aws/things/Alert-01/shadow/update/delta</td>
+<tr><td>&nbsp;</td>
+<td>サービス:Local Shadow Service</td>
+<td>デバイス:Alert-01</td>
+<td>$aws/things/Alert-01/shadow/update/delta</td>
 </tr>
-<tr><td>⑤	デバイス:Sensor-01	サービス:Local Shadow Service 	$aws/things/Sensor-01/shadow/update</td>
+<tr><td>⑤</td>
+<td>デバイス:Sensor-01</td>
+<td>サービス:Local Shadow Service</td>
+<td>$aws/things/Sensor-01/shadow/update</td>
 </tr>
-<tr><td>	サービス:Local Shadow Service 	デバイス:Sensor-01	$aws/things/Sensor-01/shadow/update/accepted</td>
+<tr><td>&nbsp;</td>
+<td>サービス:Local Shadow Service</td>
+<td>デバイス:Sensor-01</td>
+<td>$aws/things/Sensor-01/shadow/update/accepted</td>
 </tr>
-<tr><td>	サービス:Local Shadow Service 	デバイス:Sensor-01	$aws/things/Sensor-01/shadow/update/rejected</td>
+<tr><td>&nbsp;</td>
+<td>サービス:Local Shadow Service</td>
+<td>デバイス:Sensor-01</td>
+<td>$aws/things/Sensor-01/shadow/update/rejected</td>
 </tr>
-<tr><td>	サービス:Local Shadow Service 	デバイス:Sensor-01	$aws/things/Sensor-01/shadow/update/delta</td>
+<tr><td>&nbsp;</td>
+<td>サービス:Local Shadow Service</td>
+<td>デバイス:Sensor-01</td>
+<td>$aws/things/Sensor-01/shadow/update/delta</td>
 </tr>
 </tbody>
 </table>
