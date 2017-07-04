@@ -181,7 +181,7 @@ greengrass/ パスが存在する場合、以前の設定が残っています�
 
 ::
 
-  tar -zxf greengrass-linux-x86-64-1.0.0.tar.gz -C .
+  tar -zxf greengrass-linux-armv7l-1.0.0.tar.gz -C .
 
 |
 
