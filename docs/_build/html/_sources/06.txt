@@ -1,3 +1,139 @@
 =======================================
 Greengrassコアへのデプロイと動作確認
 =======================================
+
+AWS コンソールのGreengrassに戻ります。
+
+Greengrassの設定画面に戻り、Greengrassグループ：GGHandsonGroup-<参加者番号> をクリックして下さい。
+
+.. image:: images/04/greengrass-group.png
+
+|
+
+Greengrassの設定をデプロイする
+====================================
+
+Greengrassグループの設定画面が出てきます。右上の [アクション] メニューから [デプロイ] を撰んで下さい。
+
+.. image:: images/06/deploy.png
+
+|
+
+初回のでデプロイ時、「デバイスによるコア検出方法の設定」画面が表示されます。[自動検出] をクリックします。
+
+.. image:: images/06/auto-detect.png
+
+|
+
+デプロイが完了すると、「 デプロイメントが正常に完了しました」と表示されます。
+
+.. image:: images/06/deploy-completed.png
+
+|
+
+これで、デプロイは、完了しました。
+
+デプロイできない場合は、設定ファイル /home/pi/greengrass/configuration/config.json を確認してみて下さい。
+
+動作確認
+=================
+
+センサーデバイスを起動する
+------------------------------
+
+Raspberry Piのリモート画面に移動します。
+
+コンソールを開いて、cd aws-iot-device-sdk-cpp/build/bin に移動し、センサデバイス アプリを起動します。
+
+::
+
+  cd aws-iot-device-sdk-cpp/build/bin
+  ./handson-sensor-sample
+
+|
+
+センサーデバイス アプリ handson-sensor-sample が起動し、下記の様なメッセージが表示されます。
+
+.. image:: images/06/start-sensor-device.png
+
+|
+
+センサーデバイスは、Raspberry PiのCpu usageをトピック sensing/data でPublishし続けます。
+
+アラートデバイスを起動する
+------------------------------
+
+コンソールをもう一つ開いて、cd aws-iot-device-sdk-cpp/build/bin に移動し、アラートデバイス アプリを起動します。
+
+::
+
+  cd aws-iot-device-sdk-cpp/build/bin
+  ./handson-alarm-sample
+
+|
+
+アラートデバイス アプリ handson-alarm-sample が起動し、下記の様なメッセージが表示されます。
+
+.. image:: images/06/start-alert-device.png
+
+|
+
+アラートデバイスは、デバイスシャドウ のキー Alert の更新を待ち続けます。
+
+画面の右上に、Cpu usageが表示されています。通常は、25%程度です。
+
+.. image:: images/06/cpu-load.png
+
+|
+
+動作確認
+===========================
+
+AWS コンソールのAWS IoT に移動します。
+
+メニューから [登録] をクリックし、センサーデバイスをクリックします。
+
+.. image:: images/06/awsiot-sensor-device.png
+
+|
+
+メニューから、[シャドウ] をクリックし、センサーデバイスのシャドウを表示します。
+
+.. image:: images/06/sensor-shadow.png
+
+|
+
+センサーデバイスのシャドウは、クラウドと同期する設定にしていましたので、この様に表示されます。
+
+"LoadSwitch": "off" の状態では、CPUロードは、25%程度です。CPUロードを上げてみましょう。
+
+右上の [演習] をクリックして、下記の様に書き換えて下さい。
+
+::
+
+  {
+    "desired": {
+      "LoadSwitch": "on"
+    },
+    "reported": {
+      "LoadSwitch": "off"
+    }
+  }
+
+|
+
+その後、右上の [保存] をクリックして下さい。"LoadSwitch" が "on" になります。
+
+.. image:: images/06/sensor-shadow-update.png
+
+|
+
+Raspberry Piのリモート画面を見て下さい。
+
+センサーデバイスが、"LoadSwitch" が "on" になったことを認識し、CPUロードが上がる処理が実行され、センサーデバイス アプリは、"calc!" と表示します。Raspberry PiのCPU usageが 60%程度に上がります。LambdaもCpu usageを確認していますが、50%以上に上昇すると、アラートデバイスのシャドウ "Alert"を "on"に書き換えます。アラートデバイスが、"Alert": "on" を確認すると、アラートデバイス アプリが、“alert!!!" と表示します。
+
+.. image:: images/06/alert!!.png
+
+|
+
+AWSコンソールで、”LoadSwitch"を "off"にすると、"alert!!!" は停止します。
