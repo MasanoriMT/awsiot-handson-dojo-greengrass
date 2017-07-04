@@ -5,7 +5,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>7. シナリオ2: センサーデータを可視化する-1 &mdash; awsiot-handson-dojo-greengrass v0.0 documentation</title>
+    <title>7. オフライン動作の確認 &mdash; awsiot-handson-dojo-greengrass v0.0 documentation</title>
     <link rel="stylesheet" href="_static/default.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <script type="text/javascript">
@@ -47,13 +47,33 @@
           <div class="body">
             
   <div class="section" id="id1">
-<h1>7. シナリオ2: センサーデータを可視化する-1<a class="headerlink" href="#id1" title="このヘッドラインへのパーマリンク">¶</a></h1>
-<p>LambdaでJSON形式に変換されたセンサーデータをAWS IoTへトピック名を換えてPublishし、そのトピックをWebアプリケーションでSubscribeしグラフ表示します。</p>
-<img alt="_images/overview2.png" src="_images/overview2.png" />
+<h1>7. オフライン動作の確認<a class="headerlink" href="#id1" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<p>オフラインでも、Lambdaが動作し、アラートが出るか確認してみましょう。</p>
+<p>”Alert!!!”を停止させて下さい。</p>
+<p>次に、Raspberry Piのリモート画面でコンソールをオープンして下さい。コマンドラインに下記を入力して、ディフォルトルートを削除し、インターネットとの通信を遮断します。</p>
+<div class="highlight-python"><pre>sudo route del default gw 192.168.1.1</pre>
+</div>
 <div class="line-block">
 <div class="line"><br /></div>
 </div>
-<hr class="docutils" />
+<p>ping amazon.com と入力して、</p>
+<p>下記のコマンドを入力して、ディフォルトルートを元に戻します。</p>
+<div class="highlight-python"><pre>sudo route add default gw 192.168.1.1</pre>
+</div>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<div class="section" id="id2">
+<h2>7.1. オフライン動作を確認<a class="headerlink" href="#id2" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>Raspberry Piのコンソールに、ディフォルトルートの削除 コマンドを入力し、リターンせず、そのままにしておきます。</p>
+<img alt="_images/pausedefault-gw-del.png" src="_images/pausedefault-gw-del.png" />
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<p>AWSコンソールで、センサーデバイスのシャドウの&#8221;LoadSwitch&#8221;を&#8221;on&#8221;にします。すぐに、Raspberry Piのコンソールでリターンを押し、インターネットとの通信を遮断します。</p>
+<p>&#8220;alert!!!&#8221;が発生するか、確認して下さい。</p>
+<p>確認が終わったら、ディフォルトルートを元に戻しておいて下さい。</p>
+</div>
 </div>
 
 
@@ -62,6 +82,14 @@
       </div>
       <div class="sphinxsidebar">
         <div class="sphinxsidebarwrapper">
+            <h3><a href="index.html">目次</a></h3>
+            <ul>
+<li><a class="reference external" href="#">7. オフライン動作の確認</a><ul>
+<li><a class="reference external" href="#id2">7.1. オフライン動作を確認</a></li>
+</ul>
+</li>
+</ul>
+
             <h4>前のトピックへ</h4>
             <p class="topless"><a href="06.html"
                                   title="前の章へ">6. Greengrassコアへのデプロイと動作確認</a></p>

@@ -244,7 +244,7 @@ ARNは、Raspberry Pi上の Greengrassの設定ファイル
 
 |
 
-モノへの接続、トピックのパブリッシュ/サブスクライブ、デバイスシャドウの操作、greengrassの操作が可能になっています。
+モノへの接続、トピックのパブリッシュ/サブスクライブ、デバイスシャドウの操作、greengrassの操作など、AWS IoTおよび、Greengrassへの全ての操作が可能になっています。
 
 メニューから [モノ] をクリックして下さい。
 自動的に生成されたGreengrassコアデバイス [GGC_Thing-<参加者番号>] が、モノとして表示されるはずです。
@@ -253,4 +253,4 @@ ARNは、Raspberry Pi上の Greengrassの設定ファイル
 
 |
 
-これで、AWS Greengrass の基本設定は、終わりです。
+これで、AWS Greengrass のクラウド側の設定は、終わりです。
