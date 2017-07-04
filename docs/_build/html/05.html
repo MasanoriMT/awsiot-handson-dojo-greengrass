@@ -183,9 +183,15 @@ AWS IoT Device SDK C++ のパスです。センサーデバイス、アラート
 証明書を格納するパスや、設定ファイル、アプリのソースコードが入っています。</li>
 <li>greengrass
 AWS Greengrass のパスです。
-証明書を格納するパスや、設定ファイル、Greengrassコアが入っています。
-greengrass/ パスが無い場合は、/home/pi/にARMv7版のgreengrassパッケージがありますので、下記のコマンドで解凍して下さい。</li>
+証明書を格納するパスや、設定ファイル、Greengrassコアが入っています。</li>
 </ul>
+<p>greengrass/ パスが存在する場合、以前の設定が残っていますので、下記のコマンドで、一度削除して下さい。</p>
+<div class="highlight-python"><pre>sudo rm -rf greengrass</pre>
+</div>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<p>/home/pi/にARMv7版のgreengrassパッケージがありますので、下記のコマンドで解凍して greengrass/パスを構成して下さい。</p>
 <div class="highlight-python"><pre>tar -zxf greengrass-linux-x86-64-1.0.0.tar.gz -C .</pre>
 </div>
 <div class="line-block">
