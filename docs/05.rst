@@ -165,7 +165,16 @@ Raspbery Piのメニューバーをクリックしてファイラーを開きま
 - greengrass
   AWS Greengrass のパスです。
   証明書を格納するパスや、設定ファイル、Greengrassコアが入っています。
-  greengrass/ パスが無い場合は、/home/pi/にARMv7版のgreengrassパッケージがありますので、下記のコマンドで解凍して下さい。
+
+greengrass/ パスが存在する場合、以前の設定が残っていますので、下記のコマンドで、一度削除して下さい。
+
+::
+
+  sudo rm -rf greengrass
+
+|
+
+/home/pi/にARMv7版のgreengrassパッケージがありますので、下記のコマンドで解凍して greengrass/パスを構成して下さい。
 
 ::
 
