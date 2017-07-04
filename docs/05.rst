@@ -76,6 +76,8 @@ Username と、Password を入力して [OK] を押します。
 
 |
 
+警告が出ますが、無視して、[OK] を押して下さい。
+
 Raspberry Piは、WiFi SSID = awshandson に接続するように設定してあります。
 VNC Viewerでの接続ができれば、Raspberry PiもWiFiに接続出来ているはずです。
 
