@@ -86,7 +86,7 @@ Raspberry Piのリモート画面に移動します。
 
 |
 
-センサーデバイスは、Raspberry PiのCpu usageをトピック sensing/data でPublishし続けます。
+センサーデバイスは、Raspberry PiのCPUロードをトピック sensing/data でPublishし続けます。
 
 アラートデバイスを起動する
 ------------------------------
@@ -108,7 +108,7 @@ Raspberry Piのリモート画面に移動します。
 
 アラートデバイスは、デバイスシャドウ のキー Alert の更新を待ち続けます。
 
-画面の右上に、Cpu usageが表示されています。通常は、25%程度です。
+画面の右上に、CPUロードが表示されています。通常は、25%程度です。
 
 .. image:: images/06/cpu-load.png
 
