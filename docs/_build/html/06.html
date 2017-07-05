@@ -76,7 +76,9 @@
 <div class="line-block">
 <div class="line"><br /></div>
 </div>
-<p>デプロイに失敗する場合がありますので、その場合は、再度、デプロイを行って下さい。1分以上経ってもデプロイが完了しない場合、config.json 内の設定に誤りがある可能性があります。特に、&#8221;thingArn&#8221;,&#8221;iotHost&#8221;,&#8221;ggHost&#8221;を確認して下さい。コンソールを開き、~/greengrass/var/log/system/ 下のログを確認して下さい。</p>
+<p>デプロイに失敗する場合があります。その場合は、再度、デプロイを行って下さい。</p>
+<img alt="_images/deploy-fail.png" src="_images/deploy-fail.png" />
+<p>1分以上経ってもデプロイが完了しない場合、config.json 内の設定に誤りがある可能性があります。特に、&#8221;thingArn&#8221;,&#8221;iotHost&#8221;,&#8221;ggHost&#8221;を確認して下さい。コンソールを開き、~/greengrass/var/log/system/ 下のログを確認して下さい。</p>
 <p>~/greengrass/var/log/ 下のファイルは、ユーザー &#8220;pi&#8221;ではアクセス出来ませんので、root権限でアクセスします。</p>
 <div class="highlight-python"><pre>sudo su -
 cd /home/pi/greengrass/var/log/system</pre>
@@ -154,7 +156,8 @@ cd /home/pi/greengrass/var/log/system</pre>
 </div>
 <p>センサーデバイスのシャドウは、クラウドと同期する設定にしていましたので、この様に表示されます。</p>
 <p>シャドウステータスに何も表示されない場合、サブスクリプションの設定かセンサーデバイスのクラウドに同期の設定に誤りが有る可能性があります。確認してみて下さい。</p>
-<p>&#8220;LoadSwitch&#8221;: &#8220;off&#8221; の状態では、CPUロードは、25%程度です。CPUロードを上げてみましょう。</p>
+<p>また、/home/pi/greengrass/var/log/system/router.log も確認してみて下さい。</p>
+<p>&#8220;LoadSwitch&#8221;: &#8220;off&#8221; の状態では、CPUロードは、25% 程度です。CPUロードを上げてみましょう。</p>
 <p>右上の [編集] をクリックして、下記の様に書き換えて下さい。</p>
 <div class="highlight-python"><div class="highlight"><pre><span></span><span class="p">{</span>
   <span class="s2">&quot;desired&quot;</span><span class="p">:</span> <span class="p">{</span>
@@ -181,7 +184,7 @@ cd /home/pi/greengrass/var/log/system</pre>
 <div class="line-block">
 <div class="line"><br /></div>
 </div>
-<p>AWSコンソールで、”LoadSwitch&#8221;を &#8220;off&#8221;にすると、&#8221;alert!!!&#8221; は停止します。</p>
+<p>AWS IoTのコンソールで、”LoadSwitch&#8221;を &#8220;off&#8221;にすると、&#8221;alert!!!&#8221; は停止します。</p>
 <img alt="_images/shadow-load-switch-off.gif" src="_images/shadow-load-switch-off.gif" />
 <div class="line-block">
 <div class="line"><br /></div>

@@ -247,7 +247,7 @@ Greengrassの設定画面に戻り、Greengrassグループ：GGHandsonGroup-<�
 
 |
 
-④-1,の設定
+④-1の設定
 
 .. image:: images/04/subscription-4-1.png
 

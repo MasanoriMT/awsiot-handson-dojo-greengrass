@@ -22,7 +22,7 @@
     <script type="text/javascript" src="_static/translations.js"></script>
     <link rel="top" title="awsiot-handson-dojo-greengrass v0.0 documentation" href="index.html" />
     <link rel="next" title="9. ハンズオン終了後" href="09.html" />
-    <link rel="prev" title="7. シナリオ2:" href="07.html" /> 
+    <link rel="prev" title="7. オフライン動作の確認" href="07.html" /> 
   </head>
   <body>
     <div class="related">
@@ -35,7 +35,7 @@
           <a href="09.html" title="9. ハンズオン終了後"
              accesskey="N">次へ</a> |</li>
         <li class="right" >
-          <a href="07.html" title="7. シナリオ2:"
+          <a href="07.html" title="7. オフライン動作の確認"
              accesskey="P">前へ</a> |</li>
         <li><a href="index.html">awsiot-handson-dojo-greengrass v0.0 documentation</a> &raquo;</li> 
       </ul>
@@ -51,24 +51,29 @@
 <div class="section" id="cloudwatch-logs">
 <h2>8.1. CloudWatch Logsの設定<a class="headerlink" href="#cloudwatch-logs" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>AWS IoTのログはCloudWatch Logsで取得可能です。トラブルシューティングなどに使用する事ができます。</p>
-<p>マネージメントコンソールのAWS IoTを開き、[Settings]を選択し、[Update]をクリックします。</p>
+<p>マネージメントコンソールのAWS IoTを開き、[設定]を選択し、[更新]をクリックします。</p>
 <img alt="_images/IoT-Settings.png" src="_images/IoT-Settings.png" />
 <div class="line-block">
 <div class="line"><br /></div>
 </div>
-<p>次に[Create a new role]をクリックしてください。</p>
+<p>次に[新しいロールの作成]をクリックしてください。</p>
 <img alt="_images/create-new-role.png" src="_images/create-new-role.png" />
 <div class="line-block">
 <div class="line"><br /></div>
 </div>
-<p>次に&#8221;IAM role name&#8221;欄に、&#8221;AWSIoTCloudWatchLog&#8221;と入力し、[Create a new role]をクリックします。</p>
+<p>次に&#8221;IAM role name&#8221;欄に、&#8221;AWSIoTCloudWatch&#8221;と入力し、[新しいロールの作成]をクリックします。</p>
 <img alt="_images/create-new-role-2.png" src="_images/create-new-role-2.png" />
 <div class="line-block">
 <div class="line"><br /></div>
 </div>
-<p>再度&#8221;IAM role name&#8221;欄から、&#8221;AWSIoTCloudWatchLog&#8221;を選択し、[Update role]をクリックします。
-&#8220;Successfully...&#8221;と表示されるので、&#8221;Log level&#8221;で&#8221;info&#8221;を選択し、[Save]をクリックします。</p>
+<p>再度&#8221;IAM role name&#8221;欄から、&#8221;AWSIoTCloudWatch&#8221;を選択し、[ロールの更新]をクリックします。
+&#8220;ロールは正常に更新されました&#8221;と表示されるので、&#8221;ログレベル&#8221;で&#8221;情報&#8221;を選択し、[完了]をクリックします。</p>
 <img alt="_images/IoT-Settings-Update-save.png" src="_images/IoT-Settings-Update-save.png" />
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<p>CloudWatchログが有効になりました。</p>
+<img alt="_images/CloudWatch-Logenabled.png" src="_images/CloudWatch-Logenabled.png" />
 <div class="line-block">
 <div class="line"><br /></div>
 </div>
@@ -77,8 +82,36 @@
 <div class="line-block">
 <div class="line"><br /></div>
 </div>
-<p>ログストリーム一覧にエントリが存在することを確認します。ログストリームの名前をクリックすることで、ログを閲覧することができます。ログストリーム[ranger-gw-&lt;参加者番号&gt;]はデバイス(Thing)に関するログ、長い英数字のログストリームはルール実行に関するログ、短い英数字のログストリームはMQTTに関するログです。</p>
+<p>ログストリーム一覧にエントリが存在することを確認します。ログストリームの名前をクリックすることで、ログを閲覧することができます。</p>
 <img alt="_images/CloudWatch-Log-2.png" src="_images/CloudWatch-Log-2.png" />
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+</div>
+<div class="section" id="greengrasscloudwatch-logs">
+<h2>8.2. GreengrassのCloudWatch Logsの設定<a class="headerlink" href="#greengrasscloudwatch-logs" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>Greengrassの設定画面に移動し、Greengrassグループ：GGHandsonGroup-&lt;参加者番号&gt; をクリックして下さい。</p>
+<img alt="_images/greengrass-group.png" src="_images/greengrass-group.png" />
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<p>[ローカルログ設定]の編集をクリックします。</p>
+<img alt="_images/greengrass-localwatch.png" src="_images/greengrass-localwatch.png" />
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<p>[別のログタイプの追加] をクリックします。</p>
+<img alt="_images/greengrass-localwatch-2.png" src="_images/greengrass-localwatch-2.png" />
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<p>[ユーザー Lambda(推薦)] と、[Greengrass システム] をチェックし、[更新] をクリックします。</p>
+<img alt="_images/greengrass-localwatch-3.png" src="_images/greengrass-localwatch-3.png" />
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<p>最後に、[保存] をクリックします。</p>
+<img alt="_images/greengrass-localwatch-save.png" src="_images/greengrass-localwatch-save.png" />
 <div class="line-block">
 <div class="line"><br /></div>
 </div>
@@ -95,13 +128,14 @@
             <ul>
 <li><a class="reference external" href="#">8. その他の設定（オプション）</a><ul>
 <li><a class="reference external" href="#cloudwatch-logs">8.1. CloudWatch Logsの設定</a></li>
+<li><a class="reference external" href="#greengrasscloudwatch-logs">8.2. GreengrassのCloudWatch Logsの設定</a></li>
 </ul>
 </li>
 </ul>
 
             <h4>前のトピックへ</h4>
             <p class="topless"><a href="07.html"
-                                  title="前の章へ">7. シナリオ2:</a></p>
+                                  title="前の章へ">7. オフライン動作の確認</a></p>
             <h4>次のトピックへ</h4>
             <p class="topless"><a href="09.html"
                                   title="次の章へ">9. ハンズオン終了後</a></p>
@@ -137,7 +171,7 @@
           <a href="09.html" title="9. ハンズオン終了後"
              >次へ</a> |</li>
         <li class="right" >
-          <a href="07.html" title="7. シナリオ2:"
+          <a href="07.html" title="7. オフライン動作の確認"
              >前へ</a> |</li>
         <li><a href="index.html">awsiot-handson-dojo-greengrass v0.0 documentation</a> &raquo;</li> 
       </ul>

@@ -37,7 +37,11 @@ Greengrassグループの設定画面が出てきます。右上の [アクシ�
 
 |
 
-デプロイに失敗する場合がありますので、その場合は、再度、デプロイを行って下さい。1分以上経ってもデプロイが完了しない場合、config.json 内の設定に誤りがある可能性があります。特に、"thingArn","iotHost","ggHost"を確認して下さい。コンソールを開き、~/greengrass/var/log/system/ 下のログを確認して下さい。
+デプロイに失敗する場合があります。その場合は、再度、デプロイを行って下さい。
+
+.. image:: images/06/deploy-fail.png
+
+1分以上経ってもデプロイが完了しない場合、config.json 内の設定に誤りがある可能性があります。特に、"thingArn","iotHost","ggHost"を確認して下さい。コンソールを開き、~/greengrass/var/log/system/ 下のログを確認して下さい。
 
 ~/greengrass/var/log/ 下のファイルは、ユーザー "pi"ではアクセス出来ませんので、root権限でアクセスします。
 
@@ -137,7 +141,9 @@ AWS コンソールのAWS IoT に移動します。
 
 シャドウステータスに何も表示されない場合、サブスクリプションの設定かセンサーデバイスのクラウドに同期の設定に誤りが有る可能性があります。確認してみて下さい。
 
-"LoadSwitch": "off" の状態では、CPUロードは、25%程度です。CPUロードを上げてみましょう。
+また、/home/pi/greengrass/var/log/system/router.log も確認してみて下さい。
+
+"LoadSwitch": "off" の状態では、CPUロードは、25% 程度です。CPUロードを上げてみましょう。
 
 右上の [編集] をクリックして、下記の様に書き換えて下さい。
 
@@ -170,7 +176,7 @@ Raspberry Piのリモート画面を見て下さい。
 
 |
 
-AWSコンソールで、”LoadSwitch"を "off"にすると、"alert!!!" は停止します。
+AWS IoTのコンソールで、”LoadSwitch"を "off"にすると、"alert!!!" は停止します。
 
 .. image:: images/06/shadow-load-switch-off.gif
 

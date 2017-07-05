@@ -49,30 +49,40 @@
   <div class="section" id="id1">
 <h1>7. オフライン動作の確認<a class="headerlink" href="#id1" title="このヘッドラインへのパーマリンク">¶</a></h1>
 <p>オフラインでも、Lambdaが動作し、アラートが出るか確認してみましょう。</p>
-<p>”Alert!!!”を停止させて下さい。</p>
-<p>次に、Raspberry Piのリモート画面でコンソールをオープンして下さい。コマンドラインに下記を入力して、ディフォルトルートを削除し、インターネットとの通信を遮断します。</p>
+<p>AWS IoTのコンソールで、センサーデバイスのシャドウで ”LoadSwitch&#8221;を &#8220;off&#8221;にして、&#8221;alert!!!&#8221; を停止させて下さい。</p>
+<p>次に、Raspberry Piのリモート画面で４つ目のコンソールをオープンして下さい。コマンドラインに下記を入力して、ディフォルトルートを削除し、インターネットとの通信を遮断します。</p>
 <div class="highlight-python"><pre>sudo route del default gw 192.168.1.1</pre>
 </div>
 <div class="line-block">
 <div class="line"><br /></div>
 </div>
-<p>ping amazon.com と入力して、</p>
-<p>下記のコマンドを入力して、ディフォルトルートを元に戻します。</p>
+<p>ping amazon.com と入力して、インターネットとの接続が遮断されていることを確認して下さい。</p>
+<img alt="_images/default-gw-del.png" src="_images/default-gw-del.png" />
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<p>インターネットとの接続は遮断されましたが、VNCでのリモートアクセスは、継続して使用できます。</p>
+<div class="section" id="id2">
+<h2>7.1. オフライン動作を確認<a class="headerlink" href="#id2" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>インターネットとの接続が遮断されているため、&#8221;LoadSwitch&#8221; は、使えません。ローカルコマンドで、CPUロードを上げてみましょう。</p>
+<p>4つ目のコンソール画面に下記のコマンドを入力します。</p>
+<div class="highlight-python"><pre>yes &gt;&gt; /dev/null</pre>
+</div>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<p>これで、CPUロードが 25% 程度上がります。&#8221;alert!!!&#8221;が発生するか、確認しましょう。</p>
+<img alt="_images/offline-alert.gif" src="_images/offline-alert.gif" />
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<p>yes &gt;&gt; /dev/null と入力した、コンソール画面で CTRL + C を押して、yes を停止させます。</p>
+<p>確認が終わったら、下記のコマンドを入力して、ディフォルトルートを元に戻しておいて下さい。</p>
 <div class="highlight-python"><pre>sudo route add default gw 192.168.1.1</pre>
 </div>
 <div class="line-block">
 <div class="line"><br /></div>
 </div>
-<div class="section" id="id2">
-<h2>7.1. オフライン動作を確認<a class="headerlink" href="#id2" title="このヘッドラインへのパーマリンク">¶</a></h2>
-<p>Raspberry Piのコンソールに、ディフォルトルートの削除 コマンドを入力し、リターンせず、そのままにしておきます。</p>
-<img alt="_images/pausedefault-gw-del.png" src="_images/pausedefault-gw-del.png" />
-<div class="line-block">
-<div class="line"><br /></div>
-</div>
-<p>AWSコンソールで、センサーデバイスのシャドウの&#8221;LoadSwitch&#8221;を&#8221;on&#8221;にします。すぐに、Raspberry Piのコンソールでリターンを押し、インターネットとの通信を遮断します。</p>
-<p>&#8220;alert!!!&#8221;が発生するか、確認して下さい。</p>
-<p>確認が終わったら、ディフォルトルートを元に戻しておいて下さい。</p>
 </div>
 </div>
 

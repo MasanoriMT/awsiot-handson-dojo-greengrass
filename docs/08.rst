@@ -7,28 +7,34 @@ CloudWatch Logsの設定
 
 AWS IoTのログはCloudWatch Logsで取得可能です。トラブルシューティングなどに使用する事ができます。
 
-マネージメントコンソールのAWS IoTを開き、[Settings]を選択し、[Update]をクリックします。
+マネージメントコンソールのAWS IoTを開き、[設定]を選択し、[更新]をクリックします。
 
 .. image:: images/08/IoT-Settings.png
 
 |
 
-次に[Create a new role]をクリックしてください。
+次に[新しいロールの作成]をクリックしてください。
 
 .. image:: images/08/create-new-role.png
 
 |
 
-次に"IAM role name"欄に、"AWSIoTCloudWatchLog"と入力し、[Create a new role]をクリックします。
+次に"IAM role name"欄に、"AWSIoTCloudWatch"と入力し、[新しいロールの作成]をクリックします。
 
 .. image:: images/08/create-new-role-2.png
 
 |
 
-再度"IAM role name"欄から、"AWSIoTCloudWatchLog"を選択し、[Update role]をクリックします。
-"Successfully..."と表示されるので、"Log level"で"info"を選択し、[Save]をクリックします。
+再度"IAM role name"欄から、"AWSIoTCloudWatch"を選択し、[ロールの更新]をクリックします。
+"ロールは正常に更新されました"と表示されるので、"ログレベル"で"情報"を選択し、[完了]をクリックします。
 
 .. image:: images/08/IoT-Settings-Update-save.png
+
+|
+
+CloudWatchログが有効になりました。
+
+.. image:: images/08/CloudWatch-Logenabled.png
 
 |
 
@@ -38,8 +44,41 @@ AWS IoTのログはCloudWatch Logsで取得可能です。トラブルシュー�
 
 |
 
-ログストリーム一覧にエントリが存在することを確認します。ログストリームの名前をクリックすることで、ログを閲覧することができます。ログストリーム[ranger-gw-<参加者番号>]はデバイス(Thing)に関するログ、長い英数字のログストリームはルール実行に関するログ、短い英数字のログストリームはMQTTに関するログです。
+ログストリーム一覧にエントリが存在することを確認します。ログストリームの名前をクリックすることで、ログを閲覧することができます。
 
 .. image:: images/08/CloudWatch-Log-2.png
+
+|
+
+GreengrassのCloudWatch Logsの設定
+=========================================
+
+Greengrassの設定画面に移動し、Greengrassグループ：GGHandsonGroup-<参加者番号> をクリックして下さい。
+
+.. image:: images/04/greengrass-group.png
+
+|
+
+[ローカルログ設定]の編集をクリックします。
+
+.. image:: images/08/greengrass-localwatch.png
+
+|
+
+[別のログタイプの追加] をクリックします。
+
+.. image:: images/08/greengrass-localwatch-2.png
+
+|
+
+[ユーザー Lambda(推薦)] と、[Greengrass システム] をチェックし、[更新] をクリックします。
+
+.. image:: images/08/greengrass-localwatch-3.png
+
+|
+
+最後に、[保存] をクリックします。
+
+.. image:: images/08/greengrass-localwatch-save.png
 
 |
