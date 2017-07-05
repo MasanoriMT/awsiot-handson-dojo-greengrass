@@ -71,12 +71,30 @@
 <div class="line-block">
 <div class="line"><br /></div>
 </div>
-<p>下記は、デプロイのGIFアニメーションです。画像をクリックして下さい。このケースでは、デプロイにおよそ30秒程度かかっています。</p>
+<p>下記は、デプロイのGIFアニメーションです。画像をクリックするとアニメーションがスタートします。このケースでは、デプロイにおよそ30秒程度かかっています。</p>
 <img alt="_images/deploy.gif" src="_images/deploy.gif" />
 <div class="line-block">
 <div class="line"><br /></div>
 </div>
-<p>デプロイに失敗する場合がありますので、その場合は、再度、デプロイを行って下さい。1分以上経ってもデプロイが完了しない場合、config.json 内の設定に誤りがある可能性があります。</p>
+<p>デプロイに失敗する場合がありますので、その場合は、再度、デプロイを行って下さい。1分以上経ってもデプロイが完了しない場合、config.json 内の設定に誤りがある可能性があります。特に、&#8221;thingArn&#8221;,&#8221;iotHost&#8221;,&#8221;ggHost&#8221;を確認して下さい。コンソールを開き、~/greengrass/var/log/system/ 下のログを確認して下さい。</p>
+<p>~/greengrass/var/log/ 下のファイルは、ユーザー &#8220;pi&#8221;ではアクセス出来ませんので、root権限でアクセスします。</p>
+<div class="highlight-python"><pre>sudo su -
+cd /home/pi/greengrass/var/log/system</pre>
+</div>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<p>特に、下記のログファイルを確認してみて下さい。</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">connection_manager</span><span class="o">.</span><span class="n">log</span>
+<span class="n">ip_detector</span><span class="o">.</span><span class="n">log</span>
+<span class="n">localwatch</span>
+<span class="n">runtime</span><span class="o">.</span><span class="n">log</span>
+<span class="n">syncmanager</span><span class="o">.</span><span class="n">log</span>
+</pre></div>
+</div>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
 <p>これで、デプロイは、完了しました。</p>
 </div>
 <div class="section" id="id2">
@@ -118,6 +136,7 @@
 <div class="line-block">
 <div class="line"><br /></div>
 </div>
+<p>この時点で、greengrassd, handson-alarm-sample, handson-sensor-sample の３つのソフトウェアが同時に起動していることになります。</p>
 </div>
 </div>
 <div class="section" id="id5">
@@ -134,6 +153,7 @@
 <div class="line"><br /></div>
 </div>
 <p>センサーデバイスのシャドウは、クラウドと同期する設定にしていましたので、この様に表示されます。</p>
+<p>シャドウステータスに何も表示されない場合、サブスクリプションの設定かセンサーデバイスのクラウドに同期の設定に誤りが有る可能性があります。確認してみて下さい。</p>
 <p>&#8220;LoadSwitch&#8221;: &#8220;off&#8221; の状態では、CPUロードは、25%程度です。CPUロードを上げてみましょう。</p>
 <p>右上の [編集] をクリックして、下記の様に書き換えて下さい。</p>
 <div class="highlight-python"><div class="highlight"><pre><span></span><span class="p">{</span>
@@ -149,19 +169,23 @@
 <div class="line-block">
 <div class="line"><br /></div>
 </div>
-<p>その後、右上の [保存] をクリックして下さい。&#8221;LoadSwitch&#8221; が &#8220;on&#8221; になります。</p>
-<img alt="_images/sensor-shadow-update.png" src="_images/sensor-shadow-update.png" />
+<p>その後、右上の [保存] をクリックして下さい。クラウド上の &#8220;LoadSwitch&#8221; センサーデバイスのシャドウと同期し、&#8221;reported&#8221;の&#8221;LoadSwitch&#8221;が&#8221;on&#8221; になります。</p>
+<img alt="_images/shadow-sync.gif" src="_images/shadow-sync.gif" />
 <div class="line-block">
 <div class="line"><br /></div>
 </div>
 <p>Raspberry Piのリモート画面を見て下さい。</p>
-<p>センサーデバイスが、&#8221;LoadSwitch&#8221; が &#8220;on&#8221; になったことを認識し、CPUロードが上がる処理が実行され、センサーデバイス アプリは、&#8221;calc!&#8221; と表示します。Raspberry PiのCPU usageが 60%程度に上がります。LambdaもCpu usageを確認していますが、50%以上に上昇すると、アラートデバイスのシャドウ &#8220;Alert&#8221;を &#8220;on&#8221;に書き換えます。アラートデバイスが、&#8221;Alert&#8221;: &#8220;on&#8221; を確認すると、アラートデバイス アプリが、“alert!!!&#8221; と表示します。</p>
+<p>センサーデバイスが、&#8221;LoadSwitch&#8221; の状態が &#8220;on&#8221; になったことを認識し、CPUロードが上がる処理が実行され、センサーデバイス アプリは、&#8221;calc!&#8221; と表示します。Raspberry PiのCPU usageが 50% 程度に上がります。LambdaもCPUロードを確認していますが、40%以上に上昇すると、アラートデバイスのシャドウ &#8220;Alert&#8221;を &#8220;on&#8221;に更新します。アラートデバイスが、&#8221;Alert&#8221;: &#8220;on&#8221; を確認すると、アラートデバイス アプリが、“alert!!!&#8221; と表示します。</p>
 <p>アラートが発生しない場合は、ウィンドウを動かしたりして、負荷を上げて下さい。</p>
 <img alt="_images/alert!!.png" src="_images/alert!!.png" />
 <div class="line-block">
 <div class="line"><br /></div>
 </div>
 <p>AWSコンソールで、”LoadSwitch&#8221;を &#8220;off&#8221;にすると、&#8221;alert!!!&#8221; は停止します。</p>
+<img alt="_images/shadow-load-switch-off.gif" src="_images/shadow-load-switch-off.gif" />
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
 </div>
 </div>
 
