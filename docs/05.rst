@@ -288,6 +288,13 @@ Greengrassが正常に起動できれば、下記が表示されます。
 
 |
 
+エラーが出る場合、~/greengrass/configuration/config.json を確認して下さい。
+証明書("caPath","certPath","keyPath")に誤りがあると、起動に失敗します。
+"thingArn"
+"iotHost"
+"ggHost"
+
+
 デバイスの設定とビルド
 ==================================
 
