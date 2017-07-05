@@ -91,6 +91,43 @@ PCとRaspberry PiをEthernetで接続し(ストレートケーブルでも構い
 PC側のIPアドレスを、固定IP 192.168.11.xxx に設定して下さい。
 VNC Viewerの接続先を、192.168.11.100 にして、接続してみてください。
 
+シリアルケーブルでコンソール接続する場合、下記のファイルにWiFi設定が入っていますので、適宜変更して下さい。
+
+::
+
+   /etc/wpa_supplicant/wpa_supplicant.conf
+
+|
+
+ハンズオンのマニュアルを表示する
+====================================
+
+Webブラウザは、メニューバーのアイコンをクリックすると表示されます。本ハンズオンのマニュアルがブックマークに登録されています。
+
+.. image:: images/05/web-browser-manual.png
+
+|
+
+Raspberry Piの環境を初期化する
+====================================
+
+コンソールを表示
+------------------------
+
+コンソールは、メニューバーのアイコンをクリックすると表示されます。
+
+.. image:: images/05/console.png
+
+|
+
+コンソールに下記を入力し、greengrassとAWS IoT Device SDKの環境をクリーンアップします。
+
+::
+
+   ./handson_clean
+
+|
+
 
 ダウンロード済みの証明書をRaspberry Piにコピー
 ============================================================
@@ -165,32 +202,15 @@ Raspbery Piのメニューバーをクリックしてファイラーを開きま
 - aws-iot-device-sdk-cpp
   AWS IoT Device SDK C++ のパスです。センサーデバイス、アラートデバイスのアプリが存在します。
   証明書を格納するパスや、設定ファイル、アプリのソースコードが入っています。
-- greengrass
-  AWS Greengrass のパスです。
+- greengrass-linux-armv7l-1.0.0.tar.gz
+  ARMv7版のAWS Greengrass パッケージです。
   証明書を格納するパスや、設定ファイル、Greengrassコアが入っています。
 
-greengrass/ パスが存在する場合、以前の設定が残っていますので、下記のコマンドで、一度削除して下さい。
-
-::
-
-  sudo rm -rf greengrass
-
-|
-
-/home/pi/にARMv7版のgreengrassパッケージがありますので、下記のコマンドで解凍して greengrass/パスを構成して下さい。
+下記のコマンドで解凍して Greengrassパッケージを解凍して下さい。
 
 ::
 
   tar -zxf greengrass-linux-armv7l-1.0.0.tar.gz -C .
-
-|
-
-コンソールを表示
-------------------------
-
-コンソールは、メニューバーのアイコンをクリックすると表示されます。
-
-.. image:: images/05/console.png
 
 |
 

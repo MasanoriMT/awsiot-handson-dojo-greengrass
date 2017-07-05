@@ -117,9 +117,40 @@ Raspberry PiのEthernetは、固定IPアドレス 192.168.11.100 に設定され
 PCとRaspberry PiをEthernetで接続し(ストレートケーブルでも構いません。)</p>
 <p>PC側のIPアドレスを、固定IP 192.168.11.xxx に設定して下さい。
 VNC Viewerの接続先を、192.168.11.100 にして、接続してみてください。</p>
+<p>シリアルケーブルでコンソール接続する場合、下記のファイルにWiFi設定が入っていますので、適宜変更して下さい。</p>
+<div class="highlight-python"><pre>/etc/wpa_supplicant/wpa_supplicant.conf</pre>
+</div>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
 </div>
 <div class="section" id="id3">
-<h2>5.4. ダウンロード済みの証明書をRaspberry Piにコピー<a class="headerlink" href="#id3" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<h2>5.4. ハンズオンのマニュアルを表示する<a class="headerlink" href="#id3" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>Webブラウザは、メニューバーのアイコンをクリックすると表示されます。本ハンズオンのマニュアルがブックマークに登録されています。</p>
+<img alt="_images/web-browser-manual.png" src="_images/web-browser-manual.png" />
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+</div>
+<div class="section" id="id4">
+<h2>5.5. Raspberry Piの環境を初期化する<a class="headerlink" href="#id4" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<div class="section" id="id5">
+<h3>5.5.1. コンソールを表示<a class="headerlink" href="#id5" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p>コンソールは、メニューバーのアイコンをクリックすると表示されます。</p>
+<img alt="_images/console.png" src="_images/console.png" />
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<p>コンソールに下記を入力し、greengrassとAWS IoT Device SDKの環境をクリーンアップします。</p>
+<div class="highlight-python"><pre>./handson_clean</pre>
+</div>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+</div>
+</div>
+<div class="section" id="id6">
+<h2>5.6. ダウンロード済みの証明書をRaspberry Piにコピー<a class="headerlink" href="#id6" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>Greengrassコア、センサーデバイス、アラートデバイス用に証明書を３セットダウンロードしていました。
 Raspberry Piに転送、します。VNC Viewrのタイトルバーの中心にマウスを移動させると、ツールが表示されます。矢印が交差したアイコンをクリックします。</p>
 <img alt="_images/file-txfer.png" src="_images/file-txfer.png" />
@@ -172,8 +203,8 @@ Sensor Device: Sensor-01
 /aws-iot-device-sdk-cpp/common/HandsonAlarmConfig.json</li>
 </ul>
 </div>
-<div class="section" id="id4">
-<h2>5.5. Raspberry Pi上のファイル<a class="headerlink" href="#id4" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<div class="section" id="id7">
+<h2>5.7. Raspberry Pi上のファイル<a class="headerlink" href="#id7" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>Raspbery Piのメニューバーをクリックしてファイラーを開きます。</p>
 <img alt="_images/files-on-raspi.png" src="_images/files-on-raspi.png" />
 <div class="line-block">
@@ -183,40 +214,26 @@ Sensor Device: Sensor-01
 <li>aws-iot-device-sdk-cpp
 AWS IoT Device SDK C++ のパスです。センサーデバイス、アラートデバイスのアプリが存在します。
 証明書を格納するパスや、設定ファイル、アプリのソースコードが入っています。</li>
-<li>greengrass
-AWS Greengrass のパスです。
+<li>greengrass-linux-armv7l-1.0.0.tar.gz
+ARMv7版のAWS Greengrass パッケージです。
 証明書を格納するパスや、設定ファイル、Greengrassコアが入っています。</li>
 </ul>
-<p>greengrass/ パスが存在する場合、以前の設定が残っていますので、下記のコマンドで、一度削除して下さい。</p>
-<div class="highlight-python"><pre>sudo rm -rf greengrass</pre>
-</div>
-<div class="line-block">
-<div class="line"><br /></div>
-</div>
-<p>/home/pi/にARMv7版のgreengrassパッケージがありますので、下記のコマンドで解凍して greengrass/パスを構成して下さい。</p>
+<p>下記のコマンドで解凍して Greengrassパッケージを解凍して下さい。</p>
 <div class="highlight-python"><pre>tar -zxf greengrass-linux-armv7l-1.0.0.tar.gz -C .</pre>
 </div>
 <div class="line-block">
 <div class="line"><br /></div>
 </div>
-<div class="section" id="id5">
-<h3>5.5.1. コンソールを表示<a class="headerlink" href="#id5" title="このヘッドラインへのパーマリンク">¶</a></h3>
-<p>コンソールは、メニューバーのアイコンをクリックすると表示されます。</p>
-<img alt="_images/console.png" src="_images/console.png" />
-<div class="line-block">
-<div class="line"><br /></div>
-</div>
-</div>
 </div>
 <div class="section" id="greengrass">
-<h2>5.6. Greengrassコアの設定と起動<a class="headerlink" href="#greengrass" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<h2>5.8. Greengrassコアの設定と起動<a class="headerlink" href="#greengrass" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>Greengrassコアの設定は、~/greengrass/configuration で行います。</p>
 <img alt="_images/greengrass-core-setting.png" src="_images/greengrass-core-setting.png" />
 <div class="line-block">
 <div class="line"><br /></div>
 </div>
-<div class="section" id="id6">
-<h3>5.6.1. Greengrassコア用の証明書をコピー<a class="headerlink" href="#id6" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<div class="section" id="id8">
+<h3>5.8.1. Greengrassコア用の証明書をコピー<a class="headerlink" href="#id8" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <p>~/greengrass/configuration/certs にGreengrassコア用の証明書をコピーして下さい。</p>
 <p>コピーするファイルは、デスクトップ上の下記の３つのファイルになります。</p>
 <ul class="simple">
@@ -225,8 +242,8 @@ AWS Greengrass のパスです。
 <li>xxxxxxxxxx-private.pem.key</li>
 </ul>
 </div>
-<div class="section" id="id7">
-<h3>5.6.2. 設定ファイルの修正<a class="headerlink" href="#id7" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<div class="section" id="id9">
+<h3>5.8.2. 設定ファイルの修正<a class="headerlink" href="#id9" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <p>~/greengrass/configuration/config.json をダブルクリックします。Text Editorが開きます。</p>
 <img alt="_images/greengrass-core-text-editor.png" src="_images/greengrass-core-text-editor.png" />
 <div class="line-block">
@@ -256,8 +273,8 @@ AWS Greengrass のパスです。
 <p>&#8220;iotHost&#8221;は、AWS IoTのエンドポイント(endpoint)です。</p>
 <p>&#8220;ggHost&#8221;のリージョン(AWS_REGION_HERE)も、us-west-2に書き換えて下さい。&#8221;useSystemd&#8221;は、yesにして下さい。</p>
 </div>
-<div class="section" id="id8">
-<h3>5.6.3. Greengrassを起動する<a class="headerlink" href="#id8" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<div class="section" id="id10">
+<h3>5.8.3. Greengrassを起動する<a class="headerlink" href="#id10" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <p>コンソールを開き、下記を入力して、Greengrassを起動します。</p>
 <div class="highlight-python"><pre>cd greengrass
 sudo ./greengrassd start</pre>
@@ -272,11 +289,11 @@ sudo ./greengrassd start</pre>
 </div>
 </div>
 </div>
-<div class="section" id="id9">
-<h2>5.7. デバイスの設定とビルド<a class="headerlink" href="#id9" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<div class="section" id="id11">
+<h2>5.9. デバイスの設定とビルド<a class="headerlink" href="#id11" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>センサーデバイス、アラートデバイスは、AWS IoT Device SDK C++で作成します。今回のハンズオンでは、Device SDKの開発環境と、各デバイスのコードは、導入済みです。証明書を所定のパスにコピーし、設定ファイルを修正し、アプリケーションのビルドを行います。</p>
-<div class="section" id="id10">
-<h3>5.7.1. デバイスの用の証明書をコピー<a class="headerlink" href="#id10" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<div class="section" id="id12">
+<h3>5.9.1. デバイスの用の証明書をコピー<a class="headerlink" href="#id12" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <p>~/aws-iot-device-sdk-cpp/certs にDevice SDK用の証明書のパスがあります。</p>
 <img alt="_images/device-certs.png" src="_images/device-certs.png" />
 <div class="line-block">
@@ -295,8 +312,8 @@ sudo ./greengrassd start</pre>
 <li>zzzzzzzzzz-private.pem.key</li>
 </ul>
 </div>
-<div class="section" id="id11">
-<h3>5.7.2. 設定ファイルの修正<a class="headerlink" href="#id11" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<div class="section" id="id13">
+<h3>5.9.2. 設定ファイルの修正<a class="headerlink" href="#id13" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <p>設定ファイルは、下記になります。</p>
 <ul class="simple">
 <li>~/aws-iot-device-sdk-cpp/common/HandsonAlarmConfig.json</li>
@@ -319,7 +336,7 @@ sudo ./greengrassd start</pre>
 </div>
 </div>
 <div class="section" id="device-sdk">
-<h3>5.7.3. Device SDKアプリケーションのビルド<a class="headerlink" href="#device-sdk" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<h3>5.9.3. Device SDKアプリケーションのビルド<a class="headerlink" href="#device-sdk" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <p>センサーデバイス、アラートデバイス用アプリケーションのビルドを行います。</p>
 <p>古い実行ファイルが残っているとビルドに失敗するので、下記のコマンドで、消去します。</p>
 <div class="highlight-python"><pre>sudo rm -rf ~/aws-iot-device-sdk-cpp/build/bin/</pre>
@@ -376,21 +393,23 @@ sudo ./greengrassd start</pre>
 <li><a class="reference external" href="#id1">5.1. ハードウェアの確認</a></li>
 <li><a class="reference external" href="#id2">5.2. 組み立て</a></li>
 <li><a class="reference external" href="#wifi">5.3. WiFi接続</a></li>
-<li><a class="reference external" href="#id3">5.4. ダウンロード済みの証明書をRaspberry Piにコピー</a></li>
-<li><a class="reference external" href="#id4">5.5. Raspberry Pi上のファイル</a><ul>
+<li><a class="reference external" href="#id3">5.4. ハンズオンのマニュアルを表示する</a></li>
+<li><a class="reference external" href="#id4">5.5. Raspberry Piの環境を初期化する</a><ul>
 <li><a class="reference external" href="#id5">5.5.1. コンソールを表示</a></li>
 </ul>
 </li>
-<li><a class="reference external" href="#greengrass">5.6. Greengrassコアの設定と起動</a><ul>
-<li><a class="reference external" href="#id6">5.6.1. Greengrassコア用の証明書をコピー</a></li>
-<li><a class="reference external" href="#id7">5.6.2. 設定ファイルの修正</a></li>
-<li><a class="reference external" href="#id8">5.6.3. Greengrassを起動する</a></li>
+<li><a class="reference external" href="#id6">5.6. ダウンロード済みの証明書をRaspberry Piにコピー</a></li>
+<li><a class="reference external" href="#id7">5.7. Raspberry Pi上のファイル</a></li>
+<li><a class="reference external" href="#greengrass">5.8. Greengrassコアの設定と起動</a><ul>
+<li><a class="reference external" href="#id8">5.8.1. Greengrassコア用の証明書をコピー</a></li>
+<li><a class="reference external" href="#id9">5.8.2. 設定ファイルの修正</a></li>
+<li><a class="reference external" href="#id10">5.8.3. Greengrassを起動する</a></li>
 </ul>
 </li>
-<li><a class="reference external" href="#id9">5.7. デバイスの設定とビルド</a><ul>
-<li><a class="reference external" href="#id10">5.7.1. デバイスの用の証明書をコピー</a></li>
-<li><a class="reference external" href="#id11">5.7.2. 設定ファイルの修正</a></li>
-<li><a class="reference external" href="#device-sdk">5.7.3. Device SDKアプリケーションのビルド</a></li>
+<li><a class="reference external" href="#id11">5.9. デバイスの設定とビルド</a><ul>
+<li><a class="reference external" href="#id12">5.9.1. デバイスの用の証明書をコピー</a></li>
+<li><a class="reference external" href="#id13">5.9.2. 設定ファイルの修正</a></li>
+<li><a class="reference external" href="#device-sdk">5.9.3. Device SDKアプリケーションのビルド</a></li>
 </ul>
 </li>
 </ul>
