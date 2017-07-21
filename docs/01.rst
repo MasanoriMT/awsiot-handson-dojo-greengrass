@@ -15,8 +15,10 @@ Greengrassを使った _エッジコンピューティング を学ぶことが�
 
 ハンズオンシナリオ
 ====================
-
-Greengrass coreをRaspberry Piに導入し、センサーデバイス、アラートデバイスと連携させます。クラウドからGreengrass coreにLambda関数をデプロイし、センサーデバイスからの計測データをエッジ内で処理させます。デバイスがオフライン状態であっても、エッジでの処理(ローカル Lambda)が停止することなく処理が行われることを確認します。
+本ハンズオンではセンサーデバイスに異常が発生した場合、アラートデバイスで通知する、というユースケースをAWS IoTのみ用いた場合と、そこにGreengrassを加えた場合の両パターンで実現します。
+はじめに、Raspberry Pi上のセンサーデバイス、アラートデバイスをAWS IoTを通じて連携させます。AWS IoTに入力されたセンサーデバイスからの計測データをクラウド上のLambda関数で処理させます。
+その後、Raspberry Pi上にGreengrass coreを導入し、センサーデバイス、アラートデバイスをAWS IoTを介することなく連携させます。クラウドからGreengrass coreにLambda関数をデプロイし、センサーデバイスからの計測データをエッジ内で処理させます。GreenGrassを加えることで、デバイスがオフライン状態であっても、エッジでの処理(ローカル Lambda)が停止することなく処理が行われることを確認します。
+なお、本ハンズオンではセンサーデバイス、アラートデバイス、Greengrass coreを簡易化のため同一のRasbperri Piで動作させます。
 
 .. image:: images/01/overview.png
 
@@ -30,7 +32,7 @@ Raspberry Pi
 --------------------
 
 ARMプロセッサーを搭載したシングルボードコンピュータ。
-Linuxで動作し、microSDメモリーカード (microSD) を起動および長期保存用のストレージに利用する。
+Linuxで動作し、microSDメモリーカード (microSD) を起動および長期保存用のストレージに利用します。
     https://ja.wikipedia.org/wiki/Raspberry_Pi
 
 |
@@ -46,7 +48,7 @@ AWSを利用・管理するためのアカウント。アカウント作成の�
 AWS IoT
 --------------------
 
-接続されたデバイスが安全かつ簡単にクラウドアプリケーションやその他のデバイスとやりとりするためのマネージド型プラットフォームです。本ハンズオンでは、デバイスからのセンサーデータの受信で利用します。
+接続されたデバイスが安全かつ簡単にクラウドアプリケーションやその他のデバイスとやりとりするためのマネージド型プラットフォームです。
     https://aws.amazon.com/jp/iot/
 
 .. image:: images/01/AWS_IoT.png
@@ -56,8 +58,7 @@ AWS IoT
 AWS Greengrass
 --------------------
 
-接続されたデバイスでローカルのコンピューティング、メッセージング、データキャッシュ、および同期。
-AWS Lambda と AWS IoT を使用して AWS クラウドとローカルデバイス全体で IoT アプリケーションをシームレスに実行する。
+接続されたデバイスでローカルのコンピューティング、メッセージング、データキャッシュ、および同期を安全な方法で実行できるようにするソフトウェアです。
     https://aws.amazon.com/jp/greengrass/
 
 .. image:: images/01/AWS_Greengrass.png
@@ -65,10 +66,11 @@ AWS Lambda と AWS IoT を使用して AWS クラウドとローカルデバイ�
 
 |
 
-**AWS IoT Device SDK**
+AWS IoT Device SDK
+--------------------
 
 AWS IoT デバイス SDK を使用すれば、ハードウェアデバイスを簡単かつすばやく AWS IoT に接続できます。この SDK では、AWS IoT によって準備されているデバイスゲートウェイおよびデバイスのシャドウとハードウェアデバイスとをシームレスかつセキュアに連携させられるよう、機能が強化されています。
-今回のGreengrassハンズオンでは、C++言語版のDevice SDKを使用します。
+本ハンズオンでは、センサーデバイスとアラートデバイスにて、Python言語版のDevice SDKを使用しています。
     https://aws.amazon.com/jp/iot/sdk/
 
 |
@@ -76,7 +78,7 @@ AWS IoT デバイス SDK を使用すれば、ハードウェアデバイスを�
 AWS Lambda
 --------------------
 
-お客様のコードをイベント発生時やリクエストごとに実行できる管理不要なコンピューティングプラットフォームです。本ハンズオンでは、AWS Greengrassで使用します。
+お客様のコードをイベント発生時やリクエストごとに実行できる管理不要なコンピューティングプラットフォームです。本ハンズオンでは、Cloud上とAWS Greengrass上の両方で使用します。
     https://aws.amazon.com/jp/lambda/
 
 |
@@ -129,5 +131,5 @@ https://www.realvnc.com/download/viewer/
 参考情報
 ======================
 
-* AWS IoT Device SDK C++
-  https://github.com/aws/aws-iot-device-sdk-cpp
+* AWS IoT Device SDK Python
+  https://github.com/aws/aws-iot-device-sdk-python
