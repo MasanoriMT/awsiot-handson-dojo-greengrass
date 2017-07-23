@@ -1,53 +1,212 @@
-=====================================
-オフライン動作の確認
-=====================================
+================================================================
+デバイスをGreengrassグループに追加する
+================================================================
 
-オフラインでも、Lambdaが動作し、アラートが出るか確認してみましょう。
+センサーデバイス、アラートデバイスをGreengrassコアに接続するため、必要な権限の追加、Greengrass Groupへの追加を行います。
 
-AWS IoTのコンソールで、センサーデバイスのシャドウで ”LoadSwitch"を "off"にして、"alert!!!" を停止させて下さい。
+.. image:: images/07/overview-gg-thing.png
 
-次に、Raspberry Piのリモート画面で４つ目のコンソールをオープンして下さい。コマンドラインに下記を入力して、ディフォルトルートを削除し、インターネットとの通信を遮断します。
+|
+
+ポリシーの変更(アラートデバイス)
+==========================
+
+アラートデバイス(用の証明書)に付与するポリシーにGreengrassへの権限を追加します。
+
+AWS IoTのメニューから[セキュリティー]＞[ポリシー]をクリックします。
+一覧が表示されますので、Alert-<参加者番号>-policyを選択して下さい。
+
+.. image:: images/07/iot-policy-list-alert.png
+
+|
+
+アラートデバイス用の証明書に付与するポリシーを編集します。
+[ポリシードキュメントの編集]をクリックし、下記で上書きして下さい。
+既存のポリシーに、Greengrass全般の権限を追加しています。
+
+.. image:: images/07/iot-policy-edit-alert.png
+
+|
+
+**ポリシードキュメント(変更前)**
 
 ::
 
-  sudo route del default gw 192.168.1.1
+  {
+    "Version": "2012-10-17",
+    "Statement": [
+      {
+        "Effect": "Allow",
+        "Action": "iot:*",
+        "Resource": "*"
+      }
+    ]
+  }
 
 |
 
-ping amazon.com と入力して、インターネットとの接続が遮断されていることを確認して下さい。
-
-.. image:: images/07/default-gw-del.png
-
-|
-
-インターネットとの接続は遮断されましたが、VNCでのリモートアクセスは、継続して使用できます。
-
-オフライン動作を確認
-==============================
-
-インターネットとの接続が遮断されているため、"LoadSwitch" は、使えません。ローカルコマンドで、CPUロードを上げてみましょう。
-
-4つ目のコンソール画面に下記のコマンドを入力します。
+**ポリシードキュメント(変更後)**
 
 ::
 
-  yes >> /dev/null
+  {
+    "Version": "2012-10-17",
+    "Statement": [
+      {
+        "Effect": "Allow",
+        "Action": "iot:*",
+        "Resource": "*"
+      },
+      {
+        "Effect": "Allow",
+        "Action": "greengrass:*",
+        "Resource": "*"
+      }
+    ]
+  }
 
 |
 
-これで、CPUロードが 25% 程度上がります。"alert!!!"が発生するか、確認しましょう。
+編集後、[新しいバージョンとして保存。]をクリックして更新します。
 
-.. image:: images/07/offline-alert.gif
+.. image:: images/07/iot-policy-edit-alert2.png
 
 |
 
-yes >> /dev/null と入力した、コンソール画面で CTRL + C を押して、yes を停止させます。
+アラートデバイスのポリシーにGreengrassの権限が追加されました。
 
+.. image:: images/07/iot-policy-editted-alert.png
 
-確認が終わったら、下記のコマンドを入力して、ディフォルトルートを元に戻しておいて下さい。
+|
+
+※ 今回のハンズオンでは簡易化のため、アラートデバイスがAWS Greengrassにおける全アクションを全リソースに対して行えるポリシーを付与しますが、実際に使用する場合は、デバイスが必要とするアクションとリソースに制限することを検討して下さい。
+
+ポリシーの変更(センサーデバイス)
+==========================
+
+センサーデバイス(用の証明書)に付与するポリシーにGreengrassへの権限を追加します。
+
+AWS IoTのメニューから[セキュリティー]＞[ポリシー]をクリックします。
+一覧が表示されますので、Sensor-<参加者番号>-policyを選択して下さい。
+
+.. image:: images/07/iot-policy-list-sensor.png
+
+|
+
+センサーデバイス用の証明書に付与するポリシーを編集します。
+[ポリシードキュメントの編集]をクリックし、下記で上書きして下さい。
+既存のポリシーに、Greengrass全般の権限を追加しています。
+
+.. image:: images/07/iot-policy-edit-sensor.png
+
+|
+
+**ポリシードキュメント(変更前)**
 
 ::
 
-  sudo route add default gw 192.168.1.1
+  {
+    "Version": "2012-10-17",
+    "Statement": [
+      {
+        "Effect": "Allow",
+        "Action": "iot:*",
+        "Resource": "*"
+      }
+    ]
+  }
+
+|
+
+**ポリシードキュメント(変更後)**
+
+::
+
+  {
+    "Version": "2012-10-17",
+    "Statement": [
+      {
+        "Effect": "Allow",
+        "Action": "iot:*",
+        "Resource": "*"
+      },
+      {
+        "Effect": "Allow",
+        "Action": "greengrass:*",
+        "Resource": "*"
+      }
+    ]
+  }
+
+|
+
+編集後、[新しいバージョンとして保存。]をクリックして更新します。
+
+.. image:: images/07/iot-policy-edit-sensor2.png
+
+|
+
+センサーデバイスのポリシーにGreengrassの権限が追加されました。
+
+.. image:: images/07/iot-policy-editted-sensor.png
+
+|
+
+※ 今回のハンズオンでは簡易化のため、センサーデバイスがAWS Greengrassにおける全アクションを全リソースに対して行えるポリシーを付与しますが、実際に使用する場合は、デバイスが必要とするアクションとリソースに制限することを検討して下さい。
+
+
+デバイスをGreengrassグループに追加する
+=========================================
+
+作成した、センサーデバイス、アラートデバイスをGreengrassグループに追加します。
+
+Greengrassの設定画面に戻り、Greengrassグループ：GGHandsonGroup-<参加者番号> をクリックして下さい。
+
+.. image:: images/07/greengrass-group.png
+
+|
+
+メニューから [デバイス] をクリックします。以下の様な画面が表示されますので、[デバイスの追加] をクリックします。
+
+.. image:: images/07/add-thing-to-group.png
+
+|
+
+[IoT Thingを選択する] をクリックします。
+
+
+.. image:: images/07/add-thing-to-group-2.png
+
+|
+
+アラートデバイス：Alert-<参加者番号> にチェックを入れ、[完了] をクリックします。
+
+.. image:: images/07/add-thing-to-group-3.png
+
+|
+
+アラートデバイスが追加されました。[デバイスの追加] をクリックして、センサーデバイスも追加します。
+
+.. image:: images/07/add-thing-to-group-4.png
+
+|
+
+センサーデバイス、アラートデバイスをGreengrassグループに追加されました。
+
+.. image:: images/07/sync-thing-shadow.png
+
+|
+
+センサーデバイスのデバイス シャドウは、クラウド上のシャドウと同期させる必要があるので、設定を変更します。
+
+センサーデバイスの右の [●●●] をクリックして、[クラウドに同期] をクリックして下さい。
+
+.. image:: images/07/sync-thing-shadow-2.png
+
+|
+
+[クラウドへのシャドウ同期] に変更されました。
+
+.. image:: images/07/sync-thing-shadow-3.png
 
 |

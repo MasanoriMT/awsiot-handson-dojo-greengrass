@@ -1,11 +1,15 @@
-============================
-AWS Greengrass基本設定
-============================
+================================================================
+AWS IoTの設定
+================================================================
 
-AWSコンソールの操作は、お手持ちのPCで行って頂いても、Raspberry Piのリモート画面で実施して頂いても構いません。Raspberyy Piで実施する場合は、「Raspberry Piの設定」の章に従って、VNC Viewerを用いて、Raspberry Piにリモート接続して設定を実施して下さい。
+この章ではAWS IoTにセンサーデバイス、アラートデバイスを作成し、セキュリティーやポリシーの設定を行います。
+
+.. image:: images/02/overview-iot-thing.png
+
+|
 
 AWS マネジメントコンソールにログイン
-=======================================
+============================
 
 まずは、下記のURLにアクセスして、アカウントID、ユーザー名、パスワードを入力しAWSマネージメントコンソールにサインインして下さい。
 
@@ -23,8 +27,10 @@ https://console.aws.amazon.com/
 
 |
 
-Greengrassグループの作成
-=======================
+AWS IoT エンドポイント
+===========================
+
+Raspberry Pi上のGreengrassコア、センサーデバイス、アラートデバイスの設定ファイルに、AWS IoTのエンドポイントを記入する必要があります。
 
 AWSマネージメントコンソールを開き、右上のリージョン一覧から
 [米国西部(オレゴン)]を選択します。
@@ -33,226 +39,377 @@ AWSマネージメントコンソールを開き、右上のリージョン一�
 
 |
 
-サービス一覧から [AWS Greengrass] をクリックして開きます。
+サービス一覧から [AWS IoT] をクリックして開きます。
 
-.. image:: images/02/greengrass-servicemenu.png
-
-|
-
-AWS Greengrass の開始画面が表示されます。[今すぐ始める]をクリックします。
-
-.. image:: images/02/greengrass-welcome.png
+.. image:: images/02/service-list.png
 
 |
 
-Greengrasクループ を作成します。[簡単な作成の使用] をクリックします。
+メニューから [設定] をクリックして下さい。エンドポイントが表示されます。
 
-.. image:: images/02/geengrass-easy-creation.png
-
-|
-
-[グループ名] に”GGHandsonGroup-<参加者番号>” と入力し、[次へ] をクリックします。
-
-============= ============================
-項目            値
-============= ============================
-グループ名           GGHandsonGroup-<参加者番号>
-============= ============================
-
-.. image:: images/02/greengrass-group-name.png
+.. image:: images/02/endpoint.png
 
 |
 
-[名前] に "GGHandsonGroup-<参加者番号>_Core" と出ますが、”GGC_Thing-<参加者番号>” に変更して、[次へ] をクリックします。
+ノートパッドなどに記録しておいて下さい。
 
-============= ============================
-項目            値
-============= ============================
-名前             GGC_Thing-<参加者番号>
-============= ============================
-
-.. image:: images/02/greengrass-core-name.png
-
-|
-
-[グループとコアの作成] をクリックすると、GreengrassグループとGreengrassコアが作成されます。
-
-.. image:: images/02/geengrass-create-group.png
-
-|
-
-自動的に、新しいGreengrassグループが作成され、Greengrassコアデバイス用の証明書とセキュリティーポリーシーが作成されGreengrassコアにアタッチされます。
-
-次の [コアデバイスへの接続] 画面で、Greengrassコアデバイス用の証明書とプライベートキーをPCにダウンロードして下さい。
-
-各ファイルのサイズは、証明書が1,220バイト程度、プライベートキーが1,670バイト程度になります。
-
-ダウンロードした証明書とプライベートキーは、後にRaspberry Piにコピーし、Greengrassコアデバイスで使用します。(/greengrass/configuration/certs/ 下にコピーします。)
-また、証明書の番号は、Greengrassコアデバイス用と分かる様にノートパッドなどに記録しておいて下さい。
-
-証明書の番号とは、ファイル名が "xxxxxxxxxx-certificate.pem.crt" の場合、冒頭の "xxxxxxxxxx" になります。
 
 **記録**
 
 ::
 
-  Greengrass core device: GGC_Thing-01
-    "certPath": "xxxxxxxxxx-certificate.pem.crt",
-    "keyPath": "xxxxxxxxxx-private.pem.key",
+  AWS IoT endpoint
+    "endpoint": "xxxxxxxxxxxx.iot.us-west-2.amazonaws.com"
 
 |
 
 
 
-Greengrass自身のダウンロードもこの画面で可能ですが、このハンズオンでは、Greengrass導入済みのRaspberry PiのSDカードを使用しますので、ダウンロードは不要です。[完了] をクリックして、Greengrassグループの作成を終了します。
 
-.. image:: images/02/geengrass-create-group-complete.png
+モノ(Thing)の作成
+======================
 
-|
+メニューから [登録] をクリックして下さい。
+まだ何も登録していない場合は下記が表示されますので[モノの登録]をクリックして下さい。
 
-Greengrassグループが作成されました。
+.. image:: images/02/iot-thing-first.png
 
-.. image:: images/02/geengrass-group-status.png
+※ 1つ以上モノ(Thing)を登録している場合は一覧が表示されますので画面右上の[作成]をクリックして下さい。
 
-|
-
-モノ(Thing)を確認する
--------------------
-
-メニューから[コア]をクリックします。以下の様な画面が表示されますので、作成したGreengrassコアが表示されている事を確認します。
-
-.. image:: images/02/greengrass-core-verify.png
+.. image:: images/02/iot-thing-list.png
 
 |
 
-Greengrassコア [GGC_Thing-<参加者番号>] をクリックして下さい。Greengrassコアの詳細が表示されます。
-モノのARNは、後にRaspberry Pi上のGreengrassコアの設定で必要になりますので、記録しておいて下さい。
+モノの登録 画面が表示されますので、[名前]に”Alert-<参加者番号>”と入力し、[モノの作成]をクリックします。
 
-.. image:: images/02/geengrass-core-ARN.png
+============= ============================
+項目            値
+============= ============================
+Name	          Alert-<参加者番号>
+============= ============================
 
-|
-
-ARNは、Raspberry Pi上の Greengrassの設定ファイル
-::
-
-  ~/greengrass/configuration/config.json
+.. image:: images/02/create-thing-Alert.png
 
 |
 
-に記載します。config.json は、下記の様な内容になっています。
-記録した ARNは、"thingArn" となります。
+アラートデバイス：Alert-<参加者番号> が作成されました。
 
-::
-
-  config.json
-  {
-      "coreThing": {
-          "caPath": "root-ca.pem",
-          "certPath": "cloud.pem.crt",
-          "keyPath": "cloud.pem.key",
-          "thingArn": "arn:aws:iot:us-west-2:000000000000:thing/GGC_Thing-01",
-          "iotHost": "axxzxxxxxxxx.iot.us-west-2.amazonaws.com",
-          "ggHost": "greengrass.iot.us-west-2.amazonaws.com"
-      },
-      "runtime": {
-          "cgroup": {
-              "useSystemd": "yes"
-          }
-      }
-  }
+.. image:: images/02/create-thing-Alert-2.png
 
 |
+
+[←]をクリックして下さい。センサーデバイスも作成します。
+
+[作成]をクリックします。
+
+.. image:: images/02/iot-thing-list.png
+
+|
+
+[名前]に”Sensor-<参加者番号>”と入力し、[モノの作成]を再度、クリックします。
+
+============= ============================
+項目            値
+============= ============================
+Name	          Sensor-<参加者番号>
+============= ============================
+
+.. image:: images/02/create-thing-Sensor-2.png
+
+|
+
+センサーデバイス：Sensor-<参加者番号> が作成されました。
+
+.. image:: images/02/create-thing-Sensor-3.png
+
+|
+
+[←]をクリックして下さい。
+
+アラートデバイスとセンサーデバイスが作成されました。
+
+.. image:: images/02/iot-thing-created.png
+
+|
+
+証明書の作成(アラートデバイス)
+=======================
+
+アラートデバイス用の証明書を作成します。
+
+メニューから[セキュリティー]をクリックします。
+まだ何も登録していない場合は下記が表示されますので[証明書を作成する]をクリックして下さい。
+
+.. image:: images/02/iot-cert-first.png
+
+|
+
+※ 1つ以上証明書を登録している場合は一覧が表示されますので画面右上の[作成]をクリックして下さい。
+
+.. image:: images/02/create-certificate.png
+
+|
+
+[1-Click 証明書作成 (推薦)]の右の[証明書の作成]をクリックします。
+
+.. image:: images/02/create-certificate-one-click.png
+
+|
+
+下記の様に、"証明書が作成されました!" と表示されたら、[このモノの証明書] と [プライベートキー] をダウンロードして下さい。
+
+この画面で、アラートデバイスの証明書とプライベートキーをPCにダウンロードして下さい。
+[有効化] をクリックして、証明書をアクティブにし、最後に、[完了] をクリックして下さい。
+
+.. image:: images/02/iot-cert-created.png
+
+|
+
+ダウンロードした証明書とプライベートキーは、後にRaspberry Piにコピーし、アラートデバイスで使用します。
+(~/GGHandson/alert_device 下にコピーします。) また、証明書の番号は、アラートデバイス用と分かる様にノートパッドなどに記録しておいて下さい。
 
 **記録**
 
 ::
 
-  Greengrass core device: GGC_Thing-01
-    "certPath": "xxxxxxxxxx-certificate.pem.crt",
-    "keyPath": "xxxxxxxxxx-private.pem.key",
-    "thingArn": "arn:aws:iot:us-west-2:000000000000:thing/GGC_Thing-01"
+  Alarm Device: Alert-<参加者番号>
+    "device_certificate_relative_path": "yyyyyyyyyy-certificate.pem.crt",
+    "device_private_key_relative_path": "yyyyyyyyyy-private.pem.key",
 
 |
 
-[←]をクリックして下さい。メニューから [セキュリティー] をクリックして、自動的に生成された証明書を確認します。
+ポリシーの作成(アラートデバイス)
+==========================
 
-.. image:: images/02/geengrass-security-check.png
+アラートデバイス(用の証明書)に付与するポリシーを追加します。
 
-|
+メニューから[セキュリティー]＞[ポリシー]をクリックします。
+まだ何も登録していない場合は下記が表示されますので[ポリシーの作成]をクリックして下さい。
 
-証明書を確認する
--------------------
-
-作成された証明書が表示されます。先ほど記録しておいたGreengrassコアデバイス用の証明書の番号があるか確認して下さい。また、証明書が アクティブ になっているかも確認して下さい。Greengrassコアデバイス用の証明書をクリックして下さい。
-
-.. image:: images/02/geengrass-security-check-2.png
+.. image:: images/02/iot-policy-first.png
 
 |
 
-発行者、発行日、有効期限などの証明書の詳細情報が表示されます。
+※ 1つ以上ポリシーを登録している場合は一覧が表示されますので画面右上の[作成]をクリックして下さい。
 
-.. image:: images/02/geengrass-security-check-3.png
-
-|
-
-メニューから [ポリシー] をクリックして下さい。
-自動的に生成されたポリシー [GGC_Thing-<参加者番号>-policy] が、証明書と関連付けれていることが分かります。
-
-.. image:: images/02/geengrass-security-check-policy.png
+.. image:: images/02/iot-policy-list.png
 
 |
 
-ポリシーの内容は、ポリシーをクリックすれば、ポリシードキュメントの内容が表示されます。
+アラートデバイス用の証明書に付与するポリシーを作成します。
+下記のとおり入力し、[作成]をクリックして下さい。
+アクションを選択するとリソースARNとして
+[arn:aws:iot:us-west-2:<アカウント番号>:topic/replaceWithATopic]
+が自動で記入されますが、[*]に置き換えて下さい。
+
+============= ============================
+項目            値
+============= ============================
+名前	          Alert-<参加者番号>-policy
+アクション         iot:*
+リソース ARN          *
+============= ============================
+
+
+.. image:: images/02/iot-cert-create-policy-alert.png
+
+|
+
+アラートデバイスに付与するポリシーが作成されました。
+
+.. image:: images/02/iot-cert-policy-created-alert.png
+
+|
+
+※ 今回のハンズオンでは簡易化のため、アラートデバイスがAWS IoTにおける全アクションを全リソースに対して行えるポリシーを付与しますが、実際に使用する場合は、デバイスが必要とするアクションとリソースに制限することを検討して下さい。
+
+
+証明書にポリシーをアタッチする(アラートデバイス)
+==========================
+
+証明書の画面に戻ります。アラートデバイス用の証明書をクリックしてください。
+
+.. image:: images/02/attach-thing-Alert.png
+
+|
+
+証明書の詳細が表示されます。右上の [アクション] メニューから [ポリシーのアタッチ] を選んで下さい。
+
+.. image:: images/02/iot-cert-policy-attach.png
+
+|
+
+[Alert-<参加者番号>-policy] が、表示されますので、チェックを入れて、[アタッチ] をクリックして下さい。
+
+.. image:: images/02/iot-cert-policy-attach2.png
+
+|
+
+アラートデバイスに付与するポリシーが証明書に付与されました。
+証明書の詳細にて、[ポリシー]を選択すると[Alert-<参加者番号>-policy] が、表示されることを確認して下さい。
+
+.. image:: images/02/iot-cert-policy-attached.png
+
+|
+
+
+証明書にモノをアタッチする(アラートデバイス)
+====================================
+
+ポリシーが紐付けられたを証明書にモノをアタッチすることで、モノの認証と権限の設定が完了します。
+
+続けて証明書の詳細にて、右上の [アクション] メニューから [モノをアタッチする] を撰んで下さい。
+
+.. image:: images/02/attach-thing-Alert-2.png
+
+|
+
+[Alert-<参加者番号>] が、表示されますので、チェックを入れて、[アタッチ] をクリックして下さい。
+
+.. image:: images/02/attach-thing-Alert-3.png
+
+|
+
+証明書がアラートデバイスに付与されました。
+証明書の詳細にて、[モノ]を選択すると[Alert-<参加者番号>] が、表示されることを確認して下さい。
+
+.. image:: images/02/iot-cert-thing-attached.png
+
+|
+**センサーデバイスについても、同様の操作を行い、証明書の作成、ポリシーの作成、証明書にポリシーをアタッチ、証明書にモノをアタッチして下さい。**
+
+
+証明書の作成(センサーデバイス)
+=======================
+
+センサーデバイス用の証明書を作成します。
+
+メニューから[セキュリティー]をクリックします。
+一覧が表示されますので右上の[作成]をクリックして下さい。
+
+.. image:: images/02/create-certificate.png
+
+|
+
+[1-Click 証明書作成 (推薦)]の右の[証明書の作成]をクリックします。
+
+.. image:: images/02/create-certificate-one-click.png
+
+|
+
+下記の様に、"証明書が作成されました!" と表示されたら、[このモノの証明書] と [プライベートキー] をダウンロードして下さい。
+
+この画面で、センサーデバイスの証明書とプライベートキーをPCにダウンロードして下さい。
+[有効化] をクリックして、証明書をアクティブにし、最後に、[完了] をクリックして下さい。
+
+.. image:: images/02/iot-cert-created.png
+
+|
+
+ダウンロードした証明書とプライベートキーは、後にRaspberry Piにコピーし、センサーデバイスで使用します。
+(~/GGHandson/sensor_device 下にコピーします。) また、証明書の番号は、センサーデバイス用と分かる様にノートパッドなどに記録しておいて下さい。
+
+**記録**
 
 ::
 
-  {
-    "Version": "2012-10-17",
-    "Statement": [
-      {
-        "Effect": "Allow",
-        "Action": [
-          "iot:Publish",
-          "iot:Subscribe",
-          "iot:Connect",
-          "iot:Receive"
-        ],
-        "Resource": [
-          "*"
-        ]
-      },
-      {
-        "Effect": "Allow",
-        "Action": [
-          "iot:GetThingShadow",
-          "iot:UpdateThingShadow",
-          "iot:DeleteThingShadow"
-        ],
-        "Resource": [
-          "*"
-        ]
-      },
-      {
-        "Effect": "Allow",
-        "Action": [
-          "greengrass:*"
-        ],
-        "Resource": [
-          "*"
-        ]
-      }
-    ]
-  }
+  Sensor Device: Sensor-<参加者番号>
+    "device_certificate_relative_path": "yyyyyyyyyy-certificate.pem.crt",
+    "device_private_key_relative_path": "yyyyyyyyyy-private.pem.key",
 
 |
 
-モノへの接続、トピックのパブリッシュ/サブスクライブ、デバイスシャドウの操作、greengrassの操作など、AWS IoTおよび、Greengrassへの全ての操作が可能になっています。
+ポリシーの作成(センサーデバイス)
+==========================
 
-メニューから [モノ] をクリックして下さい。
-自動的に生成されたGreengrassコアデバイス [GGC_Thing-<参加者番号>] が、モノとして表示されるはずです。
+センサーデバイス(用の証明書)に付与するポリシーを追加します。
 
-.. image:: images/02/geengrass-security-check-thing.png
+メニューから[セキュリティー]＞[ポリシー]をクリックします。
+一覧が表示されますので画面右上の[作成]をクリックして下さい。
+
+.. image:: images/02/iot-policy-list.png
 
 |
 
-これで、AWS Greengrass のクラウド側の設定は、終わりです。
+センサーデバイス用の証明書に付与するポリシーを作成します。
+下記のとおり入力し、[作成]をクリックして下さい。
+アクションを選択するとリソースARNとして
+[arn:aws:iot:us-west-2:<アカウント番号>:topic/replaceWithATopic]
+が自動で記入されますので、[topic]以下の[replaceWithATopic]を[*]に置き換えて下さい。
+
+============= ============================
+項目            値
+============= ============================
+名前	          Sensor-<参加者番号>-policy
+アクション         iot:*
+リソース ARN          *
+============= ============================
+
+
+.. image:: images/02/iot-cert-policy-create-sensor.png
+
+|
+
+センサーデバイスに付与するポリシーが作成されました。
+
+.. image:: images/02/iot-cert-policy-created-sensor.png
+
+|
+
+※ 今回のハンズオンでは簡易化のため、センサーデバイスがAWS IoTにおける全アクションを全リソースに対して行えるポリシーを付与しますが、実際に使用する場合は、デバイスが必要とするアクションとリソースに制限することを検討して下さい。
+
+
+証明書にポリシーをアタッチする(センサーデバイス)
+==========================
+
+証明書の画面に戻ります。センサーデバイス用の証明書をクリックしてください。
+
+.. image:: images/02/attach-thing-Alert.png
+
+|
+
+証明書の詳細が表示されます。右上の [アクション] メニューから [ポリシーのアタッチ] を選んで下さい。
+
+.. image:: images/02/iot-cert-policy-attach.png
+
+|
+
+[Sensor-<参加者番号>-policy] が、表示されますので、チェックを入れて、[アタッチ] をクリックして下さい。
+
+.. image:: images/02/iot-cert-policy-attach2-sensor.png
+
+|
+
+センサーデバイスに付与するポリシーが証明書に付与されました。
+証明書の詳細にて、[ポリシー]を選択すると[Sensor-<参加者番号>-policy] が、表示されることを確認して下さい。
+
+.. image:: images/02/iot-cert-policy-attached-sensor.png
+
+|
+
+
+証明書にモノをアタッチする(センサーデバイス)
+====================================
+
+ポリシーが紐付けられたを証明書にモノをアタッチすることで、モノの認証と権限の設定が完了します。
+
+続けて証明書の詳細にて、右上の [アクション] メニューから [モノをアタッチする] を撰んで下さい。
+
+.. image:: images/02/attach-thing-Alert-2.png
+
+|
+
+[Sensor-<参加者番号>] が、表示されますので、チェックを入れて、[アタッチ] をクリックして下さい。
+
+.. image:: images/02/iot-cert-thing-attach-sensor.png
+
+|
+
+証明書がセンサーデバイスに付与されました。
+証明書の詳細にて、[モノ]を選択すると[Alert-<参加者番号>] が、表示されることを確認して下さい。
+
+.. image:: images/02/iot-cert-thing-attached-sensor.png
+
+|
+
+これで、AWS IoTの基本設定は、終わりです。

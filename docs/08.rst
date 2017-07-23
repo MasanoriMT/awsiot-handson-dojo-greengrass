@@ -1,84 +1,296 @@
-===============================
-その他の設定（オプション）
-===============================
+==================================================================
+Greengrass向けLambda関数の更新とサブスクリプションの設定
+==================================================================
 
-CloudWatch Logsの設定
-============================
+クラウド上で動作させていたlambda関数をGreengrassコアにデプロイ、動作できるよう更新します。
 
-AWS IoTのログはCloudWatch Logsで取得可能です。トラブルシューティングなどに使用する事ができます。
-
-マネージメントコンソールのAWS IoTを開き、[設定]を選択し、[更新]をクリックします。
-
-.. image:: images/08/IoT-Settings.png
+.. image:: images/08/overview-gg.png
 
 |
 
-次に[新しいロールの作成]をクリックしてください。
+AWS IoT Lambdaルールの無効化
+=======================
 
-.. image:: images/08/create-new-role.png
+クラウド上で動作させていたlambda関数を、無効化します。
+AWS IoTのメニューから[ルール]をクリックします。
+一覧が表示されますので、cpuUsageRule-<参加者番号>を選択して下さい。
 
-|
-
-次に"IAM role name"欄に、"AWSIoTCloudWatch"と入力し、[新しいロールの作成]をクリックします。
-
-.. image:: images/08/create-new-role-2.png
-
-|
-
-再度"IAM role name"欄から、"AWSIoTCloudWatch"を選択し、[ロールの更新]をクリックします。
-"ロールは正常に更新されました"と表示されるので、"ログレベル"で"情報"を選択し、[完了]をクリックします。
-
-.. image:: images/08/IoT-Settings-Update-save.png
+.. image:: images/08/iot-rule-list.png
 
 |
 
-CloudWatchログが有効になりました。
+[アクション]をクリックし、プルダウンメニューから[無効化]をクリックして下さい。
 
-.. image:: images/08/CloudWatch-Logenabled.png
-
-|
-
-ログを確認するには、マネージメントコンソールのサービスメニューから[CloudWatch]をクリックして開き、左側のメニューの[ログ]を選択します。ロググループ一覧に”AWSIotLogs”が表示されていることを確認し、クリックします。
-
-.. image:: images/08/CloudWatch-Log.png
+.. image:: images/08/iot-rule-disable.png
 
 |
 
-ログストリーム一覧にエントリが存在することを確認します。ログストリームの名前をクリックすることで、ログを閲覧することができます。
+ルールが無効化されました。
 
-.. image:: images/08/CloudWatch-Log-2.png
-
-|
-
-GreengrassのCloudWatch Logsの設定
-=========================================
-
-Greengrassの設定画面に移動し、Greengrassグループ：GGHandsonGroup-<参加者番号> をクリックして下さい。
-
-.. image:: images/04/greengrass-group.png
+.. image:: images/08/iot-rule-disabled.png
 
 |
 
-[ローカルログ設定]の編集をクリックします。
+Lambda関数の更新
+=======================
 
-.. image:: images/08/greengrass-localwatch.png
+Lambda関数をGreengrassコアにデプロイ、動作できるよう更新します。
 
-|
+サービス一覧から[Lambda] をクリックして開きます。
 
-[別のログタイプの追加] をクリックします。
-
-.. image:: images/08/greengrass-localwatch-2.png
-
-|
-
-[ユーザー Lambda(推薦)] と、[Greengrass システム] をチェックし、[更新] をクリックします。
-
-.. image:: images/08/greengrass-localwatch-3.png
+.. image:: images/08/lambda.png
 
 |
 
-最後に、[保存] をクリックします。
+Lambda関数一覧が表示されます。
+先ほど作成したcpuUsageChecker-<参加者番号>を選択します。
 
-.. image:: images/08/greengrass-localwatch-save.png
+.. image:: images/08/lambda-list.png
 
 |
+
+コードをインラインで編集します。
+boto3の代わりにgreengrasssdkを利用するよう、修正して下さい。
+このSDKは、Greengrassコアとの通信を可能にします。
+
+
+|
+
+.. image:: images/08/lambda-edit.png
+
+|
+
+**コード(変更前)**
+
+::
+
+  import sys
+  import logging
+  import json
+  import boto3
+  # import greengrasssdk
+
+  # Setup logging to stdout
+  logger = logging.getLogger(__name__)
+  logging.basicConfig(stream=sys.stdout, level=logging.DEBUG)
+
+  client = boto3.client('iot-data')
+  # client = greengrasssdk.client('iot-data')
+
+|
+
+**コード(変更後)**
+
+::
+
+  import sys
+  import logging
+  import json
+  # import boto3
+  import greengrasssdk
+
+  # Setup logging to stdout
+  logger = logging.getLogger(__name__)
+  logging.basicConfig(stream=sys.stdout, level=logging.DEBUG)
+
+  # client = boto3.client('iot-data')
+  client = greengrasssdk.client('iot-data')
+
+|
+
+コードを変更したら[保存]をクリックして下さい。
+
+.. image:: images/08/lambda-edit2.png
+
+|
+
+Lambda関数のバージョンを設定します。[アクション ▼] メニューから、[新しいバージョンを発行] をクリックします。
+
+.. image:: images/08/lambda-version.png
+
+|
+
+[バージョンの説明] に、"Handson" と入力し、[発行] をクリックします。
+
+.. image:: images/08/lambda-version-2.png
+
+|
+
+これで、Lambda関数の登録は、終了です。
+
+次に、このLambda関数をGreengrassクループに追加します。
+
+Greengrassの設定画面に戻り、Greengrassグループ：GGHandsonGroup-<参加者番号> をクリックして下さい。
+
+.. image:: images/08/greengrass-group.png
+
+|
+
+メニューから [Lambda] をクリックします。
+
+.. image:: images/08/add-lambda-to-group.png
+
+|
+
+[Lambdaの追加] をクリックします。
+
+.. image:: images/08/add-lambda-to-group-2.png
+
+|
+
+[]既存のLambdaの使用] をクリックします。
+
+.. image:: images/08/add-lambda-to-group-3.png
+
+|
+
+[cpuUsageChecker-<参加者番号>] にチェックを入れ、[次へ] をクリックします。
+
+.. image:: images/08/add-lambda-to-group-4.png
+
+|
+
+先ほど作成したLambda関数のバージョンにチェックを入れ、[次へ] をクリックします。
+
+.. image:: images/08/add-lambda-to-group-5.png
+
+|
+
+Lambda関数のバージョンが、Greengrassグループに追加されました。
+
+.. image:: images/08/add-lambda-to-group-6.png
+
+|
+
+シナリオ
+==================
+
+今回のハンズオンでは、下記のシナリオでGreengrassの動作を確認します。
+動作確認を容易化するため、センシングしたデータはエッジだけでなくクラウドにも送信します。
+
+- ① センサーデバイスが、Raspberry PiのCPUロードを定期的にトピック"sensing/data"にPublish
+- ② トピック"sensing/data"をローカルLambdaにも流す
+- ③ ローカルLambdaが、CPUロードを確認し、シャドウ "Alert"を更新する
+- ④ アラートデバイスは、シャドウ "Alert"がセットされると、アラートを出す
+- ⑤ センサー用のシャドウ "LoadSwitch"は、クラウドとSyncする設定にしておき、クラウド側でシャドウを更新すると、センサーデバイスでRaspberry Piに負荷がかかる処理を実行する
+
+.. image:: images/08/subscription-overview.png
+
+|
+
+サブスクリプションの設定
+==========================
+
+サブスクリプションは、ローカルデバイス、Greengrassコア、クラウド間のメッセージの送信先を定義するものです。今回のハンズオンでは、下記のサブスクリプションを設定します。
+
+.. csv-table::
+    :header-rows: 1
+    :file: table/subscription.csv
+
+|
+
+**【注意】トピックフィルターの $aws/things/Alert-01/、$aws/things/Sensor-01/ の "01"は、ご自分の参加者番号に置き換えて下さい。**
+
+このテーブルに従って、サブスクリプションの設定を行います。
+
+Greengrassの設定画面に戻り、Greengrassグループ：GGHandsonGroup-<参加者番号> をクリックして下さい。
+
+.. image:: images/08/greengrass-group.png
+
+|
+
+メニューから [サブスクリプション] をクリックします。
+
+.. image:: images/08/subscription.png
+
+|
+
+まずは、①のソースのセンサーデバイスを設定します。ソースの [選択] をクリックします。
+
+.. image:: images/08/source-1.png
+
+|
+
+[デバイス] をクリックし、Sensor-<参加者番号> をクリックします。
+
+.. image:: images/08/source-1-select.png
+
+|
+
+次に、①のターゲットの IoT Cloud を設定します。ターゲットの [選択] をクリックします。
+
+.. image:: images/08/target-1.png
+
+|
+
+[サービス] をクリックし、IoT Cloud をクリックします。
+
+.. image:: images/08/target-1-select.png
+
+|
+
+[次へ] をクリックします。
+
+.. image:: images/08/next.png
+
+|
+
+オプションのトピックのフィルターに sensing/data を入力し、[次へ] をクリックします。
+
+.. image:: images/08/topic-filter-1.png
+
+|
+
+確認画面が出てきますので、[完了] をクリックして、設定を保存します。
+
+.. image:: images/08/subscription-confirm.png
+
+|
+
+上記の操作を繰り返して、残りのサブスクリプションの設定を行って下さい。
+
+②の設定
+
+.. image:: images/08/subscription-2.png
+
+|
+
+③の設定
+
+.. image:: images/08/subscription-3.png
+
+|
+
+④-1の設定
+
+.. image:: images/08/subscription-4-1.png
+
+|
+
+④-2の設定
+
+.. image:: images/08/subscription-4-2.png
+
+|
+
+⑤-1の設定
+
+.. image:: images/08/subscription-5-1.png
+
+|
+
+⑤-2の設定
+
+.. image:: images/08/subscription-5-2.png
+
+|
+
+最終的には、下記の様になります。
+
+.. image:: images/08/subscription-result.png
+
+|
+
+トピックが長い場合、入力したフィルター全体が表示されませんが、トピックが隠れている所にマウスポインタを置くと、トピックの隠れていた部分も含めて全体が表示されます。
+
+これで、クラウド側の設定は、終わりです。

@@ -1,306 +1,221 @@
-==================================================================
-Greengrass向けLambda関数の登録とサブスクリプションの設定
-==================================================================
+======================
+Raspberry Piの設定
+======================
 
-Lambda関数の登録
+ハードウェアの確認
 =======================
 
-Greengrassコアにデプロイする Lambda関数を登録します。
+下記の３つのハードウエアを確認して下さい。
 
-はじめに、Lambda関数パッケージを下記のリンクからPCにダウンロードして下さい。このzipファイルは、後ほどLambdaの設定画面でアップロードします。
+① Raspberry Pi 3
 
-https://s3-us-west-2.amazonaws.com/greengrass-trial/GGhandsonLambda.zip
-
-このパッケージは、Lambda関数(greengrassCpuUsage.py)の他に、AWS Greengrass コア Python SDKが含まれています。
-このSDKは、Lambda関数は実行中にGreengrassコアとの通信を可能にします。
-
-サービス一覧から[Lambda] をクリックして開きます。
-
-.. image:: images/04/lambda.png
+.. image:: images/04/RaspberryPi3.jpg
 
 |
 
-下記のような画面が表示されるので、[今すぐ始める] をクリックします。
+② 電源アダプタ
 
-.. image:: images/04/lambda-2.png
-
-|
-
-Lambda関数の作成画面が表示されるので、"Blank Function" をクリックします。
-
-.. image:: images/04/lambda-3.png
+.. image:: images/04/PowerAddapter.png
 
 |
 
-トリガーの設定画面が表示されるので、[次へ]をクリックします。
+③ マイクロSDカード
 
-.. image:: images/04/lambda-4.png
-
-|
-
-ダウンロード済みのLambda関数パッケージ(GGhandsonLambda.zip)をアップロードします。
-下記のような画面が表示されるので、必要事項を入力して下さい。
-
-======================== =======================================
-項目                        設定
-======================== =======================================
-名前                          greengrassCpuUsage-<参加者番号>
-説明                          a Lambda func. to run Greengrass core
-ランタイム                     Python 2.7
-コード エントリ タイプ           .ZIPファイルをアップロード
-関数パッケージ                  GGhandsonLambda.zip
-ハンドラ                       greengrassCpuUsage.message_handler
-ロール                         カスタムロールの作成
-======================== =======================================
-
-.. image:: images/04/lambda-5.png
+.. image:: images/04/SDCard.png
 
 |
 
-ロール：[カスタムロールの作成] を選択すると、別画面でIAMの設定画面が出てきます。[許可] をクリックするとIAMの設定画面は閉じます。
+参加者番号の紙が入っています。確認して下さい。
 
-.. image:: images/04/lambda-role.png
+組み立て
+===================
 
-|
+SDカードをRaspberry Piに装着します。向きがあるので注意して下さい。
 
-Lambdaの画面に戻ります。ロールが [既存のロールを選択] に変更され、ロール名として、"lambda_basic_execution" になって居居ることを確認し、[次へ] をクリックして下さい。
-
-.. image:: images/04/lambda-6.png
-
-|
-
-確認画面が表示されますので、下までスクロースし、[関数の作成] をクリックして下さい。
-
-.. image:: images/04/lambda-create.png
+.. image:: images/04/SDCard-2.png
 
 |
 
-Lambda関数の作成に成功すると、下記の様な画面が表示されます。
+電源プラグをマイクロUDBソケットに差し込みます。
 
-.. image:: images/04/lambda-complete.png
-
-|
-
-コード内の "thingName" が、"Alert-01" となっていますので、01 の所をご自分の参加者番号に置き換えて下さい。CPUロードが 40% を越えると、アラートを"on"にするようになっています。
-
-修正したら、 [保存] をクリックします。
-
-.. image:: images/04/lambda-save.png
+.. image:: images/04/USB-Plug-in.png
 
 |
 
-Lambda関数のバージョンを設定します。[アクション ▼] メニューから、[新しいバージョンを発行] をクリックします。
+電源を投入すると、SDカードスロット右の赤LEDが点灯します。OSブートが始まり、SDカードへのアクセスがあると、、緑LEDが点滅します。
 
-.. image:: images/04/lambda-version.png
+WiFi接続
+===================================
 
-|
+お手持ちのPCをハンズオンのWiFiアクセスポイントに接続します。WiFi設定は、下記になります。
 
-[バージョンの説明] に、"Handson" と入力し、[発行] をクリックします。
+::
 
-.. image:: images/04/lambda-version-2.png
-
-|
-
-これで、Lambda関数の登録は、終了です。
-
-次に、このLambda関数をGreengrassクループに追加します。
-
-Greengrassの設定画面に戻り、Greengrassグループ：GGHandsonGroup-<参加者番号> をクリックして下さい。
-
-.. image:: images/04/greengrass-group.png
+- SSID：awshandson
+- パスフレーズ：awshandson
 
 |
 
-メニューから [Lambda] をクリックします。
+お手持ちのPCにインストールした、VNC Viewer を起動して下さい。下記の画面が表示されます。
 
-.. image:: images/04/add-lambda-to-group.png
+接続先として、'raspberrypi-<参加者番号>.local'と入力して[エンター]を押します。
 
-|
+「一人で1つのAWSアカウントを利用する場合は「参加者番号」は "01" としてください。」
+としていましたが、ここでの<参加者番号>は、SDカードに書かれた番号にして下さい・。
 
-[Lambdaの追加] をクリックします。
-
-.. image:: images/04/add-lambda-to-group-2.png
-
-|
-
-[]既存のLambdaの使用] をクリックします。
-
-.. image:: images/04/add-lambda-to-group-3.png
+.. image:: images/04/VNC_Viewer.png
 
 |
 
-[greengrassCpuUsage-<参加者番号>] にチェックを入れ、[次へ] をクリックします。
+Username と、Password を入力して [OK] を押します。
 
-.. image:: images/04/add-lambda-to-group-4.png
-
-|
-
-先ほど作成したLambda関数のバージョンにチェックを入れ、[次へ] をクリックします。
-
-.. image:: images/04/add-lambda-to-group-5.png
+.. image:: images/04/VNC_Connect.png
 
 |
 
-Lambda関数のバージョンが、Greengrassグループに追加されました。
+無事、Raspberry Piに接続出来たら、Raspberry Piのリモート画面が表示されます。
 
-.. image:: images/04/add-lambda-to-group-6.png
-
-|
-
-シナリオ
-==================
-
-今回のハンズオンでは、下記のシナリオでGreengrassの動作を確認します。
-
-- ① センサーデバイスが、Raspberry PiのCPUロードを定期的にトピック"sensing/data"にPublish
-- ② トピック"sensing/data"をローカルLambdaにも流す
-- ③ ローカルLambdaが、CPUロードを確認し、シャドウ "Alert"を"更新する
-- ④ アラートデバイスは、シャドウ "Alert"がセットされると、アラートを出す
-- ⑤ センサー用のシャドウ "LoadSwitch"は、クラウドとSyncする設定にしておき、クラウド側でシャドウを更新すると、センサーデバイスでRaspberry Piに負荷がかかる処理を実行する
-
-.. image:: images/04/subscription-overview.png
+.. image:: images/04/VNC_login-OK.png
 
 |
 
-サブスクリプションの設定
-==========================
+警告が出ますが、無視して、[OK] を押して下さい。
 
-サブスクリプションは、ローカルデバイス、Greengrassコア、クラウド間のメッセージの送信先を定義するものです。今回のハンズオンでは、下記のサブスクリプションを設定します。
+Raspberry Piは、WiFi SSID = awshandson に接続するように設定してあります。
+VNC Viewerでの接続ができれば、Raspberry PiもWiFiに接続出来ているはずです。
 
-.. csv-table::
-    :header-rows: 1
-    :file: table/subscription.csv
+うまく接続出来ない場合は、Ethernet接続を試してみましょう。
+Raspberry PiのEthernetは、固定IPアドレス 192.168.11.100 に設定されています。
+PCとRaspberry PiをEthernetで接続し(ストレートケーブルでも構いません。)
 
-|
+PC側のIPアドレスを、固定IP 192.168.11.xxx に設定して下さい。
+VNC Viewerの接続先を、192.168.11.100 にして、接続してみてください。
 
-**【注意】トピックフィルターの $aws/things/Alert-01/、$aws/things/Sensor-01/ の "01"は、ご自分の参加者番号に置き換えて下さい。**
+シリアルケーブルでコンソール接続する場合、下記のファイルにWiFi設定が入っていますので、適宜変更して下さい。
 
-このテーブルに従って、サブスクリプションの設定を行います。
+::
 
-Greengrassの設定画面に戻り、Greengrassグループ：GGHandsonGroup-<参加者番号> をクリックして下さい。
-
-.. image:: images/04/greengrass-group.png
-
-|
-
-メニューから [サブスクリプション] をクリックします。
-
-.. image:: images/04/subscription.png
+   /etc/wpa_supplicant/wpa_supplicant.conf
 
 |
 
-まずは、①のソースのセンサーデバイスを設定します。ソースの [選択] をクリックします。
+ハンズオンのマニュアルを表示する
+====================================
 
-.. image:: images/04/source-1.png
+Webブラウザは、メニューバーのアイコンをクリックすると表示されます。本ハンズオンのマニュアルがブックマークに登録されています。
 
-|
-
-[デバイス] をクリックし、Sensor-<参加者番号> をクリックします。
-
-.. image:: images/04/source-1-select.png
+.. image:: images/04/web-browser-manual.png
 
 |
 
-次に、①のターゲットの IoT Cloud を設定します。ターゲットの [選択] をクリックします。
+Raspberry Piの環境を初期化する
+====================================
 
-[デバイス] をクリックし、Sensor-<参加者番号> をクリックします。
+コンソールを表示
+------------------------
 
-.. image:: images/04/target-1.png
+コンソールは、メニューバーのアイコンをクリックすると表示されます。
 
-|
-
-[サービス] をクリックし、IoT Cloud をクリックします。
-
-.. image:: images/04/target-1-select.png
+.. image:: images/04/console.png
 
 |
 
-[次へ] をクリックします。
+コンソールに下記を入力し、greengrassとAWS IoT Device SDKの環境をクリーンアップします。
 
-.. image:: images/04/next.png
+::
 
-|
-
-オプションのトピックのフィルターに sensing/data を入力し、[次へ] をクリックします。
-
-.. image:: images/04/topic-filter-1.png
+   ./handson_cleanup
 
 |
 
-確認画面が出てきますので、[完了] をクリックして、設定を保存します。
 
-.. image:: images/04/subscription-confirm.png
+ダウンロード済みの証明書をRaspberry Piにコピー
+============================================================
 
-|
+センサーデバイス、アラートデバイス用に証明書を2セットダウンロードしていました。
+Raspberry Piに転送、します。VNC Viewrのタイトルバーの中心にマウスを移動させると、ツールが表示されます。矢印が交差したアイコンをクリックします。
 
-上記の操作を繰り返して、残りのサブスクリプションの設定を行って下さい。
-
-②の設定
-
-.. image:: images/04/subscription-2.png
+.. image:: images/04/file-txfer.png
 
 |
 
-③の設定
+ファイル転送の画面が表示されます。 [Send files...] ボタンを押します。
 
-.. image:: images/04/subscription-3.png
-
-|
-
-④-1の設定
-
-.. image:: images/04/subscription-4-1.png
+.. image:: images/04/file-txfer-2.png
 
 |
 
-④-2の設定
+ファイルの選択画面が表示されるので、全ての証明書を選択して、[Open] を押します。(図は6つのファイル転送していますが、ここでは4つのファイルを転送します)
 
-.. image:: images/04/subscription-4-2.png
-
-|
-
-④-3の設定
-
-.. image:: images/04/subscription-4-3.png
+.. image:: images/04/file-txfer-3.png
 
 |
 
-④-4の設定
+ファイルがRaspberry Piのデスクトップに転送されます。
 
-.. image:: images/04/subscription-4-4.png
-
-|
-
-⑤-1の設定
-
-.. image:: images/04/subscription-5-1.png
+.. image:: images/04/file-txfer-done.png
 
 |
 
-⑤-2の設定
+設定のおさらい、
 
-.. image:: images/04/subscription-5-2.png
+ここで、設定のおさらいをしてみましょう。Raspberry Piの設定のために記録した内容は、下記の様になっているはずです。この内容をテキストファイルにして、Raspberry Piに転送しておきましょう。PC側でコピーしてVNCの画面にペーストすることも出来ますが、うまくいかないこともあり、ファイルを転送することをお勧めします。
 
-|
+::
 
-⑤-3の設定
+  AWS IoT endpoint
+    "endpoint": "xxxxxxxxxxxx.iot.us-west-2.amazonaws.com"
 
-.. image:: images/04/subscription-5-3.png
+  Alarm Device: Alert-<参加者番号>
+    "device_certificate_relative_path": "yyyyyyyyyy-certificate.pem.crt",
+    "device_private_key_relative_path": "yyyyyyyyyy-private.pem.key",
 
-|
-
-⑤-4の設定
-
-.. image:: images/04/subscription-5-4.png
-
-|
-
-最終的には、下記の様になります。
-
-.. image:: images/04/subscription-result.gif
+  Sensor Device: Sensor-<参加者番号>
+    "device_certificate_relative_path": "zzzzzzzzzz-certificate.pem.crt",
+    "device_private_key_relative_path": "zzzzzzzzzz-private.pem.key",
 
 |
 
-トピックが長い場合、入力したフィルター全体が表示されませんが、トピックが隠れている所にマウスポインタを置くと、トピックの隠れていた部分も含めて全体が表示されます。
+Raspberry Pi上のファイル
+===============================
 
-これで、クラウド側の設定は、終わりです。
+Raspbery Piのメニューバーをクリックしてファイラーを開きます。
+/home/pi以下に下記ファイルがあります。
+
+- GGHandson-20170726.tar.gz
+  本ハンズオンで利用する、センサーデバイス、アラートデバイスのアプリが入っています。
+
+下記のコマンドで解凍して GGhandsonパッケージを解凍して下さい。
+
+::
+
+  tar -zxf GGHandson-20170726.tar.gz -C .
+
+|
+
+デバイスの設定と起動
+==================================
+
+アラートデバイス、センサーデバイスは、AWS IoT Device SDK Pythonで作成します。今回のハンズオンでは、Device SDKの開発環境と、各デバイスのコードは、導入済みです。証明書を所定のパスにコピーし、アプリケーションを実行します。
+
+アラートデバイスの設定と起動は、~/GGHandson/alert_device で、
+センサーデバイスの設定と起動は、~/GGHandson/sensor_device で行います。
+
+デバイス用の証明書をコピー
+----------------------------------
+
+~/GGHandson/alert_device にアラートデバイス用の証明書をコピーして下さい。
+
+コピーするファイルは、デスクトップ上の下記の2つのファイルになります。
+
+- root-ca.pem
+- yyyyyyyyyy-certificate.pem.crt
+- yyyyyyyyyy-private.pem.key
+
+同様に~/GGHandson/sensor_device にアラートデバイス用の証明書をコピーして下さい。
+
+コピーするファイルは、デスクトップ上の下記の2つのファイルになります。
+
+- root-ca.pem
+- zzzzzzzzzz-certificate.pem.crt
+- zzzzzzzzzz-private.pem.key

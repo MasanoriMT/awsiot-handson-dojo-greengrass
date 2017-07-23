@@ -1,183 +1,237 @@
-=======================================
-Greengrassコアへのデプロイと動作確認
-=======================================
+============================
+AWS Greengrass基本設定
+============================
 
-AWS コンソールのGreengrassに戻ります。
+この章からは、今まで見てきたアプリケーションをエッジで実行するため、
+Greengrassの設定を行います。
 
-Greengrassの設定画面に戻り、Greengrassグループ：GGHandsonGroup-<参加者番号> をクリックして下さい。
-
-.. image:: images/04/greengrass-group.png
-
-|
-
-Greengrassの設定をデプロイする
-====================================
-
-Greengrassグループの設定画面が出てきます。右上の [アクション] メニューから [デプロイ] を撰んで下さい。
-
-.. image:: images/06/deploy.png
+.. image:: images/06/overview-gg.png
 
 |
 
-初回のでデプロイ時、「デバイスによるコア検出方法の設定」画面が表示されます。[自動検出] をクリックします。
+Greengrassグループの作成
+=======================
 
-.. image:: images/06/auto-detect.png
+サービス一覧から [AWS Greengrass] をクリックして開きます。
 
-|
-
-デプロイが完了すると、「 デプロイメントが正常に完了しました」と表示されます。
-
-.. image:: images/06/deploy-completed.png
+.. image:: images/06/greengrass-servicemenu.png
 
 |
 
-下記は、デプロイのGIFアニメーションです。画像をクリックするとアニメーションがスタートします。このケースでは、デプロイにおよそ30秒程度かかっています。
+AWS Greengrass の開始画面が表示されます。[今すぐ始める]をクリックします。
 
-.. image:: images/06/deploy.gif
+.. image:: images/06/greengrass-welcome.png
 
 |
 
-デプロイに失敗する場合があります。その場合は、再度、デプロイを行って下さい。
+Greengrasクループ を作成します。[簡単な作成の使用] をクリックします。
 
-.. image:: images/06/deploy-fail.png
+.. image:: images/06/geengrass-easy-creation.png
 
-1分以上経ってもデプロイが完了しない場合、config.json 内の設定に誤りがある可能性があります。特に、"thingArn","iotHost","ggHost"を確認して下さい。コンソールを開き、~/greengrass/var/log/system/ 下のログを確認して下さい。
+|
 
-~/greengrass/var/log/ 下のファイルは、ユーザー "pi"ではアクセス出来ませんので、root権限でアクセスします。
+[グループ名] に”GGHandsonGroup-<参加者番号>” と入力し、[次へ] をクリックします。
+
+============= ============================
+項目            値
+============= ============================
+グループ名           GGHandsonGroup-<参加者番号>
+============= ============================
+
+.. image:: images/06/greengrass-group-name.png
+
+|
+
+[名前] に "GGHandsonGroup-<参加者番号>_Core" と出ますが、”GGC_Thing-<参加者番号>” に変更して、[次へ] をクリックします。
+
+============= ============================
+項目            値
+============= ============================
+名前             GGC_Thing-<参加者番号>
+============= ============================
+
+.. image:: images/06/greengrass-core-name.png
+
+|
+
+[グループとコアの作成] をクリックすると、GreengrassグループとGreengrassコアが作成されます。
+
+.. image:: images/06/geengrass-create-group.png
+
+|
+
+自動的に、新しいGreengrassグループが作成され、Greengrassコアデバイス用の証明書とセキュリティーポリーシーが作成されGreengrassコアにアタッチされます。
+
+次の [コアデバイスへの接続] 画面で、Greengrassコアデバイス用の証明書とプライベートキーをPCにダウンロードして下さい。
+
+各ファイルのサイズは、証明書が1,220バイト程度、プライベートキーが1,670バイト程度になります。
+
+ダウンロードした証明書とプライベートキーは、後にRaspberry Piにコピーし、Greengrassコアデバイスで使用します。(/greengrass/configuration/certs/ 下にコピーします。)
+また、証明書の番号は、Greengrassコアデバイス用と分かる様にノートパッドなどに記録しておいて下さい。
+
+証明書の番号とは、ファイル名が "xxxxxxxxxx-certificate.pem.crt" の場合、冒頭の "xxxxxxxxxx" になります。
+
+**記録**
 
 ::
 
-  sudo su -
-  cd /home/pi/greengrass/var/log/system
+  Greengrass core device: GGC_Thing-01
+    "certPath": "xxxxxxxxxx-certificate.pem.crt",
+    "keyPath": "xxxxxxxxxx-private.pem.key",
 
 |
 
-特に、下記のログファイルを確認してみて下さい。
+
+
+Greengrass自身のダウンロードもこの画面で可能ですが、このハンズオンでは、Greengrass導入済みのRaspberry PiのSDカードを使用しますので、ダウンロードは不要です。[完了] をクリックして、Greengrassグループの作成を終了します。
+
+.. image:: images/06/geengrass-create-group-complete.png
+
+|
+
+Greengrassグループが作成されました。
+
+.. image:: images/06/geengrass-group-status.png
+
+|
+
+モノ(Thing)を確認する
+-------------------
+
+メニューから[コア]をクリックします。以下の様な画面が表示されますので、作成したGreengrassコアが表示されている事を確認します。
+
+.. image:: images/06/greengrass-core-verify.png
+
+|
+
+Greengrassコア [GGC_Thing-<参加者番号>] をクリックして下さい。Greengrassコアの詳細が表示されます。
+モノのARNは、後にRaspberry Pi上のGreengrassコアの設定で必要になりますので、記録しておいて下さい。
+
+.. image:: images/06/geengrass-core-ARN.png
+
+|
+
+ARNは、Raspberry Pi上の Greengrassの設定ファイル
+::
+
+  ~/greengrass/configuration/config.json
+
+|
+
+に記載します。config.json は、下記の様な内容になっています。
+記録した ARNは、"thingArn" となります。
 
 ::
 
-  connection_manager.log
-  ip_detector.log
-  localwatch
-  runtime.log
-  syncmanager.log
-
-|
-
-これで、デプロイは、完了しました。
-
-
-動作確認
-=================
-
-センサーデバイスを起動する
-------------------------------
-
-Raspberry Piのリモート画面に移動します。
-
-コンソールを開いて、cd aws-iot-device-sdk-cpp/build/bin に移動し、センサデバイス アプリを起動します。
-
-::
-
-  cd aws-iot-device-sdk-cpp/build/bin
-  ./handson-sensor-sample
-
-|
-
-センサーデバイス アプリ handson-sensor-sample が起動し、下記の様なメッセージが表示されます。
-
-.. image:: images/06/start-sensor-device.png
-
-|
-
-センサーデバイスは、Raspberry PiのCPUロードをトピック sensing/data でPublishし続けます。
-
-アラートデバイスを起動する
-------------------------------
-
-コンソールをもう一つ開いて、cd aws-iot-device-sdk-cpp/build/bin に移動し、アラートデバイス アプリを起動します。
-
-::
-
-  cd aws-iot-device-sdk-cpp/build/bin
-  ./handson-alarm-sample
-
-|
-
-アラートデバイス アプリ handson-alarm-sample が起動し、下記の様なメッセージが表示されます。
-
-.. image:: images/06/start-alert-device.png
-
-|
-
-アラートデバイスは、デバイスシャドウ のキー Alert の更新を待ち続けます。
-
-画面の右上に、CPUロードが表示されています。通常は、25%程度です。
-
-.. image:: images/06/cpu-load.png
-
-|
-
-この時点で、greengrassd, handson-alarm-sample, handson-sensor-sample の３つのソフトウェアが同時に起動していることになります。
-
-動作確認
-===========================
-
-AWS コンソールのAWS IoT に移動します。
-
-メニューから [登録] をクリックし、センサーデバイスをクリックします。
-
-.. image:: images/06/awsiot-sensor-device.png
-
-|
-
-メニューから、[シャドウ] をクリックし、センサーデバイスのシャドウを表示します。
-
-.. image:: images/06/sensor-shadow.png
-
-|
-
-センサーデバイスのシャドウは、クラウドと同期する設定にしていましたので、この様に表示されます。
-
-シャドウステータスに何も表示されない場合、サブスクリプションの設定かセンサーデバイスのクラウドに同期の設定に誤りが有る可能性があります。確認してみて下さい。
-
-また、/home/pi/greengrass/var/log/system/router.log も確認してみて下さい。
-
-"LoadSwitch": "off" の状態では、CPUロードは、25% 程度です。CPUロードを上げてみましょう。
-
-右上の [編集] をクリックして、下記の様に書き換えて下さい。
-
-::
-
+  config.json
   {
-    "desired": {
-      "LoadSwitch": "on"
-    },
-    "reported": {
-      "LoadSwitch": "off"
-    }
+      "coreThing": {
+          "caPath": "root-ca.pem",
+          "certPath": "cloud.pem.crt",
+          "keyPath": "cloud.pem.key",
+          "thingArn": "arn:aws:iot:us-west-2:000000000000:thing/GGC_Thing-01",
+          "iotHost": "axxzxxxxxxxx.iot.us-west-2.amazonaws.com",
+          "ggHost": "greengrass.iot.us-west-2.amazonaws.com"
+      },
+      "runtime": {
+          "cgroup": {
+              "useSystemd": "yes"
+          }
+      }
   }
 
 |
 
-その後、右上の [保存] をクリックして下さい。クラウド上の "LoadSwitch" センサーデバイスのシャドウと同期し、"reported"の"LoadSwitch"が"on" になります。
+**記録**
 
-.. image:: images/06/shadow-sync.gif
+::
 
-|
-
-Raspberry Piのリモート画面を見て下さい。
-
-センサーデバイスが、"LoadSwitch" の状態が "on" になったことを認識し、CPUロードが上がる処理が実行され、センサーデバイス アプリは、"calc!" と表示します。Raspberry PiのCPU usageが 50% 程度に上がります。LambdaもCPUロードを確認していますが、40%以上に上昇すると、アラートデバイスのシャドウ "Alert"を "on"に更新します。アラートデバイスが、"Alert": "on" を確認すると、アラートデバイス アプリが、“alert!!!" と表示します。
-
-アラートが発生しない場合は、ウィンドウを動かしたりして、負荷を上げて下さい。
-
-.. image:: images/06/alert!!.png
+  Greengrass core device: GGC_Thing-01
+    "certPath": "xxxxxxxxxx-certificate.pem.crt",
+    "keyPath": "xxxxxxxxxx-private.pem.key",
+    "thingArn": "arn:aws:iot:us-west-2:000000000000:thing/GGC_Thing-01"
 
 |
 
-AWS IoTのコンソールで、”LoadSwitch"を "off"にすると、"alert!!!" は停止します。
+[←]をクリックして下さい。メニューから [セキュリティー] をクリックして、自動的に生成された証明書を確認します。
 
-.. image:: images/06/shadow-load-switch-off.gif
+.. image:: images/06/geengrass-security-check.png
 
 |
+
+証明書を確認する
+-------------------
+
+作成された証明書が表示されます。先ほど記録しておいたGreengrassコアデバイス用の証明書の番号があるか確認して下さい。また、証明書が アクティブ になっているかも確認して下さい。Greengrassコアデバイス用の証明書をクリックして下さい。
+
+.. image:: images/06/geengrass-security-check-2.png
+
+|
+
+発行者、発行日、有効期限などの証明書の詳細情報が表示されます。
+
+.. image:: images/06/geengrass-security-check-3.png
+
+|
+
+メニューから [ポリシー] をクリックして下さい。
+自動的に生成されたポリシー [GGC_Thing-<参加者番号>-policy] が、証明書と関連付けれていることが分かります。
+
+.. image:: images/06/geengrass-security-check-policy.png
+
+|
+
+ポリシーの内容は、ポリシーをクリックすれば、ポリシードキュメントの内容が表示されます。
+
+::
+
+  {
+    "Version": "2012-10-17",
+    "Statement": [
+      {
+        "Effect": "Allow",
+        "Action": [
+          "iot:Publish",
+          "iot:Subscribe",
+          "iot:Connect",
+          "iot:Receive"
+        ],
+        "Resource": [
+          "*"
+        ]
+      },
+      {
+        "Effect": "Allow",
+        "Action": [
+          "iot:GetThingShadow",
+          "iot:UpdateThingShadow",
+          "iot:DeleteThingShadow"
+        ],
+        "Resource": [
+          "*"
+        ]
+      },
+      {
+        "Effect": "Allow",
+        "Action": [
+          "greengrass:*"
+        ],
+        "Resource": [
+          "*"
+        ]
+      }
+    ]
+  }
+
+|
+
+モノへの接続、トピックのパブリッシュ/サブスクライブ、デバイスシャドウの操作、greengrassの操作など、AWS IoTおよび、Greengrassへの全ての操作が可能になっています。
+
+メニューから [モノ] をクリックして下さい。
+自動的に生成されたGreengrassコアデバイス [GGC_Thing-<参加者番号>] が、モノとして表示されるはずです。
+
+.. image:: images/06/geengrass-security-check-thing.png
+
+|
+
+これで、AWS Greengrass のクラウド側の設定は、終わりです。

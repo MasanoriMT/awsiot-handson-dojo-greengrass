@@ -1,0 +1,5 @@
+==========================
+AWS IoT Device SDK Python解説
+==========================
+
+本ハンズオンで利用したAWS IoT Device SDK Pythonの解説をします。

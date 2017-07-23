@@ -1,141 +1,146 @@
-==================
- ハンズオン終了後
-==================
+======================
+Raspberry Piの設定
+======================
 
-Raspberry Piを初期化する
-============================
+ダウンロード済みの証明書をRaspberry Piにコピー(Greengrassコア)
+============================================================
 
+Greengrassコアの証明書をダウンロードしていました。
+これをRaspberry Piに転送します。VNC Viewrのタイトルバーの中心にマウスを移動させると、ツールが表示されます。矢印が交差したアイコンをクリックします。
 
-ハンズオン終了後には以下の設定を削除してください。
-
-AWS IoTのリソースを削除
-==========================
-
-AWS IoTの証明書、ポリシー、デバイスを削除するためには、削除前にアタッチされているリソースをデタッチする必要があります。（ルールは他のリソースとの関連性はありません）
-
-- マネージメントコンソールのサービスから[AWS IoT]を選択します。
-- メニューから、[セキュリティー]-[証明書]をクリックします。
-- 削除したい証明書を選択します。
-- メニューから、[モノ]を選び、アクションメニューから[取り消し] して下さい。
-- [ポリシー] も同様に[取り消し] して下さい。
-
-.. image:: images/09/detach.png
+.. image:: images/09/file-txfer.png
 
 |
 
-- 削除したいリソース(Certificate, Thing, Policy)を選択し、"Actions"のメニューから"Delete”を選択します。
+ファイル転送の画面が表示されます。 [Send files...] ボタンを押します。
 
-.. image:: images/09/delete.png
-
-|
-
-Ruleも同様に削除します。
-
-.. image:: images/09/rule-delete.png
+.. image:: images/09/file-txfer-2.png
 
 |
 
-ワーニングが出ますが、[Yes, continue with delete]をクリックして削除して下さい。
+ファイルの選択画面が表示されるので、全ての証明書を選択して、[Open] を押します。
+(図は6つのファイル転送していますが、ここでは2つのファイルを転送します)
 
-.. image:: images/09/detelte-rule-warning.png
-
-|
-
-AWS IoTのCloudWatchログを有効にしている場合、無効にします。
-Settingsをクリックし、CloudWatch Logsの[Disable]をクリックして無効にして下さい。
-
-.. image:: images/09/IOT-CloudWatch_logs_Disable.png
+.. image:: images/09/file-txfer-3.png
 
 |
 
-S3バケットを削除
-==========================
+ファイルがRaspberry Piのデスクトップに転送されます。
 
-マネージメントコンソールのサービス一覧から[S3]をクリックして開きます。
-リストからバケット”sensor-data-<参加者番号>”のアイコンをクリックして選択します。[バケットを削除する]をクリックして下さい。
-
-.. image:: images/09/s3-delete.png
+.. image:: images/09/file-txfer-done.png
 
 |
 
-確認画面が表示されますので、"バケットの名前を入力する"にバケット名を入力して、[確認]をクリックして下さい。
+設定のおさらい、
 
-.. image:: images/09/s3-delete-confirm.png
+ここで、Greengrass 設定のおさらいをしてみましょう。Raspberry Piの設定邸のために記録した内容は、下記の様になっているはずです。この内容をテキストファイルにして、Raspberry Piに転送しておきましょう。PC側でコピーしてVNCの画面にペーストすることも出来ますが、うまくいかないこともあり、ファイルを転送することをお勧めします。
 
-|
+::
 
-ElsticSearch Serviceの設定を削除
-======================================
-
-マネージメントコンソールのサービス一覧から[ElsticSearch Service]をクリックして開きます。
-Domain”firehose-to-es-domain-<参加者番号>”をクリックします。
-
-.. image:: images/09/elasticsearch-delete.png
+  Greengrass core device: GGC_Thing-<参加者番号>
+    "certPath": "xxxxxxxxxx-certificate.pem.crt",
+    "keyPath": "xxxxxxxxxx-private.pem.key",
+    "thingArn": "arn:aws:iot:us-west-2:000000000000:thing/GGC_Thing-01"
 
 |
 
-画面の下までスクロールし、"Delete Elasticsearch domain"をクリックすると、[Delete domain] ボタンが表示されるので、クリックします。
+Greengrassコアの設定ファイルは、下記になります。
 
-.. image:: images/09/elasticsearch-delete-2.png
+- Greengrassコアの設定
+  /greengrass/configuration/config.json
 
-|
+Raspberry Pi上のファイル
+===============================
 
-確認画面が表示されますので、"Delete the domain ...."のチェックを入れ、[Delete] ボタンをクリックします。
+Raspbery Piのメニューバーをクリックしてファイラーを開きます。
+/home/pi以下に下記ファイルがあります。
 
-.. image:: images/09/elasticsearch-delete-fonfirm.png
+- greengrass-linux-armv7l-1.0.0.tar.gz
+  ARMv7版のAWS Greengrass パッケージです。
+  証明書を格納するパスや、設定ファイル、Greengrassコアが入っています。
 
-|
+下記のコマンドで解凍して Greengrassパッケージを解凍して下さい。
 
-Lambda関数を削除
-=======================
+::
 
-マネージメントコンソールのサービス一覧から[Lambda]をクリックして開きます。Lammbda関数 ranger-raw-data-to-json-<参加者番号>をチェックし、[アクション]から、"関数の削除"を選びます。確認画面が表示されるので[削除]をクリックします。
-
-.. image:: images/09/lambda-delete.png
-
-|
-
-Kinesis Firehoseの設定を削除
-===================================
-
-マネージメントコンソールのサービス一覧から[Kinesis]をクリックして開きます。[Firehose コンソールに移動]をクリックし、Kinesis Firehoseの設定画面に移動します。
-
-S3 Delivery Streamsから、"sensor-data-to-s3-<参加者番号>" をチェックし、[アクション]から、"Delete"を選びます。確認画面が表示されるので[削除]をクリックします。
-
-.. image:: images/09/firehose-delete.png
+  tar -zxf greengrass-linux-armv7l-1.0.0.tar.gz -C .
 
 |
 
-確認画面が表示されるので、delivery stream 名を入力し、[Delete]をクリックします。ElasticSearch Delivery Streamsも同様の方法で削除します。
+Greengrassコアの設定と起動
+==================================
 
-.. image:: images/09/firehose-delete-confirm.png
 
-|
+Greengrassコアの設定は、~/greengrass/configuration で行います。
 
-IAMロールを削除
-====================
-
-マネージメントコンソールのサービス一覧から[IAM]をクリックして開きます。
-メニューから[ロール]をクリックして下さい。右上の設定アイコンを押して、作成時刻を表示して下さい。
-作成事項でソートすると、本ハンズオンで作成したロールが見えます。
-
-.. image:: images/09/IAM-roles.png
+.. image:: images/09/greengrass-core-setting.png
 
 |
 
-本ハンズオンで作成した下記のロールのみにチェックを入れ、[ロールの削除]をクリックして下さい。
+Greengrassコア用の証明書をコピー
+----------------------------------
 
-* firehose_delivery_role_es-<参加者番号>
-* IOT_to_Kinesis_Firehose-<参加者番号>
-* firehose_delivery_role-<参加者番号>
-* lambda_KinesisFirehoseAccess-<参加者番号>
+~/greengrass/configuration/certs にGreengrassコア用の証明書をコピーして下さい。
 
-.. image:: images/09/IAM-role-delete.png
+コピーするファイルは、デスクトップ上の下記の３つのファイルになります。
+
+- root-ca.pem
+- xxxxxxxxxx-certificate.pem.crt
+- xxxxxxxxxx-private.pem.key
+
+設定ファイルの修正
+---------------------------
+
+~/greengrass/configuration/config.json をダブルクリックします。Text Editorが開きます。
+
+.. image:: images/09/greengrass-core-text-editor.png
 
 |
 
-確認画面が表示されますので、[はい、削除する]をクリックして下さい。
+赤線の部分を書き換えて下さい。
 
-.. image:: images/09/IAM-role-delete-confirm.png
+::
+
+  {
+      "coreThing": {
+          "caPath": "root-ca.pem",
+          "certPath": "xxxxxxxxxx-certificate.pem.crt",
+          "keyPath": "xxxxxxxxxx-private.pem.key",
+          "thingArn": "arn:aws:iot:us-west-2:000000000000:thing/GGC_Thing-01",
+          "iotHost": "xxxxxxxxxxxx.iot.us-west-2.amazonaws.com",
+          "ggHost": "greengrass.iot.us-west-2.amazonaws.com"
+      },
+      "runtime": {
+          "cgroup": {
+              "useSystemd": "yes"
+          }
+      }
+  }
 
 |
+
+"iotHost"は、AWS IoTのエンドポイント(endpoint)です。
+
+"ggHost"のリージョン(AWS_REGION_HERE)も、us-west-2に書き換えて下さい。"useSystemd"は、yesにして下さい。
+
+Greengrassを起動する
+-----------------------------
+
+コンソールを開き、下記を入力して、Greengrassを起動します。
+
+::
+
+  cd greengrass
+  sudo ./greengrassd start
+
+|
+
+Greengrassが正常に起動できれば、下記が表示されます。
+
+.. image:: images/09/greengrass-start.png
+
+|
+
+エラーが出る場合、~/greengrass/configuration/config.json を確認して下さい。
+証明書("caPath","certPath","keyPath")に誤りがあると、greengrassdの起動に失敗します。
+"thingArn","iotHost","ggHost"に誤りがあっても、起動は成功しますが、デプロイに失敗します。
