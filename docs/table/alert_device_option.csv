@@ -1,0 +1,7 @@
+short オプション,long オプション,説明,値
+-e,--endpoint,AWS IoTのEndpoint,xxxxxxxxxxxx.iot.us-west-2.amazonaws.com
+-r,--rootCA,AWS IoTのサーバ証明書,root-ca.pem
+-c,--cert,アラートデバイスの証明書,yyyyyyyyyy-certificate.pem.crt
+-k,--key,アラートデバイスの秘密鍵,yyyyyyyyyy-private.pem.key
+-n,--thingName,アラートデバイス名,Alert-<参加者番号>
+-id,--clientId,アラートデバイスのクライアントID,Alert-<参加者番号>
