@@ -1,0 +1,8 @@
+short オプション,long オプション,説明,値
+-e,--endpoint,AWS IoTのEndpoint,xxxxxxxxxxxx.iot.us-west-2.amazonaws.com
+-r,--rootCA,AWS IoTのサーバ証明書,root-ca.pem
+-c,--cert,センサーデバイスの証明書,zzzzzzzzzz-certificate.pem.crt
+-k,--key,センサーデバイスの秘密鍵,zzzzzzzzzz-private.pem.key
+-n,--thingName,センサーデバイス名,Sensor-<参加者番号>
+-id,--clientId,センサーデバイスのクライアントID,Sensor-<参加者番号>
+-g,--greengrass,Greengrassモードで動作,

@@ -34,17 +34,6 @@
 
 |
 
-===================== ============================== ==============================
-オプション                        説明                      値
-===================== ============================== ==============================
--e, --endpoint        AWS IoTのEndpoint               xxxxxxxxxxxx.iot.us-west-2.amazonaws.com
--r, --rootCA          AWS IoTのサーバ証明書                 root-ca.pem
--c, --cert            アラートデバイスの証明書                   yyyyyyyyyy-certificate.pem.crt
--k, --key             アラートデバイスの秘密鍵                   yyyyyyyyyy-private.pem.key
--n, --thingName       アラートデバイス名                      Alert-<参加者番号>
--id, --clientId       アラートデバイスのクライアントID              Alert-<参加者番号>
-===================== ============================== ==============================
-
 アラートデバイスは、デバイスシャドウ のキー Alert の更新を待ち続けます。
 
 エラーが出る場合、オプションに指定したパラメータが正しいか、モノに証明書がアタッチされているか、証明書にポリシーがアタッチされているか、ポリシーの内容は適切か、再度確認して下さい。
@@ -63,16 +52,11 @@
 
 各実行パラメータの説明は以下になります。
 
-===================== ============================== ==============================
-オプション                        説明                      値
-===================== ============================== ==============================
--e, --endpoint        AWS IoTのEndpoint               xxxxxxxxxxxx.iot.us-west-2.amazonaws.com
--r, --rootCA          AWS IoTのサーバ証明書                 root-ca.pem
--c, --cert            センサーデバイスの証明書                   zzzzzzzzzz-certificate.pem.crt
--k, --key             センサーデバイスの秘密鍵                   zzzzzzzzzz-private.pem.key
--n, --thingName       センサーデバイス名                      Sensor-<参加者番号>
--id, --clientId       センサーデバイスのクライアントID              Sensor-<参加者番号>
-===================== ============================== ==============================
+.. csv-table::
+    :header-rows: 1
+    :file: table/sensor_device_option.csv
+
+|
 
 センサーデバイスは、Raspberry PiのCPUロードをトピック sensing/data にPublishし続けます。
 
