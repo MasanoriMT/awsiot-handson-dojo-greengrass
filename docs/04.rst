@@ -58,7 +58,7 @@ WiFi接続
 
 お手持ちのPCにインストールした、VNC Viewer を起動して下さい。下記の画面が表示されます。
 
-接続先として、'raspberrypi-<参加者番号>.local'と入力して[エンター]を押します。
+接続先として、'raspberrypi-<参加者番号>.local'と入力して[Enter]を押します。
 
 「一人で1つのAWSアカウントを利用する場合は「参加者番号」は "01" としてください。」
 としていましたが、ここでの<参加者番号>は、SDカードに書かれた番号にして下さい・。
@@ -208,7 +208,6 @@ Raspbery Piのメニューバーをクリックしてファイラーを開きま
 
 コピーするファイルは、デスクトップ上の下記の2つのファイルになります。
 
-- root-ca.pem
 - yyyyyyyyyy-certificate.pem.crt
 - yyyyyyyyyy-private.pem.key
 
@@ -216,6 +215,5 @@ Raspbery Piのメニューバーをクリックしてファイラーを開きま
 
 コピーするファイルは、デスクトップ上の下記の2つのファイルになります。
 
-- root-ca.pem
 - zzzzzzzzzz-certificate.pem.crt
 - zzzzzzzzzz-private.pem.key
