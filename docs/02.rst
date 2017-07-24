@@ -314,8 +314,8 @@ Name	          Sensor-<参加者番号>
 ::
 
   Sensor Device: Sensor-<参加者番号>
-    "device_certificate_relative_path": "yyyyyyyyyy-certificate.pem.crt",
-    "device_private_key_relative_path": "yyyyyyyyyy-private.pem.key",
+    "device_certificate_relative_path": "zzzzzzzzzz-certificate.pem.crt",
+    "device_private_key_relative_path": "zzzzzzzzzz-private.pem.key",
 
 |
 
