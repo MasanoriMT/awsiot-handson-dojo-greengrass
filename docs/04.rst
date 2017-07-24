@@ -120,11 +120,13 @@ Raspberry Piの環境を初期化する
 
 |
 
-コンソールに下記を入力し、greengrassとAWS IoT Device SDKの環境をクリーンアップします。
+コンソールに下記を入力し、greengrassとAWS IoT Device SDKの環境、及び証明書をクリーンアップします。
 
 ::
 
    ./handson_cleanup
+   rm ~/Desktop/*-certificate.pem.crt
+   rm ~/Desktop/*-private.pem.key
 
 |
 
