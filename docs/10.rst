@@ -2,6 +2,22 @@
 Greengrassコアへのデプロイと動作確認
 =======================================
 
+アプリケーションを実際に動かして、動作を確認します。
+本ハンズオンでは、センサーデバイスはRaspberry Pi上のCPU使用率を定期的にGreengrassコアのsensing/dataにuploadし、
+これをトリガーに実行されたlambda関数が、Greengrassmコア上でCPU使用率を確認、閾値を超える、もしくは下回るとアラートデバイスのalertのon/offを切り替えます。
+
+本ハンズオンでは、センサーデバイスのCPU使用率を制御するため、
+センサーデバイスは、高負荷の処理を実行するswitchをシャドウとして保持します。
+このswitchをonにすることで、センサーデバイスを閾値を超える高負荷状態にすることができます。
+また、動作確認を容易化するため、センシングしたデータはエッジだけでなくクラウドにも送信します。
+
+.. image:: images/10/overview-gg-all.png
+
+|
+
+Greengrassの設定をデプロイする
+====================================
+
 AWS コンソールのGreengrassに戻ります。
 
 Greengrassの設定画面に戻り、Greengrassグループ：GGHandsonGroup-<参加者番号> をクリックして下さい。
@@ -9,9 +25,6 @@ Greengrassの設定画面に戻り、Greengrassグループ：GGHandsonGroup-<�
 .. image:: images/10/greengrass-group.png
 
 |
-
-Greengrassの設定をデプロイする
-====================================
 
 Greengrassグループの設定画面が出てきます。右上の [アクション] メニューから [デプロイ] を撰んで下さい。
 
