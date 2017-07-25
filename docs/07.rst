@@ -160,7 +160,8 @@ AWS IoTのメニューから[セキュリティー]＞[ポリシー]をクリッ
 
 作成した、センサーデバイス、アラートデバイスをGreengrassグループに追加します。
 
-Greengrassの設定画面に戻り、Greengrassグループ：GGHandsonGroup-<参加者番号> をクリックして下さい。
+Greengrassの設定画面に戻り、[Greengrass] > [グループ]をクリックします。
+一覧が表示されますので、GGHandsonGroup-<参加者番号> を選択して下さい。
 
 .. image:: images/07/greengrass-group.png
 
@@ -197,7 +198,14 @@ Greengrassの設定画面に戻り、Greengrassグループ：GGHandsonGroup-<�
 
 |
 
-センサーデバイスのデバイス シャドウは、クラウド上のシャドウと同期させる必要があるので、設定を変更します。
+ここでデバイスのシャドウの設定を行います。
+AWS IoTを介して動作させた時と同様に、センサーデバイスのCPU使用率を制御するシャドウとアラートデバイスの状態を制御するシャドウを利用します。
+
+.. image:: images/07/overview-gg-shadow.png
+
+|
+
+センサーデバイスのデバイス シャドウは、クラウド上で状態を変更するため、クラウドのシャドウと同期できるよう、設定を変更します。
 
 センサーデバイスの右の [●●●] をクリックして、[クラウドに同期] をクリックして下さい。
 
@@ -210,3 +218,5 @@ Greengrassの設定画面に戻り、Greengrassグループ：GGHandsonGroup-<�
 .. image:: images/07/sync-thing-shadow-3.png
 
 |
+
+一方、アラートデバイスのデバイス シャドウは、デバイス上のLambdaで状態を変更するため、クラウドのシャドウと同期する必要はありません。

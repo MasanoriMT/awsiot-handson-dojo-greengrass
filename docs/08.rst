@@ -120,7 +120,8 @@ Lambda関数のバージョンを設定します。[アクション ▼] メニ�
 
 次に、このLambda関数をGreengrassクループに追加します。
 
-Greengrassの設定画面に戻り、Greengrassグループ：GGHandsonGroup-<参加者番号> をクリックして下さい。
+Greengrassの設定画面に戻り、[Greengrass] > [グループ]をクリックし、
+一覧からGGHandsonGroup-<参加者番号> を選択して下さい。
 
 .. image:: images/08/greengrass-group.png
 
@@ -188,8 +189,6 @@ Lambda関数のバージョンが、Greengrassグループに追加されまし�
     :file: table/subscription.csv
 
 |
-
-**【注意】トピックフィルターの $aws/things/Alert-01/、$aws/things/Sensor-01/ の "01"は、ご自分の参加者番号に置き換えて下さい。**
 
 このテーブルに従って、サブスクリプションの設定を行います。
 

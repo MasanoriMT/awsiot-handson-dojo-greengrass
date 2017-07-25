@@ -99,15 +99,6 @@ VNC Viewerの接続先を、192.168.11.100 にして、接続してみてくだ�
 
 |
 
-ハンズオンのマニュアルを表示する
-====================================
-
-Webブラウザは、メニューバーのアイコンをクリックすると表示されます。本ハンズオンのマニュアルがブックマークに登録されています。
-
-.. image:: images/04/web-browser-manual.png
-
-|
-
 Raspberry Piの環境を初期化する
 ====================================
 
@@ -219,3 +210,12 @@ Raspbery Piのメニューバーをクリックしてファイラーを開きま
 
 - zzzzzzzzzz-certificate.pem.crt
 - zzzzzzzzzz-private.pem.key
+
+また、~/GGHandson/alert_device, ~/GGHandson/sensor_deviceそれぞれに、root-ca.pemが事前に配置されています。
+こちらはAWS IoTのサーバ証明書となっており、各デバイスがAWS IoTに接続するために必要になります。
+
+- root-ca.pem
+
+※ 本証明書はサイトからダウンロードすることが可能です。詳細は下記を参照して下さい。
+
+http://docs.aws.amazon.com/ja_jp/iot/latest/developerguide/managing-device-certs.html
