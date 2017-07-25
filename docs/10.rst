@@ -4,7 +4,7 @@ Greengrassコアへのデプロイと動作確認
 
 アプリケーションを実際に動かして、動作を確認します。
 本ハンズオンでは、センサーデバイスはRaspberry Pi上のCPU使用率を定期的にGreengrassコアのsensing/dataにuploadし、
-これをトリガーに実行されたlambda関数が、Greengrassmコア上でCPU使用率を確認、閾値を超える、もしくは下回るとアラートデバイスのalertのon/offを切り替えます。
+これをトリガーに実行されたlambda関数が、Greengrassコア上でCPU使用率を確認、閾値を超える、もしくは下回るとアラートデバイスのalertのon/offを切り替えます。
 
 本ハンズオンでは、センサーデバイスのCPU使用率を制御するため、
 センサーデバイスは、高負荷の処理を実行するswitchをシャドウとして保持します。
