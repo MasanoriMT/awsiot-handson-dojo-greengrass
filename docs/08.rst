@@ -139,7 +139,7 @@ Greengrassの設定画面に戻り、[Greengrass] > [グループ]をクリッ�
 
 |
 
-[]既存のLambdaの使用] をクリックします。
+[既存のLambdaの使用] をクリックします。
 
 .. image:: images/08/add-lambda-to-group-3.png
 
