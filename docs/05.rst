@@ -46,7 +46,7 @@
 ::
 
   cd GGHandson/sensor_device
-  python ./ThingShadowSensor.py -e xxxxxxxxxxxx.iot.us-west-2.amazonaws.com -r root-ca.pem -c zzzzzzzzzz-certificate.pem.crt -k zzzzzzzzzz-private.pem.key -n Sensor-<参加者番号> -id Sensor-<参加者番号>
+  python ./ThingShadowSensor.py -e xxxxxxxxxxxx.iot.us-west-2.amazonaws.com -r root-ca.pem -c zzzzzzzzzz-certificate.pem.crt -k zzzzzzzzzz-private.pem.key -n Sensor-<参加者番号> -id Sensor-<参加者番号> -t sensing/data/Sensor-<参加者番号>
 
 |
 

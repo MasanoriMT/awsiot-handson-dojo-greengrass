@@ -109,45 +109,14 @@ Greengrassコア [GGC_Thing-<参加者番号>] をクリックして下さい。
 
 |
 
-ARNは、Raspberry Pi上の Greengrassの設定ファイル
-::
-
-  ~/greengrass/configuration/config.json
-
-|
-
-に記載します。config.json は、下記の様な内容になっています。
-記録した ARNは、"thingArn" となります。
-
-::
-
-  config.json
-  {
-      "coreThing": {
-          "caPath": "root-ca.pem",
-          "certPath": "cloud.pem.crt",
-          "keyPath": "cloud.pem.key",
-          "thingArn": "arn:aws:iot:us-west-2:000000000000:thing/GGC_Thing-01",
-          "iotHost": "axxzxxxxxxxx.iot.us-west-2.amazonaws.com",
-          "ggHost": "greengrass.iot.us-west-2.amazonaws.com"
-      },
-      "runtime": {
-          "cgroup": {
-              "useSystemd": "yes"
-          }
-      }
-  }
-
-|
-
 **記録**
 
 ::
 
-  Greengrass core device: GGC_Thing-01
+  Greengrass core device: GGC_Thing-<参加者番号>
     "certPath": "xxxxxxxxxx-certificate.pem.crt",
     "keyPath": "xxxxxxxxxx-private.pem.key",
-    "thingArn": "arn:aws:iot:us-west-2:000000000000:thing/GGC_Thing-01"
+    "thingArn": "arn:aws:iot:us-west-2:<アカウントID>:thing/GGC_Thing-<参加者番号>"
 
 |
 
