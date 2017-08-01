@@ -5,4 +5,5 @@ short オプション,long オプション,説明,値
 -k,--key,センサーデバイスの秘密鍵,zzzzzzzzzz-private.pem.key
 -n,--thingName,センサーデバイス名,Sensor-<参加者番号>
 -id,--clientId,センサーデバイスのクライアントID,Sensor-<参加者番号>
+-t,--topic, 送信先のtopic名,sensing/data/Sensor-<参加者番号>
 -g,--greengrass,Greengrassモードで動作,
