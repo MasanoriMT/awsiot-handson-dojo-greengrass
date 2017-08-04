@@ -91,7 +91,7 @@ Greengrassグループの設定画面が出てきます。右上の [アクシ�
 
 ::
 
-  cd GGHandson/alert_device
+  cd aws-iot-greengrass-handson-basic
   python ./ThingShadowAlarm.py -e xxxxxxxxxxxx.iot.us-west-2.amazonaws.com -r root-ca.pem -c yyyyyyyyyy-certificate.pem.crt -k yyyyyyyyyy-private.pem.key -n Alert-<参加者番号> -id Alert-<参加者番号> -g
 
 |
@@ -116,7 +116,7 @@ Greengrassグループの設定画面が出てきます。右上の [アクシ�
 
 ::
 
-  cd GGHandson/sensor_device
+  cd aws-iot-greengrass-handson-basic
   python ./ThingShadowSensor.py -e xxxxxxxxxxxx.iot.us-west-2.amazonaws.com -r root-ca.pem -c zzzzzzzzzz-certificate.pem.crt -k zzzzzzzzzz-private.pem.key -n Sensor-<参加者番号> -id Sensor-<参加者番号> -t sensing/data/Sensor-<参加者番号> -g
 
 |

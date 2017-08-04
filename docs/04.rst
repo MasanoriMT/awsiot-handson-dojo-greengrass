@@ -152,7 +152,7 @@ Raspberry Piに転送、します。VNC Viewrのタイトルバーの中心に�
 
 設定のおさらい、
 
-ここで、設定のおさらいをしてみましょう。Raspberry Piの設定のために記録した内容は、下記の様になっているはずです。この内容をテキストファイルにして、Raspberry Piに転送しておきましょう。PC側でコピーしてVNCの画面にペーストすることも出来ますが、うまくいかないこともあり、ファイルを転送することをお勧めします。
+ここで、設定のおさらいをしてみましょう。Raspberry Piの設定のために記録した内容は、下記の様になっているはずです。この内容をテキストファイルにして、Raspberry Piに転送しておきましょう。PC側でコピーしてVNCの画面にペーストすることも出来ますが、うまくいかないこともあり、ファイルを転送することをお勧めします。(cleanupスクリプトで削除するために、拡張子は.txtとしてください。)
 
 ::
 
@@ -175,14 +175,14 @@ Raspberry Pi上のファイル
 Raspbery Piのメニューバーをクリックしてファイラーを開きます。
 /home/pi以下に下記ファイルがあります。
 
-- GGHandson-20170726.tar.gz
+- aws-iot-greengrass-handson-basic.tar.gz
   本ハンズオンで利用する、センサーデバイス、アラートデバイスのアプリが入っています。
 
 下記のコマンドで解凍して GGhandsonパッケージを解凍して下さい。
 
 ::
 
-  tar -zxf GGHandson-20170726.tar.gz -C .
+  tar -zxf ./aws-iot-greengrass-handson-basic.tar.gz -C .
 
 |
 
@@ -191,27 +191,26 @@ Raspbery Piのメニューバーをクリックしてファイラーを開きま
 
 アラートデバイス、センサーデバイスは、AWS IoT Device SDK Pythonで作成します。今回のハンズオンでは、Device SDKの開発環境と、各デバイスのコードは、導入済みです。証明書を所定のパスにコピーし、アプリケーションを実行します。
 
-アラートデバイスの設定と起動は、~/GGHandson/alert_device で、
-センサーデバイスの設定と起動は、~/GGHandson/sensor_device で行います。
+アラートデバイス及びセンサーデバイスの設定と起動は、~/aws-iot-greengrass-handson-basic で行います。
 
 デバイス用の証明書をコピー
 ----------------------------------
 
-~/GGHandson/alert_device にアラートデバイス用の証明書をコピーして下さい。
+~/aws-iot-greengrass-handson-basic にアラートデバイス用の証明書をコピーして下さい。
 
 コピーするファイルは、デスクトップ上の下記の2つのファイルになります。
 
 - yyyyyyyyyy-certificate.pem.crt
 - yyyyyyyyyy-private.pem.key
 
-同様に~/GGHandson/sensor_device にアラートデバイス用の証明書をコピーして下さい。
+同様に~/aws-iot-greengrass-handson-basic にセンサーデバイス用の証明書をコピーして下さい。
 
 コピーするファイルは、デスクトップ上の下記の2つのファイルになります。
 
 - zzzzzzzzzz-certificate.pem.crt
 - zzzzzzzzzz-private.pem.key
 
-また、~/GGHandson/alert_device, ~/GGHandson/sensor_deviceそれぞれに、root-ca.pemが事前に配置されています。
+また、~/aws-iot-greengrass-handson-basicには、root-ca.pemが事前に配置されています。
 こちらはAWS IoTのサーバ証明書となっており、各デバイスがAWS IoTに接続するために必要になります。
 
 - root-ca.pem
